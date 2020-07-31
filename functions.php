@@ -35,6 +35,7 @@ add_action('after_setup_theme', 'ks_content_width', 0);
 function kinectiv_flex_scripts() {
 	wp_enqueue_style('kinectiv-flex-style', get_stylesheet_directory_uri() . '/style.min.css', array(), '0.1.0');
 //	wp_enqueue_style('kinectiv-flex-vendor-style', get_stylesheet_directory_uri() . '/css/vendor.min.css', array(), '1.0.0');
+	wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Roboto+Slab:wght@700&display=swap', array(), null);
     
     wp_deregister_script('wp-embed');
     wp_deregister_script('jquery');
@@ -47,6 +48,62 @@ function ks_admin_scripts() {
 	wp_enqueue_script('ks-admin-js', get_template_directory_uri() . '/js/wp-admin.js', array(), '1.0.0', true);
 }
 add_action('admin_enqueue_scripts', 'ks_admin_scripts');
+
+
+/**
+ * Formatted copyright year
+ */
+function kf_get_copyright_year() {
+    $year = '2020'; // year site was first published
+    $today_dt = current_datetime();
+    
+    // if the current year is not the publish year, convert to a range (e.g. "2018-2020")
+    if ($today_dt->format('Y') != $year) {
+        $year .= '-' . $today_dt->format('Y');
+    }
+    
+    return $year;
+}
+
+
+/**
+ * Prepend copyright year to ACF field
+ */
+function kf_prepend_copyright_year_to_field($field) {
+    $field['prepend'] = '&copy; Copyright ' . kf_get_copyright_year();
+    
+    return $field;
+}
+add_filter('acf/prepare_field/key=field_5f22b95009b0c', 'kf_prepend_copyright_year_to_field');
+
+
+/**
+ * Get color ID
+ */
+function color_id($theme, $color_num, $return = false) {
+    // list of color IDs in order for each theme
+    $theme_maps = array(
+        'main' => array('a0', 'a1', 'a2', 'a3', 'a4', 'a5'),
+        'main-dark' => array('a5', 'a4', 'a3', 'a2', 'a1', 'a0'),
+        'alt' => array('b0', 'b1', 'b2', 'b3', 'b4', 'b5'),
+        'alt-dark' => array('b5', 'b4', 'b3', 'b2', 'b1', 'b0')
+    );
+    $color_num = max(0, min(5, $color_num)); // ensure that the color number is between 0 and 5
+    
+    if (array_key_exists($theme, $theme_maps)) {
+        // return color ID
+        if ($return) {
+            return $theme_maps[$theme][$color_num];
+        } else {
+            echo $theme_maps[$theme][$color_num];
+        }
+    }
+    
+    // if the provided theme doesn't exist, return an empty string
+    if ($return) {
+        return '';
+    }
+}
 
 
 /**
@@ -200,21 +257,6 @@ function ks_admin_menu_order($menu_order) {
 }
 add_filter('custom_menu_order', '__return_true'); // enable menu_order filter
 add_filter('menu_order', 'ks_admin_menu_order'); // filter menu order
-
-
-/**
- * Hide Posts from admin
- */
-function ks_disable_posts_admin_menu() {
-    remove_menu_page('edit.php');
-}
-add_action('admin_menu', 'ks_disable_posts_admin_menu'); // remove posts link from admin menu
-
-function ks_disable_posts_admin_bar() {
-    global $wp_admin_bar;
-    $wp_admin_bar->remove_menu('new-post');
-}
-add_action('wp_before_admin_bar_render', 'ks_disable_posts_admin_bar'); // remove new post link from admin bar
 
 
 /**
