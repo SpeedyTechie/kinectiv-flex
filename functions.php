@@ -107,6 +107,40 @@ function color_id($theme, $color_num, $return = false) {
 
 
 /**
+ * Get page ancestors
+ */
+function kf_get_ancestors($post_id) {
+    $front_id = intval(get_option('page_on_front')); // get front page ID
+    $ancestors = array(); // create an array to store ancestors (format URL => Page Title)
+    
+    // if there's a static front page (and it isn't the current page), add it as the first ancestor
+    if ($front_id > 0 && $post_id != $front_id) {
+        $ancestors[get_permalink($front_id)] = get_the_title($front_id);
+    }
+    
+    // build breadcrumb array based on the post type
+    if (is_singular('post')) {
+        
+    } elseif (is_singular('event')) {
+        
+    } else {
+        $wp_ancestors = get_post_ancestors($post_id); // get list of post ancestors from WordPress
+        
+        if (in_array($front_id, $wp_ancestors)) {
+            $ancestors = array(); // if the front page is one of the ancestors returned by WordPress, remove it from the ancestors array
+        }
+        
+        // add the ancestors returned by WordPress to the array
+        foreach (array_reverse($wp_ancestors) as $anc_id) {
+            $ancestors[get_permalink($anc_id)] = get_the_title($anc_id);
+        }
+    }
+    
+    return $ancestors;
+}
+
+
+/**
  * Add ACF options page
  */
 if (function_exists('acf_add_options_page')) {
