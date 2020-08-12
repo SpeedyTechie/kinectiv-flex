@@ -25,9 +25,8 @@
     
     $theme = 'main-dark';
     ?>
-    
 	<header class="site-header c_bg_<?php color_id($theme, 1); ?> c_color_<?php color_id($theme, 5); ?>">
-        <?php if ($f_options['nav-location'] == 'top' && $f_nav_2['links']): ?>
+        <?php if ($f_options['layout_nav-location'] == 'top' && $f_nav_2['links']): ?>
         <div class="site-header__secondary c_bg_<?php color_id($theme, 0); ?>">
             <div class="site-header__content">
                 <nav class="site-nav site-nav_right site-nav_xs site-nav_lines c_color_<?php color_id($theme, 3); ?>">
@@ -46,7 +45,7 @@
                     <div class="header-1__main">
                         <div class="header-1__col header-1__col_logo">
                             <a href="<?php echo esc_url(home_url()); ?>" class="site-header__home">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/logo.svg" alt="<?php bloginfo('name'); ?>" class="site-header__logo" />
+                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/logo.svg" width="158" height="31" alt="<?php bloginfo('name'); ?>" class="site-header__logo" />
                             </a>
                         </div>
                         <?php if ($f_nav['links']): ?>
@@ -81,7 +80,7 @@
                 </div>
             </div>
         </div>
-        <?php if ($f_options['nav-location'] == 'bottom' && $f_nav_2['links']): ?>
+        <?php if ($f_options['layout_nav-location'] == 'bottom' && $f_nav_2['links']): ?>
         <div class="site-header__secondary c_bg_<?php color_id($theme, 0); ?>">
             <div class="site-header__content">
                 <nav class="site-nav site-nav_right site-nav_xs site-nav_lines c_color_<?php color_id($theme, 3); ?>">

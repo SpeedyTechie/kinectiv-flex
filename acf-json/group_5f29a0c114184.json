@@ -1,0 +1,210 @@
+{
+    "key": "group_5f29a0c114184",
+    "title": "[Options] Padding",
+    "fields": [
+        {
+            "key": "field_5f29a0fd3c8c5",
+            "label": "Vertical Padding",
+            "name": "vertical",
+            "type": "button_group",
+            "instructions": "Choose how much padding to show above and below this section, or select \"Separate Top\/Bottom\" to control the top and bottom padding individually.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "separate": "Separate Top\/Bottom",
+                "none": "None",
+                "xs": "Extra Small",
+                "sm": "Small",
+                "md": "Medium",
+                "lg": "Large",
+                "xl": "Extra Large",
+                "hg": "Huge"
+            },
+            "allow_null": 0,
+            "default_value": "md",
+            "layout": "horizontal",
+            "return_format": "value"
+        },
+        {
+            "key": "field_5f29a43d2f097",
+            "label": "Top Padding",
+            "name": "top",
+            "type": "button_group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f29a0fd3c8c5",
+                        "operator": "==",
+                        "value": "separate"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "none": "None",
+                "xs": "Extra Small",
+                "sm": "Small",
+                "md": "Medium",
+                "lg": "Large",
+                "xl": "Extra Large",
+                "hg": "Huge"
+            },
+            "allow_null": 0,
+            "default_value": "md",
+            "layout": "horizontal",
+            "return_format": "value"
+        },
+        {
+            "key": "field_5f2d8f8a23a8b",
+            "label": "Allow Top Padding to Collapse",
+            "name": "collapse-top",
+            "type": "true_false",
+            "instructions": "Enable this option to prevent double-height padding when the previous section has the same background color.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f29a0fd3c8c5",
+                        "operator": "!=",
+                        "value": "none"
+                    },
+                    {
+                        "field": "field_5f29a0fd3c8c5",
+                        "operator": "!=",
+                        "value": "separate"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5f29a0fd3c8c5",
+                        "operator": "==",
+                        "value": "separate"
+                    },
+                    {
+                        "field": "field_5f29a43d2f097",
+                        "operator": "!=",
+                        "value": "none"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5f29a4612f098",
+            "label": "Bottom Padding",
+            "name": "bottom",
+            "type": "button_group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f29a0fd3c8c5",
+                        "operator": "==",
+                        "value": "separate"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "none": "None",
+                "xs": "Extra Small",
+                "sm": "Small",
+                "md": "Medium",
+                "lg": "Large",
+                "xl": "Extra Large",
+                "hg": "Huge"
+            },
+            "allow_null": 0,
+            "default_value": "md",
+            "layout": "horizontal",
+            "return_format": "value"
+        },
+        {
+            "key": "field_5f2d8faa23a8c",
+            "label": "Allow Bottom Padding to Collapse",
+            "name": "collapse-bottom",
+            "type": "true_false",
+            "instructions": "Enable this option to prevent double-height padding when the next section has the same background color.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f29a0fd3c8c5",
+                        "operator": "!=",
+                        "value": "none"
+                    },
+                    {
+                        "field": "field_5f29a0fd3c8c5",
+                        "operator": "!=",
+                        "value": "separate"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5f29a0fd3c8c5",
+                        "operator": "==",
+                        "value": "separate"
+                    },
+                    {
+                        "field": "field_5f29a4612f098",
+                        "operator": "!=",
+                        "value": "none"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 0,
+    "description": "",
+    "modified": 1597155644
+}

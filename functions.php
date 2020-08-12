@@ -34,7 +34,7 @@ add_action('after_setup_theme', 'ks_content_width', 0);
  */
 function kinectiv_flex_scripts() {
 	wp_enqueue_style('kinectiv-flex-style', get_stylesheet_directory_uri() . '/style.min.css', array(), '0.1.0');
-//	wp_enqueue_style('kinectiv-flex-vendor-style', get_stylesheet_directory_uri() . '/css/vendor.min.css', array(), '1.0.0');
+	wp_enqueue_style('kinectiv-flex-vendor-style', get_stylesheet_directory_uri() . '/css/vendor.min.css', array(), '1.0.0');
 	wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Roboto+Slab:wght@700&display=swap', array(), null);
     
     wp_deregister_script('wp-embed');
@@ -45,7 +45,14 @@ function kinectiv_flex_scripts() {
 add_action('wp_enqueue_scripts', 'kinectiv_flex_scripts');
 
 function ks_admin_scripts() {
+    wp_enqueue_style('kf-admin-css', get_stylesheet_directory_uri() . '/css/wp-admin.css', array(), '1.0.0');
+    
 	wp_enqueue_script('ks-admin-js', get_template_directory_uri() . '/js/wp-admin.js', array(), '1.0.0', true);
+    
+    wp_localize_script('ks-admin-js', 'wpVars', array(
+        'colorList' => kf_color_id_list(),
+        'themeMaps' => kf_color_theme_maps()
+    ));
 }
 add_action('admin_enqueue_scripts', 'ks_admin_scripts');
 
@@ -82,12 +89,7 @@ add_filter('acf/prepare_field/key=field_5f22b95009b0c', 'kf_prepend_copyright_ye
  */
 function color_id($theme, $color_num, $return = false) {
     // list of color IDs in order for each theme
-    $theme_maps = array(
-        'main' => array('a0', 'a1', 'a2', 'a3', 'a4', 'a5'),
-        'main-dark' => array('a5', 'a4', 'a3', 'a2', 'a1', 'a0'),
-        'alt' => array('b0', 'b1', 'b2', 'b3', 'b4', 'b5'),
-        'alt-dark' => array('b5', 'b4', 'b3', 'b2', 'b1', 'b0')
-    );
+    $theme_maps = kf_color_theme_maps();
     $color_num = max(0, min(5, $color_num)); // ensure that the color number is between 0 and 5
     
     if (array_key_exists($theme, $theme_maps)) {
@@ -103,6 +105,204 @@ function color_id($theme, $color_num, $return = false) {
     if ($return) {
         return '';
     }
+}
+
+
+/**
+ * Get color theme maps
+ */
+function kf_color_theme_maps() {
+    return array(
+        'main' => array('a0', 'a1', 'a2', 'a3', 'a4', 'a5'),
+        'main-dark' => array('a5', 'a4', 'a3', 'a2', 'a1', 'a0'),
+        'alt' => array('b0', 'b1', 'b2', 'b3', 'b4', 'b5'),
+        'alt-dark' => array('b5', 'b4', 'b3', 'b2', 'b1', 'b0')
+    );
+}
+
+
+/**
+ * Get list of color ID definitions
+ */
+function kf_color_id_list() {
+    return array(
+        'a0' => '#fff',
+        'a1' => '#f3f3f3',
+        'a2' => '#a8a8a8',
+        'a3' => '#6d6d6d',
+        'a4' => '#3d3d3d',
+        'a5' => '#000',
+        'b0' => '#fafdff',
+        'b1' => '#c8e0f1',
+        'b2' => '#90a6cb',
+        'b3' => '#38536f',
+        'b4' => '#253143',
+        'b5' => '#161a1e'
+    );
+}
+
+
+/**
+ * Add custom classes to tags in WYSIWYG content
+ */
+function kf_add_wysiwyg_classes($html, $class_list) {
+    $dom = new DOMDocument();
+    $dom->loadHTML('<meta http-equiv="Content-Type" content="text/html; charset=utf-8">' . $html); // load HTML with proper encoding
+    
+    // check the dom for each type of element and add the corresponding classes
+    foreach ($class_list as $element => $classes) {
+        foreach($dom->getElementsByTagName($element) as $dom_element) {
+            $dom_element->setAttribute('class', trim($dom_element->getAttribute('class') . ' ' . $classes)); // set the class attribute
+        }
+    }
+    
+    // build string of all elements (to exclude <html> and <body> wrappers that are added automatically)
+    $final_html = '';
+    if ($dom->getElementsByTagName('body')->item(0)->childNodes > 0) {
+        foreach ($dom->getElementsByTagName('body')->item(0)->childNodes as $node) {
+            $final_html .= $dom->saveHTML($node);
+        }
+    }
+    
+    return $final_html; // return final modified HTML
+}
+
+function kf_acf_format_wysiwyg_value($value, $post_id, $field) {
+    // list of classes to add to various elements
+    $class_list = array(
+        'h1' => 'title title_lg',
+        'h2' => 'title',
+        'h3' => 'text text_lg text_normal text_line_1-4',
+        'h4' => 'text text_md text_bold',
+        'h5' => 'text text_md text_bold',
+        'h6' => 'text text_sm text_bold'
+    );
+    
+    return kf_add_wysiwyg_classes($value, $class_list);
+}
+add_filter('acf/format_value/type=wysiwyg', 'kf_acf_format_wysiwyg_value', 10, 3); // add classes to ACF WYSIWYG fields
+
+function kf_wysiwyg_color_classes($html, $theme) {
+    // list of classes to add to various elements
+    $class_list = array(
+        'h3' => 'c_color_' . color_id($theme, 3, true),
+        'h5' => 'c_color_' . color_id($theme, 3, true),
+        'blockquote' => 'c_color_' . color_id($theme, 3, true),
+        'hr' => 'c_bg_' . color_id($theme, 2, true)
+    );
+    
+    if ($theme == 'main-dark' || $theme == 'alt-dark') {
+        $class_list['a'] = 'light';
+    }
+    
+    return kf_add_wysiwyg_classes($html, $class_list);
+}
+
+
+/**
+ * Get section styles and classes
+ */
+function kf_section_bg_styles($options) {
+    $styles = array(
+        'style' => '',
+        'classes' =>  ''
+    );
+    
+    if ($options['color_theme']) {
+        $styles['classes'] = ' c_bg_' . color_id($options['color_theme'], 0, true); // set default bg to base color of theme
+    }
+    
+    if ($options['bg_type'] == 'color') {
+        $styles['style'] = ' background-color: ' . $options['bg_color'] . ';'; // add bg color
+    } elseif ($options['bg_type'] == 'image') {
+        $styles['style'] = ' background-image: url(\'' . $options['bg_image']['url'] . '\');'; // add bg image url
+
+        // add bg size and repeat options
+        if ($options['bg_advanced']['image_size'] != 'cover') {
+            if ($options['bg_advanced']['image_size'] == 'contain') {
+                $styles['classes'] .= ' section_bg-size_contain'; // add bg size contain class
+            } elseif ($options['bg_advanced']['image_size'] == 'custom') {
+                // add custom bg size to style attribute
+                $bg_w = $options['bg_advanced']['image_custom-size']['width'] ? $options['bg_advanced']['image_custom-size']['width'] . $options['bg_advanced']['image_custom-size']['unit'] : 'auto';
+                $bg_h = $options['bg_advanced']['image_custom-size']['height'] ? $options['bg_advanced']['image_custom-size']['height'] . $options['bg_advanced']['image_custom-size']['unit'] : 'auto';
+                $styles['style'] .= ' background-size: ' . $bg_w . ' ' . $bg_h . ';';
+            }
+
+            $styles['classes'] .= ' section_bg-repeat_' . $options['bg_advanced']['image_repeat']; // add bg repeat class
+        }
+
+        $styles['classes'] .= ' section_bg-pos_' . $options['bg_advanced']['image_position']['x'] . '-' . $options['bg_advanced']['image_position']['y']; // add bg position class
+
+        if ($options['bg_advanced']['image_color']) {
+            $styles['style'] .= ' background-color: ' . $options['bg_advanced']['image_color'] . ';'; // add fallback bg color
+        }
+    }
+    
+    return $styles;
+}
+
+function kf_section_padding_styles($options, $options_prev, $options_next) {
+    $padding_sizes = array('xs', 'sm', 'md', 'lg', 'xl', 'hg'); // list of available padding sizes in order from smallest to largest
+    $styles = array(
+        'style' => '',
+        'classes' => ''
+    );
+    
+    $padding = array(
+        'top' => ($options['padding_vertical'] == 'separate') ? $options['padding_top'] : $options['padding_vertical'],
+        'bottom' => ($options['padding_vertical'] == 'separate') ? $options['padding_bottom'] : $options['padding_vertical']
+    );
+    $bg = kf_get_bg_color($options);
+    
+    foreach (array('top' => $options_prev, 'bottom' => $options_next) as $loc => $neighbor) {
+        if ($padding[$loc] == 'none' || !$options['padding_collapse-' . $loc] || !$bg || !$neighbor) continue; // leave padding as set if there's already no padding, padding collapse is disabled, the bg is not a solid color, or there's no neighboring section
+        
+        $neighbor_loc = ($loc == 'top') ? 'bottom' : 'top'; // get opposite of current location to use for neighbor
+        $neighbor_padding = ($neighbor['padding_vertical'] == 'separate') ? $neighbor['padding_' . $neighbor_loc] : $neighbor['padding_vertical']; // get padding from relevant location from neighbor
+        $neighbor_bg = kf_get_bg_color($neighbor);
+        
+        if (!$neighbor['padding_vertical'] || $neighbor_padding == 'none' || !$neighbor['padding_collapse-' . $neighbor_loc] || $bg != $neighbor_bg) continue; // leave padding as set if the neighbor doesn't have padding options, neighbor has no padding, neighbor's padding collapse is disabled, or neighbor's bg is different from the current section
+        
+        // get index of sizes for current and neighbor padding so they can be compared
+        $size_levels = array(
+            'current' => array_search($padding[$loc], $padding_sizes),
+            'neighbor' => array_search($neighbor_padding, $padding_sizes)
+        );
+        
+        if ($size_levels['current'] !== false && $size_levels['neighbor'] !== false) {
+            if ($loc == 'top') $size_levels['neighbor']++; // if this is the top of the current section, increase the neighbor size by one to break ties
+            
+            if ($size_levels['current'] < $size_levels['neighbor']) {
+                $padding[$loc] = 'none'; // set padding to none if the current section has less padding than the neighbor
+            }
+        }
+    }
+    
+    if ($padding['top'] == $padding['bottom']) {
+        $styles['classes'] .= ' section_y_' . $padding['top']; // add vertical padding class
+    } else {
+        $styles['classes'] .= ' section_top_' . $padding['top']; // add top padding class
+        $styles['classes'] .= ' section_bottom_' . $padding['bottom']; // add bottom padding class
+    }
+    
+    return $styles;
+}
+
+function kf_get_bg_color($options) {
+    $hex = null;
+    
+    if ($options['bg_type'] == 'default') {
+        $hex = kf_color_id_list()[color_id($options['color_theme'], 0, true)]; // if this section is using the default bg, get the hex code of the base color of the current theme
+    } elseif ($options['bg_type'] == 'color') {
+        $hex = $options['bg_color']; // if this section is using a custom bg color, get the hex code
+    }
+    
+    // convert 3 to 6 digit hex
+    if (strlen($hex) == 4) {
+        $hex = '#' . $hex[1] . $hex[1] . $hex[2] . $hex[2] . $hex[3] . $hex[3];
+    }
+    
+    return $hex;
 }
 
 
@@ -377,9 +577,47 @@ add_filter('tiny_mce_before_init', 'ks_tinymce_paste_as_text');
 
 
 /**
+ * Add ACF WYSIWYG height setting
+ */
+function ks_acf_wysiwyg_field_height_setting($field) {
+	acf_render_field_setting($field, array(
+		'label'	=> 'Height',
+		'name' => 'editor_height',
+		'type' => 'number',
+        'placeholder' => '300',
+        'append' => 'px'
+	));
+}
+add_action('acf/render_field_settings/type=wysiwyg', 'ks_acf_wysiwyg_field_height_setting'); // add setting to adjust field height
+
+function ks_acf_wysiwyg_field_height_script($field) {
+    if ($field['editor_height']) { ?>
+        <style type="text/css">
+            textarea[name="<?php echo $field['name']; ?>"] {
+                height: <?php echo $field['editor_height']; ?>px !important;
+            }
+        </style>
+        <script type="text/javascript">
+            jQuery(function() {
+                jQuery('textarea[name="<?php echo $field['name']; ?>"]').css('height', '<?php echo $field['editor_height']; ?>px');
+            });
+        </script>
+    <?php }
+
+    return $field;
+}
+add_filter('acf/prepare_field/type=wysiwyg', 'ks_acf_wysiwyg_field_height_script'); // add js to adjust field height
+
+
+/**
  * Customize ACF WYSIWYG toolbars
  */
 function ks_acf_toolbars($toolbars) {
+    // Add Standard toolbar
+    $toolbars['Standard'] = array();
+    $toolbars['Standard'][1] = array('formatselect', 'bold', 'italic', 'underline', 'strikethrough', 'blockquote', 'bullist', 'numlist', 'link', 'hr', 'undo', 'redo', 'wp_adv');
+    $toolbars['Standard'][2] = array('alignleft', 'aligncenter', 'alignright', 'removeformat', 'fullscreen');
+    
     // Add Minimal toolbar
 	$toolbars['Minimal'] = array();
 	$toolbars['Minimal'][1] = array('bold' , 'italic', 'link');
@@ -394,6 +632,8 @@ function ks_acf_wysiwyg_strip_tags($value, $post_id, $field) {
             $value = strip_tags($value, '<p><strong><em><span><a><br><blockquote><del><ul><ol><li>');
         } elseif ($field['toolbar'] == 'minimal') {
             $value = strip_tags($value, '<p><strong><em><a><br>');
+        } elseif ($field['toolbar'] == 'standard') {
+            $value = strip_tags($value, '<p><h2><h3><h4><h5><strong><em><span><del><blockquote><ul><ol><li><a><hr><br>');
         }
     }
     
@@ -411,6 +651,17 @@ function ks_acf_wysiwyg_strip_tags_setting($field) {
 	));
 }
 add_action('acf/render_field_settings/type=wysiwyg', 'ks_acf_wysiwyg_strip_tags_setting'); // add setting to enable/disable
+
+
+/**
+ * Limit WYSIWYG format optons to H2, H3, H4, H5, and Text
+ */
+function kf_wysiwyg_block_formats($args) {
+    $args['block_formats'] = 'Text=p;Heading 2=h2;Heading 3=h3;Heading 4=h4;Heading 5=h5';
+    
+    return $args;
+}
+add_filter('tiny_mce_before_init', 'kf_wysiwyg_block_formats');
 
 
 /**
@@ -491,6 +742,7 @@ function ks_acf_template_filter_query($args, $field, $post_id) {
 add_filter('acf/fields/post_object/query', 'ks_acf_template_filter_query', 10, 3); // update query for post object fields to include template filter
 add_filter('acf/fields/page_link/query', 'ks_acf_template_filter_query', 10, 3); // update query for page link fields to include template filter
 add_filter('acf/fields/relationship/query', 'ks_acf_template_filter_query', 10, 3); // update query for relationship fields to include template filter
+
 
 /**
  * Add maximum/minimum selection options to field types with multi-select functionality

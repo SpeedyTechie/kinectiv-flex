@@ -56,16 +56,15 @@
 
     $theme = 'main-dark';
     ?>
-    
 	<footer class="site-footer c_bg_<?php color_id($theme, 0); ?> c_color_<?php color_id($theme, 3); ?>">
-        <div class="site-footer__main<?php if ($f_options['variation'] == 'simple') { echo ' site-footer__main_y_sm'; } ?>">
+        <div class="site-footer__main<?php if ($f_options['layout_variation'] == 'simple') { echo ' site-footer__main_y_sm'; } ?>">
             <div class="site-footer__content">
-                <?php if ($f_options['variation'] == 'standard'): ?>
+                <?php if ($f_options['layout_variation'] == 'standard'): ?>
                 <div class="footer-1">
                     <div class="footer-1__col footer-1__col_details">
                         <div class="footer-1__section footer-1__section_logo">
                             <a href="<?php echo esc_url(home_url()); ?>" class="site-footer__home">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/logo.svg" alt="<?php bloginfo('name'); ?>" class="site-footer__logo" />
+                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/logo.svg" width="158" height="31" alt="<?php bloginfo('name'); ?>" class="site-footer__logo" />
                             </a>
                         </div>
                         <?php if ($f_contact['address']['line-1'] || $f_contact['address']['line-2']): ?>
@@ -146,11 +145,11 @@
                     </div>
                     <?php endif; ?>
                 </div>
-                <?php elseif ($f_options['variation'] == 'simple'): ?>
+                <?php elseif ($f_options['layout_variation'] == 'simple'): ?>
                 <div class="footer-2">
                     <div class="footer-2__section footer-2__section_logo">
                         <a href="<?php echo esc_url(home_url()); ?>" class="site-footer__home site-footer__home_lg">
-                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/logo.svg" alt="<?php bloginfo('name'); ?>" class="site-footer__logo" />
+                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/logo.svg" width="158" height="31" alt="<?php bloginfo('name'); ?>" class="site-footer__logo" />
                         </a>
                     </div>
                     <?php if ($nav_links): ?>
@@ -217,7 +216,7 @@
         </div>
         <div class="site-footer__bottom c_bg_<?php color_id($theme, 1); ?>">
             <div class="site-footer__content">
-                <?php if ($f_options['variation'] == 'standard'): ?>
+                <?php if ($f_options['layout_variation'] == 'standard'): ?>
                 <div class="sub-footer-1">
                     <div class="sub-footer-1__item">
                         <p class="sub-footer-1__text">&copy; Copyright <?php echo kf_get_copyright_year(); if ($f_details['copyright']) { echo ' ' . $f_details['copyright']; } ?></p>
@@ -234,7 +233,7 @@
                     </div>
                     <?php endif; ?>
                 </div>
-                <?php elseif ($f_options['variation'] == 'simple'): ?>
+                <?php elseif ($f_options['layout_variation'] == 'simple'): ?>
                 <div class="sub-footer-2">
                     <div class="sub-footer-2__item">
                         <p class="sub-footer-2__text">&copy; Copyright <?php echo kf_get_copyright_year(); if ($f_details['copyright']) { echo ' ' . $f_details['copyright']; } ?></p>

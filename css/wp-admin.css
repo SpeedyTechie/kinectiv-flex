@@ -1,0 +1,23 @@
+/*--------------------------------------------------------------
+# Theme Selector Color Swatches
+--------------------------------------------------------------*/
+.kf-selector-swatches {
+    display: inline-block;
+    vertical-align: top;
+    height: 0.7em;
+    margin: 0.3em 0.2em 0 0;
+    border: 1px solid #000;
+}
+.kf-selector-swatches__item {
+    display: inline-block;
+    vertical-align: top;
+    height: 100%;
+    width: 0.7em;
+}
+
+/*--------------------------------------------------------------
+# WYSIWYG
+--------------------------------------------------------------*/
+.acf-input .acf-editor-wrap iframe {
+    min-height: 56px;
+}
