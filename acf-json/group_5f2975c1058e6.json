@@ -62,7 +62,7 @@
         },
         {
             "key": "field_5f29994e6909c",
-            "label": "Options",
+            "label": "<span class=\"dashicons dashicons-admin-settings\"><\/span> Options",
             "name": "",
             "type": "accordion",
             "instructions": "",
@@ -266,5 +266,5 @@
     "hide_on_screen": "",
     "active": 0,
     "description": "",
-    "modified": 1597085317
+    "modified": 1597418057
 }

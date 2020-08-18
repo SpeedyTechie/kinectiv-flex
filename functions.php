@@ -122,6 +122,19 @@ function kf_color_theme_maps() {
 
 
 /**
+ * Get name of inverse theme
+ */
+function kf_color_theme_inverses() {
+    return array(
+        'main' => 'main-dark',
+        'main-dark' => 'main',
+        'alt' => 'alt-dark',
+        'alt-dark' => 'alt'
+    );
+}
+
+
+/**
  * Get list of color ID definitions
  */
 function kf_color_id_list() {
@@ -209,33 +222,18 @@ function kf_section_bg_styles($options) {
     );
     
     if ($options['color_theme']) {
-        $styles['classes'] = ' c_bg_' . color_id($options['color_theme'], 0, true); // set default bg to base color of theme
+        $styles['classes'] .= ' c_bg_' . color_id($options['color_theme'], 0, true); // set default bg to base color of theme
     }
     
     if ($options['bg_type'] == 'color') {
-        $styles['style'] = ' background-color: ' . $options['bg_color'] . ';'; // add bg color
+        $styles['style'] .= ' background-color: ' . $options['bg_color'] . ';'; // add bg color
     } elseif ($options['bg_type'] == 'image') {
-        $styles['style'] = ' background-image: url(\'' . $options['bg_image']['url'] . '\');'; // add bg image url
-
-        // add bg size and repeat options
-        if ($options['bg_advanced']['image_size'] != 'cover') {
-            if ($options['bg_advanced']['image_size'] == 'contain') {
-                $styles['classes'] .= ' section_bg-size_contain'; // add bg size contain class
-            } elseif ($options['bg_advanced']['image_size'] == 'custom') {
-                // add custom bg size to style attribute
-                $bg_w = $options['bg_advanced']['image_custom-size']['width'] ? $options['bg_advanced']['image_custom-size']['width'] . $options['bg_advanced']['image_custom-size']['unit'] : 'auto';
-                $bg_h = $options['bg_advanced']['image_custom-size']['height'] ? $options['bg_advanced']['image_custom-size']['height'] . $options['bg_advanced']['image_custom-size']['unit'] : 'auto';
-                $styles['style'] .= ' background-size: ' . $bg_w . ' ' . $bg_h . ';';
-            }
-
-            $styles['classes'] .= ' section_bg-repeat_' . $options['bg_advanced']['image_repeat']; // add bg repeat class
-        }
-
-        $styles['classes'] .= ' section_bg-pos_' . $options['bg_advanced']['image_position']['x'] . '-' . $options['bg_advanced']['image_position']['y']; // add bg position class
-
-        if ($options['bg_advanced']['image_color']) {
-            $styles['style'] .= ' background-color: ' . $options['bg_advanced']['image_color'] . ';'; // add fallback bg color
-        }
+        $styles['style'] .= ' background-image: url(\'' . $options['bg_image']['url'] . '\');'; // add bg image url
+        
+        // add advanced bg styles
+        $image_styles = kf_advanced_bg_image_styles($options['bg_advanced']);
+        $styles['style'] .= $image_styles['style'];
+        $styles['classes'] .= $image_styles['classes'];
     }
     
     return $styles;
@@ -303,6 +301,40 @@ function kf_get_bg_color($options) {
     }
     
     return $hex;
+}
+
+
+/**
+ * Get styles/classes for advanced bg image options
+ */
+function kf_advanced_bg_image_styles($options) {
+    $styles = array(
+        'style' => '',
+        'classes' =>  ' bg-image'
+    );
+    
+    // add bg size and repeat options
+    if ($options['image_size'] != 'cover') {
+        if ($options['image_size'] == 'contain') {
+            $styles['classes'] .= ' bg-image_size_contain'; // add bg size contain class
+        } elseif ($options['image_size'] == 'custom') {
+            // add custom bg size to style attribute
+            $bg_w = $options['image_custom-size']['width'] ? $options['image_custom-size']['width'] . $options['image_custom-size']['unit'] : 'auto';
+            $bg_h = $options['image_custom-size']['height'] ? $options['image_custom-size']['height'] . $options['image_custom-size']['unit'] : 'auto';
+            $styles['style'] .= ' background-size: ' . $bg_w . ' ' . $bg_h . ';';
+        }
+
+        $styles['classes'] .= ' bg-image_repeat_' . $options['image_repeat']; // add bg repeat class
+    }
+
+    $styles['classes'] .= ' bg-image_pos_' . $options['image_position']['x'] . '-' . $options['image_position']['y']; // add bg position class
+    
+    // add fallback bg color
+    if ($options['image_color']) {
+        $styles['style'] .= ' background-color: ' . $options['image_color'] . ';';
+    }
+    
+    return $styles;
 }
 
 

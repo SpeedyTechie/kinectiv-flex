@@ -78,6 +78,68 @@
                     "min": "",
                     "max": ""
                 },
+                "layout_5f36ba4596ac3": {
+                    "key": "layout_5f36ba4596ac3",
+                    "name": "image",
+                    "label": "Full-Width Image",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_5f36ba5f96ac4",
+                            "label": "Section",
+                            "name": "section",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "clone": [
+                                "group_5f36ad5ee22fd"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_5f36dcfc4c35a": {
+                    "key": "layout_5f36dcfc4c35a",
+                    "name": "slider",
+                    "label": "Image Slider",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_5f36dd114c35b",
+                            "label": "Section",
+                            "name": "section",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "clone": [
+                                "group_5f36da1d1e003"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
                 "layout_5f319ac6e7359": {
                     "key": "layout_5f319ac6e7359",
                     "name": "gallery_masonry",
@@ -225,5 +287,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1597255069
+    "modified": 1597431071
 }

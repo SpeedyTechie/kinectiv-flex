@@ -34,10 +34,11 @@ if ($bottom_padding == 'xs' || $bottom_padding == 'none') {
 <div class="section c_color_<?php color_id($theme, 5); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
     <div class="section__content section__content_w_full">
         <div class="page-intro">
+            <?php if ($section['title'] || $section['text'] || $section['buttons'] || ($section['options']['bg_type'] == 'image' && $section['options']['layout_height'] != 'min')): ?>
             <div class="page-intro__main page-intro__main_<?php echo $section['options']['layout_align']; ?><?php if ($section['options']['bg_type'] == 'image') { echo ' page-intro__main_h_' . $section['options']['layout_height']; } ?>">
                 <div class="page-intro__main-content">
-                    <h1 class="page-intro__title title title_lg"><?php echo $section['title'] ? $section['title'] : get_the_title(); ?></h1>
-                    <?php if ($section['text']) { ?><div class="page-intro__text text text_wrap text_compact"><?php echo kf_wysiwyg_color_classes($section['text'], $theme); ?></div><?php } ?>
+                    <?php if ($section['title']) { ?><h2 class="page-intro__title title title_<?php echo $section['options']['layout_title-size']; ?>"><?php echo $section['title']; ?></h2><?php } ?>
+                    <?php if ($section['text']) { ?><div class="page-intro__text page-intro__text_<?php echo $section['options']['layout_align']; ?> text text_wrap text_compact"><?php echo kf_wysiwyg_color_classes($section['text'], $theme); ?></div><?php } ?>
                     <?php if ($section['buttons']): ?>
                     <div class="page-intro__buttons">
                         <div class="button-group button-group_<?php echo $section['options']['layout_align']; ?>">
@@ -51,6 +52,7 @@ if ($bottom_padding == 'xs' || $bottom_padding == 'none') {
                     <?php endif; ?>
                 </div>
             </div>
+            <?php endif; ?>
             <?php if ($section['text-blocks']): ?>
             <?php
             // determine whether blocks should be displayed at half instead of one-third width

@@ -3329,10 +3329,10 @@ function initDialogBoxes() {
                     speed: 400
                 });
                 
-                $('<button type="button" class="box-slider__arrow box-slider__arrow_prev"><span class="screen-reader-text">Previous</span></button>').click(function() {
+                $('<button type="button" class="box-slider__arrow box-slider__arrow_prev"><span class="screen-reader-text">Previous Slide</span></button>').click(function() {
                     slider.slick('slickPrev');
                 }).appendTo(content);
-                $('<button type="button" class="box-slider__arrow box-slider__arrow_next"><span class="screen-reader-text">Next</span></button>').click(function() {
+                $('<button type="button" class="box-slider__arrow box-slider__arrow_next"><span class="screen-reader-text">Next Slide</span></button>').click(function() {
                     slider.slick('slickNext');
                 }).appendTo(content);
             }
@@ -3472,6 +3472,7 @@ function initMasonryGrid() {
             height = 350;
         }
         
+        
         masonry.flexImages({
             container: '.image-masonry__item',
             object: '.image-masonry__block',
@@ -3483,11 +3484,156 @@ function initMasonryGrid() {
 
 
 
+/* Image Slider */
+
+function initImageSlider() {
+    $('.image-slider_slick').each(function() {
+        var sliderWrap = $(this);
+        var slider = sliderWrap.find('.image-slider__slider');
+        var sliderButtons = sliderWrap.find('.image-slider__nav');
+        
+        
+        // get all clones of a given slide
+        function getSlideClones(index, total) {
+            var slideList = slider.find('.image-slider__item'); // get all slides
+            var parentSlide = slideList.filter('[data-slick-index="' + index + '"]'); // get slide with exact index
+            var resultSlides = $().add(parentSlide); // add parent slide to list
+
+            // if the parent slide exists, look for clones
+            if (parentSlide.length > 0) {
+                // loop through all slides
+                slideList.each(function() {
+                    var curIndex = parseInt($(this).attr('data-slick-index')); // get index of current slide in loop
+
+                    // check if slide index is offset by the correct amount to make it a clone of the parent slide (if so, add it to the list)
+                    if ((curIndex >= 0 && curIndex % total == index) || (curIndex < 0 && (curIndex - total) % total == index - total)) {
+                        resultSlides = resultSlides.add($(this));
+                    }
+                });
+            }
+
+            return resultSlides; // return final list of slides
+        }
+        
+        // update slide hover/focus states
+        function updateSlideHover() {
+            var slick = slider.slick('getSlick'); // get slick object
+
+            // remove existing hover/focus classes
+            slider.find('.image-slider__slide_hover').removeClass('image-slider__slide_hover');
+            slider.find('.image-slider__slide_focus').removeClass('image-slider__slide_focus');
+
+            // check each button for hover/focus
+            sliderButtons.each(function() {
+                var dir = ($(this).hasClass('image-slider__nav_prev')) ? -1 : 1; // get the change in slide index caused by this button
+                var linkedSlide = slick.currentSlide + dir; // get the slide behind this button
+
+                // get correct slide index if the direction causes looping to the beginning/end of the slider
+                if (linkedSlide < 0) {
+                    linkedSlide = slick.slideCount - 1;
+                } else if (linkedSlide > slick.slideCount - 1) {
+                    linkedSlide = 0;
+                }
+
+                // if button is hovered, add hover class to corresponding slide and all clones
+                if ($(this).is(':hover')) {
+                    getSlideClones(linkedSlide, slick.slideCount).each(function() {
+                        $(this).find('.image-slider__slide').addClass('image-slider__slide_hover');
+                    });
+                }
+
+                // if button is focused, add focus class to corresponding slide and all clones
+                if ($(this).is(':focus')) {
+                    getSlideClones(linkedSlide, slick.slideCount).each(function() {
+                        $(this).find('.image-slider__slide').addClass('image-slider__slide_focus');
+                    });
+                }
+            });
+        }
+        
+        
+        // initialize slick
+        slider.slick({
+            arrows: false,
+            centerMode: true,
+            centerPadding: '120px',
+            speed: 600,
+            touchThreshold: 4,
+            responsive: [
+                {
+                    breakpoint: 1700,
+                    settings: {
+                        centerPadding: '100px'
+                    }
+                },
+                {
+                    breakpoint: 1450,
+                    settings: {
+                        centerPadding: '80px'
+                    }
+                }
+            ]
+        });
+        
+        // remove slick focus/blur function (which stops propagation to other handlers), and update enhanced mouse focus elements
+        slider.off('focus.slick blur.slick', '*');
+        enhanceMouseFocusUpdate();
+        slider.on('init reInit breakpoint', function() {
+            slider.off('focus.slick blur.slick', '*');
+            enhanceMouseFocusUpdate();
+        });
+        
+        // advance the slider in the corresponding direction on next/previous button click
+        sliderButtons.click(function() {
+            if ($(this).hasClass('image-slider__nav_prev')) {
+                slider.slick('slickPrev');
+            } else {
+                slider.slick('slickNext');
+            }
+        });
+        
+        // update hover states on next/previous button hover/focus change
+        sliderButtons.on('mouseenter mouseleave focus blur', function(e) {
+            updateSlideHover();
+        });
+        
+        // update slide styles on slide change
+        slider.on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+            slider.find('.image-slider__slide_active').removeClass('image-slider__slide_active'); // remove class from active slide and any clones
+
+            // add class to new slide and all clones
+            getSlideClones(nextSlide, slick.slideCount).each(function() {
+                $(this).find('.image-slider__slide').addClass('image-slider__slide_active');
+            });
+
+            // update hover/focus states after slide change begins
+            setTimeout(function() {
+                updateSlideHover();
+            }, 10);
+        });
+        
+        // update hover/focus states after slide change
+        slider.on('afterChange', function() {
+            updateSlideHover();
+            
+            // if old slide is focused, move focus to current slide
+            if (slider.find('.image-slider__item:focus').length > 0) {
+                setTimeout(function() {
+                    slider.find('.image-slider__item.slick-active').focus();
+                }, 10);
+            }
+        });
+    });
+}
+
+
+
 /* General */
 
 $(function() {
     initFitVids();
     initMasonryGrid();
+    initImageSlider();
     initLastItemFlexRow();
     initEnhanceMouseFocus();
     initDialogBoxes();
