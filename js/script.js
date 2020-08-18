@@ -3617,7 +3617,7 @@ function initImageSlider() {
             updateSlideHover();
             
             // if old slide is focused, move focus to current slide
-            if (slider.find('.image-slider__item:focus').length > 0) {
+            if ($(document.activeElement).is('.image-slider__item') || $(document.activeElement).parents('.image-slider__item:not(.slick-active)').length > 0) {
                 setTimeout(function() {
                     slider.find('.image-slider__item.slick-active').focus();
                 }, 10);
