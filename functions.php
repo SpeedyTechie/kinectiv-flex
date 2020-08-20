@@ -215,14 +215,14 @@ function kf_wysiwyg_color_classes($html, $theme) {
 /**
  * Get section styles and classes
  */
-function kf_section_bg_styles($options) {
+function kf_section_bg_styles($options, $default = 0) {
     $styles = array(
         'style' => '',
         'classes' =>  ''
     );
     
     if ($options['color_theme']) {
-        $styles['classes'] .= ' c_bg_' . color_id($options['color_theme'], 0, true); // set default bg to base color of theme
+        $styles['classes'] .= ' c_bg_' . color_id($options['color_theme'], $default, true); // set default bg to base color of theme
     }
     
     if ($options['bg_type'] == 'color') {

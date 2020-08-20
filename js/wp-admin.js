@@ -34,7 +34,7 @@ acf.addFilter('color_picker_args', function(args, field){
 /* Add color swatches to theme selector */
 
 function addThemeSelectorSwatches(field) {
-    if (field.$el.hasClass('kf-theme-selector')) {
+    if (field.$el.hasClass('kf-theme-selector') && field.$el.find('.kf-selector-swatches').length == 0) {
         var optionLabels = field.$el.find('.acf-input .acf-button-group > label');
         
         optionLabels.each(function() {
@@ -50,5 +50,4 @@ function addThemeSelectorSwatches(field) {
     }
 }
 
-acf.addAction('ready_field/type=button_group', addThemeSelectorSwatches);
 acf.addAction('new_field/type=button_group', addThemeSelectorSwatches);

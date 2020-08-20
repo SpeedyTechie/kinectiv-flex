@@ -1301,6 +1301,9 @@ object {
 .title_lg {
     font-size: 54px;
 }
+.title_line_1-1 {
+    line-height: 1.1;
+}
 .title_left {
     text-align: left;
 }
@@ -2490,4 +2493,103 @@ object {
     .image-slider__slider_slick:not(.slick-slider) {
         padding: 0 80px;
     }
+}
+
+/*--------------------------------------------------------------
+## Text with Image
+--------------------------------------------------------------*/
+.text-image {
+    display: flex;
+}
+.text-image_boxed {
+    margin: 0 -5px;
+}
+.text-image__item {
+    flex: 0 0 auto;
+    width: 50%;
+}
+.text-image__item_boxed {
+    padding: 0 5px;
+}
+.text-image__block {
+    height: 100%;
+}
+.text-image__block_text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.text-image__block_center {
+    text-align: center;
+}
+.text-image__block_right {
+    text-align: right;
+}
+.text-image__content {
+    width: 100%;
+    max-width: 800px;
+    padding: 85px 100px;
+    margin-left: auto;
+}
+.text-image__content_left {
+    margin-right: auto;
+    margin-left: 0;
+}
+.text-image__content_y_xs {
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+.text-image__content_y_sm {
+    padding-top: 55px;
+    padding-bottom: 55px;
+}
+.text-image__content_y_lg {
+    padding-top: 115px;
+    padding-bottom: 115px;
+}
+.text-image__content_y_xl {
+    padding-top: 145px;
+    padding-bottom: 145px;
+}
+.text-image__content_y_hg {
+    padding-top: 175px;
+    padding-bottom: 175px;
+}
+.text-image__content_y_none {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.text-image__content_boxed {
+    max-width: none;
+    padding: 70px 75px;
+}
+.text-image__graphic {
+    display: block;
+    width: 100%;
+    margin-bottom: 25px;
+}
+.text-image__graphic:last-child {
+    margin-bottom: 0;
+}
+.text-image__text {
+    margin-top: 15px;
+}
+.text-image__text:first-child {
+    margin-top: 0;
+}
+.text-image__buttons {
+    margin-top: 25px;
+}
+.text-image__buttons:first-child {
+    margin-top: 0;
+}
+.text-image__image {
+    height: 100%;
+    padding-top: 85%;
+}
+.text-image__image_sm {
+    padding-top: 65%;
+}
+.text-image__image_lg {
+    padding-top: 100%;
 }
