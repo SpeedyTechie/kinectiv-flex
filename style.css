@@ -2593,3 +2593,50 @@ object {
 .text-image__image_lg {
     padding-top: 100%;
 }
+
+/*--------------------------------------------------------------
+## Call to Action
+--------------------------------------------------------------*/
+.cta {
+    text-align: center;
+}
+.cta_left {
+    text-align: left;
+}
+.cta_right {
+    text-align: right;
+}
+.cta__graphic {
+    display: block;
+    width: 100%;
+    max-width: 750px;
+    margin: 0 auto 35px;
+}
+.cta__graphic_sm {
+    max-width: 450px;
+}
+.cta__graphic_lg {
+    max-width: none;
+}
+.cta__graphic_left {
+    margin-left: 0;
+}
+.cta__graphic_right {
+    margin-right: 0;
+}
+.cta__graphic:last-child {
+    margin-bottom: 0;
+}
+.cta__text {
+    max-width: 800px;
+    margin: 15px auto 0;
+}
+.cta__text:first-child {
+    margin-top: 0;
+}
+.cta__buttons {
+    margin-top: 25px;
+}
+.cta__buttons:first-child {
+    margin-top: 0;
+}

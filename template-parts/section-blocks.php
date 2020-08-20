@@ -39,7 +39,7 @@ $section['options']['layout_block-options']['color_theme'] = $theme; // set them
                 ?>
                 <div class="text-image__block text-image__block_text text-image__block_<?php echo $section['options']['layout_align']; ?><?php echo $block_classes; ?>"<?php if ($block_style) { echo ' style="' . trim($block_style) . '"'; } ?>>
                     <div class="text-image__content text-image__content_<?php echo $section['options']['layout_size']; ?><?php if ($i_block == 1) { echo ' text-image__content_left'; } ?><?php if ($section['options']['layout_size'] == 'full') { echo ' text-image__content_y_' . $section['options']['layout_block-options']['padding_vertical']; } ?>">
-                        <?php if ($section['graphic']) { ?><img src="<?php echo $section['graphic']['url']; ?>" alt="<?php echo esc_attr($section['graphic']['alt']); ?>" class="text-image__graphic" /><?php } ?>
+                        <?php if ($section['graphic']) { ?><img src="<?php echo $section['graphic']['url']; ?>" alt="<?php echo esc_attr($section['graphic']['alt']); ?>" width="<?php echo $section['graphic']['width']; ?>" height="<?php echo $section['graphic']['height']; ?>" class="text-image__graphic" /><?php } ?>
                         <?php if ($section['title']) { ?><h2 class="text-image__title title title_line_1-1 c_color_<?php color_id($theme, 5); ?>"><?php echo $section['title']; ?></h2><?php } ?>
                         <?php if ($section['text']) { ?><div class="text-image__text text text_wrap text_compact"><?php echo kf_wysiwyg_color_classes($section['text'], $theme); ?></div><?php } ?>
                         <?php if ($section['buttons']): ?>
