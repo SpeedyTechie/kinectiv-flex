@@ -1,33 +1,9 @@
 {
-    "key": "group_5f3eab56c1576",
-    "title": "[Section] Call to Action",
+    "key": "group_5f3ec4e425875",
+    "title": "[Section] Logos",
     "fields": [
         {
-            "key": "field_5f3eadc64876b",
-            "label": "Title Graphic",
-            "name": "graphic",
-            "type": "image",
-            "instructions": "Standard Width: 1200 (large), 750 (medium\/default), 450 (small)",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array",
-            "preview_size": "medium",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": ""
-        },
-        {
-            "key": "field_5f3eade34876c",
+            "key": "field_5f3ec4f450429",
             "label": "Title",
             "name": "title",
             "type": "text",
@@ -46,7 +22,7 @@
             "maxlength": ""
         },
         {
-            "key": "field_5f3eadeb4876d",
+            "key": "field_5f3ec5055042a",
             "label": "Text",
             "name": "text",
             "type": "wysiwyg",
@@ -68,7 +44,68 @@
             "enable_autoembed": 0
         },
         {
-            "key": "field_5f3eae064876e",
+            "key": "field_5f3ec7423d9e3",
+            "label": "Logos",
+            "name": "logos",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 1,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Add Logo",
+            "sub_fields": [
+                {
+                    "key": "field_5f3ec7583d9e4",
+                    "label": "Logo",
+                    "name": "logo",
+                    "type": "image",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "preview_size": "medium",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": ""
+                },
+                {
+                    "key": "field_5f3ec7ce3d9e5",
+                    "label": "Link",
+                    "name": "link",
+                    "type": "url",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": ""
+                }
+            ]
+        },
+        {
+            "key": "field_5f3ec52a5042b",
             "label": "Link Buttons",
             "name": "buttons",
             "type": "repeater",
@@ -87,7 +124,7 @@
             "button_label": "Add Button",
             "sub_fields": [
                 {
-                    "key": "field_5f3eae144876f",
+                    "key": "field_5f3ec5375042c",
                     "label": "Link",
                     "name": "link",
                     "type": "link",
@@ -104,7 +141,7 @@
             ]
         },
         {
-            "key": "field_5f3eab87ff626",
+            "key": "field_5f3ec56cce791",
             "label": "<span class=\"dashicons dashicons-admin-settings\"><\/span> Options",
             "name": "",
             "type": "accordion",
@@ -121,7 +158,7 @@
             "endpoint": 0
         },
         {
-            "key": "field_5f3eab8dff627",
+            "key": "field_5f3ec571ce792",
             "label": "",
             "name": "options",
             "type": "group",
@@ -136,7 +173,7 @@
             "layout": "block",
             "sub_fields": [
                 {
-                    "key": "field_5f3eab9dff628",
+                    "key": "field_5f3ec57ace793",
                     "label": "Layout",
                     "name": "",
                     "type": "accordion",
@@ -153,7 +190,7 @@
                     "endpoint": 0
                 },
                 {
-                    "key": "field_5f3eabc4ff62c",
+                    "key": "field_5f3ec5face797",
                     "label": "Alignment",
                     "name": "layout_align",
                     "type": "button_group",
@@ -176,9 +213,9 @@
                     "return_format": "value"
                 },
                 {
-                    "key": "field_5f3eac67ff630",
-                    "label": "Title Graphic Width",
-                    "name": "layout_graphic-width",
+                    "key": "field_5f3ec613ce798",
+                    "label": "Logo Size",
+                    "name": "layout_logo-size",
                     "type": "button_group",
                     "instructions": "",
                     "required": 0,
@@ -199,7 +236,7 @@
                     "return_format": "value"
                 },
                 {
-                    "key": "field_5f3eaba3ff629",
+                    "key": "field_5f3ec5e9ce794",
                     "label": "Color",
                     "name": "",
                     "type": "accordion",
@@ -216,7 +253,7 @@
                     "endpoint": 0
                 },
                 {
-                    "key": "field_5f3eac1eff62d",
+                    "key": "field_5f3ec69fce799",
                     "label": "Color Options",
                     "name": "color",
                     "type": "clone",
@@ -237,7 +274,7 @@
                     "prefix_name": 1
                 },
                 {
-                    "key": "field_5f3eabaaff62a",
+                    "key": "field_5f3ec5eece795",
                     "label": "Background",
                     "name": "",
                     "type": "accordion",
@@ -254,7 +291,7 @@
                     "endpoint": 0
                 },
                 {
-                    "key": "field_5f3eac34ff62e",
+                    "key": "field_5f3ec6e1ce79a",
                     "label": "Background Options",
                     "name": "bg",
                     "type": "clone",
@@ -275,7 +312,7 @@
                     "prefix_name": 1
                 },
                 {
-                    "key": "field_5f3eabb1ff62b",
+                    "key": "field_5f3ec5f4ce796",
                     "label": "Padding",
                     "name": "",
                     "type": "accordion",
@@ -292,7 +329,7 @@
                     "endpoint": 0
                 },
                 {
-                    "key": "field_5f3eac4dff62f",
+                    "key": "field_5f3ec6face79b",
                     "label": "Padding Options",
                     "name": "padding",
                     "type": "clone",
@@ -332,5 +369,5 @@
     "hide_on_screen": "",
     "active": false,
     "description": "",
-    "modified": 1597949251
+    "modified": 1597950484
 }

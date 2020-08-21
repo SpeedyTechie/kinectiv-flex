@@ -295,6 +295,37 @@
                     "min": "",
                     "max": ""
                 },
+                "layout_5f3ec716f871c": {
+                    "key": "layout_5f3ec716f871c",
+                    "name": "logos",
+                    "label": "Logos",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_5f3ec725f871d",
+                            "label": "Section",
+                            "name": "section",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "clone": [
+                                "group_5f3ec4e425875"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
                 "layout_5f34211fcc6ff": {
                     "key": "layout_5f34211fcc6ff",
                     "name": "divider",
@@ -349,5 +380,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1597942990
+    "modified": 1597949750
 }

@@ -2640,3 +2640,78 @@ object {
 .cta__buttons:first-child {
     margin-top: 0;
 }
+
+/*--------------------------------------------------------------
+## Logos
+--------------------------------------------------------------*/
+.logos {
+    text-align: center;
+}
+.logos_left {
+    text-align: left;
+}
+.logos_right {
+    text-align: right;
+}
+.logos__title {
+    margin-bottom: 35px;
+}
+.logos__title:last-child {
+    margin-bottom: 0;
+}
+.logos__text {
+    max-width: 800px;
+    margin: 0 auto;
+}
+.logos__logos {
+    margin-top: 45px;
+}
+.logos__logos:first-child {
+    margin-top: 0;
+}
+.logos__grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: -12px -18px;
+}
+.logos__grid_left {
+    justify-content: flex-start;
+}
+.logos__grid_right {
+    justify-content: flex-end;
+}
+.logos__grid_sm {
+    margin: -10px -15px;
+}
+.logos__grid_lg {
+    margin: -15px -25px;
+}
+.logos__item {
+    padding: 12px 18px;
+}
+.logos__item_sm {
+    padding: 10px 15px;
+}
+.logos__item_lg {
+    padding: 15px 25px;
+}
+.logos__link {
+    display: block;
+    text-decoration: none;
+}
+.logos__logo {
+    display: block;
+    width: auto;
+    height: 80px;
+}
+.logos__logo_sm {
+    height: 60px;
+}
+.logos__logo_lg {
+    height: 100px;
+}
+.logos__buttons {
+    margin-top: 50px;
+}
