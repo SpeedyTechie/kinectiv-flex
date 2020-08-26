@@ -458,9 +458,55 @@ function initImageSlider() {
             updateSlideHover();
             
             // if old slide is focused, move focus to current slide
-            if ($(document.activeElement).is('.image-slider__item') || $(document.activeElement).parents('.image-slider__item:not(.slick-active)').length > 0) {
+            if (slider.has(document.activeElement) && ($(document.activeElement).is('.image-slider__item') || $(document.activeElement).parents('.image-slider__item:not(.slick-active)').length > 0)) {
                 setTimeout(function() {
                     slider.find('.image-slider__item.slick-active').focus();
+                }, 10);
+            }
+        });
+    });
+}
+
+
+
+/* Testimonial Slider */
+
+function initTestimonialSlider() {
+    $('.testimonials_slick').each(function() {
+        var sliderWrap = $(this);
+        var slider = sliderWrap.find('.testimonials__slider');
+        var sliderButtons = sliderWrap.find('.testimonials__nav');
+        
+        
+        // initialize slick
+        slider.slick({
+            arrows: false,
+            speed: 600,
+            touchThreshold: 4
+        });
+        
+        // remove slick focus/blur function (which stops propagation to other handlers), and update enhanced mouse focus elements
+        slider.off('focus.slick blur.slick', '*');
+        enhanceMouseFocusUpdate();
+        slider.on('init reInit breakpoint', function() {
+            slider.off('focus.slick blur.slick', '*');
+            enhanceMouseFocusUpdate();
+        });
+        
+        // advance the slider in the corresponding direction on next/previous button click
+        sliderButtons.click(function() {
+            if ($(this).hasClass('testimonials__nav_prev')) {
+                slider.slick('slickPrev');
+            } else {
+                slider.slick('slickNext');
+            }
+        });
+        
+        // if old slide is focused after change, move focus to current slide
+        slider.on('afterChange', function() {
+            if (slider.has(document.activeElement) && ($(document.activeElement).is('.testimonials__item') || $(document.activeElement).parents('.image-slider__item:not(.slick-active)').length > 0)) {
+                setTimeout(function() {
+                    slider.find('.testimonials__item.slick-active').focus();
                 }, 10);
             }
         });
@@ -475,6 +521,7 @@ $(function() {
     initFitVids();
     initMasonryGrid();
     initImageSlider();
+    initTestimonialSlider();
     initLastItemFlexRow();
     initEnhanceMouseFocus();
     initDialogBoxes();

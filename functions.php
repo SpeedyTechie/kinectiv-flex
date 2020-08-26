@@ -654,6 +654,10 @@ function ks_acf_toolbars($toolbars) {
 	$toolbars['Minimal'] = array();
 	$toolbars['Minimal'][1] = array('bold' , 'italic', 'link');
     
+    // Add Minimal (No Links) toolbar
+	$toolbars['Minimal (No Links)'] = array();
+	$toolbars['Minimal (No Links)'][1] = array('bold' , 'italic');
+    
 	return $toolbars;
 }
 add_filter('acf/fields/wysiwyg/toolbars' , 'ks_acf_toolbars'); // add toolbars
@@ -664,6 +668,8 @@ function ks_acf_wysiwyg_strip_tags($value, $post_id, $field) {
             $value = strip_tags($value, '<p><strong><em><span><a><br><blockquote><del><ul><ol><li>');
         } elseif ($field['toolbar'] == 'minimal') {
             $value = strip_tags($value, '<p><strong><em><a><br>');
+        } elseif ($field['toolbar'] == 'minimal_no_links') {
+            $value = strip_tags($value, '<p><strong><em><br>');
         } elseif ($field['toolbar'] == 'standard') {
             $value = strip_tags($value, '<p><h2><h3><h4><h5><strong><em><span><del><blockquote><ul><ol><li><a><hr><br>');
         }
