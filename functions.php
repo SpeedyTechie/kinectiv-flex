@@ -41,15 +41,19 @@ function kinectiv_flex_scripts() {
     wp_deregister_script('jquery');
     wp_enqueue_script('jquery', 'https://code.jquery.com/jquery-1.12.4.min.js', array(), null, false);
 	wp_enqueue_script('kinectiv-flex-script', get_template_directory_uri() . '/js/script.min.js', array('jquery'), '0.1.0', true);
+    
+    wp_localize_script('kinectiv-flex-script', 'wpVars', array(
+        'themeMaps' => kf_color_theme_maps()
+    ));
 }
 add_action('wp_enqueue_scripts', 'kinectiv_flex_scripts');
 
 function ks_admin_scripts() {
     wp_enqueue_style('kf-admin-css', get_stylesheet_directory_uri() . '/css/wp-admin.css', array(), '1.0.0');
     
-	wp_enqueue_script('ks-admin-js', get_template_directory_uri() . '/js/wp-admin.js', array(), '1.0.0', true);
+	wp_enqueue_script('kf-admin-js', get_template_directory_uri() . '/js/wp-admin.js', array(), '1.0.0', true);
     
-    wp_localize_script('ks-admin-js', 'wpVars', array(
+    wp_localize_script('kf-admin-js', 'wpVars', array(
         'colorList' => kf_color_id_list(),
         'themeMaps' => kf_color_theme_maps()
     ));
@@ -650,6 +654,11 @@ function ks_acf_toolbars($toolbars) {
     $toolbars['Standard'][1] = array('formatselect', 'bold', 'italic', 'underline', 'strikethrough', 'blockquote', 'bullist', 'numlist', 'link', 'hr', 'undo', 'redo', 'wp_adv');
     $toolbars['Standard'][2] = array('alignleft', 'aligncenter', 'alignright', 'removeformat', 'fullscreen');
     
+    // Add Standard (No Headings) toolbar
+    $toolbars['Standard (No Headings)'] = array();
+    $toolbars['Standard (No Headings)'][1] = array('bold', 'italic', 'underline', 'strikethrough', 'blockquote', 'bullist', 'numlist', 'link', 'hr', 'undo', 'redo', 'wp_adv');
+    $toolbars['Standard (No Headings)'][2] = array('alignleft', 'aligncenter', 'alignright', 'removeformat', 'fullscreen');
+    
     // Add Minimal toolbar
 	$toolbars['Minimal'] = array();
 	$toolbars['Minimal'][1] = array('bold' , 'italic', 'link');
@@ -672,6 +681,8 @@ function ks_acf_wysiwyg_strip_tags($value, $post_id, $field) {
             $value = strip_tags($value, '<p><strong><em><br>');
         } elseif ($field['toolbar'] == 'standard') {
             $value = strip_tags($value, '<p><h2><h3><h4><h5><strong><em><span><del><blockquote><ul><ol><li><a><hr><br>');
+        } elseif ($field['toolbar'] == 'standard_no_headings') {
+            $value = strip_tags($value, '<p><strong><em><span><del><blockquote><ul><ol><li><a><hr><br>');
         }
     }
     

@@ -30,7 +30,14 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
                     <?php if ($block['text']) { ?><div class="info-cols__text text text_md text_wrap text_compact"><?php echo kf_wysiwyg_color_classes($block['text'], $theme); ?></div><?php } ?>
                     <?php if ($block['list']): ?>
                     <ul class="info-cols__list info-cols__list_<?php echo $section['options']['layout_align-columns']; ?>">
-                        <?php foreach ($block['list'] as $list_item) { ?><li class="info-cols__list-item title title_xs"><?php echo $list_item['text']; ?></li><?php } ?>
+                        <?php foreach ($block['list'] as $list_item): ?>
+                        <li class="info-cols__list-item title title_xs">
+                            <svg viewBox="0 0 21.69 21.69" class="info-cols__list-bullet">
+                                <path class="c_fill_<?php color_id($theme, 5); ?>" d="M15,4.15A10.85,10.85,0,1,0,25.85,15,10.85,10.85,0,0,0,15,4.15Zm6.24,7.17-6.77,8.79-.05.06a1.48,1.48,0,0,1-.3.26,1.38,1.38,0,0,1-.51.16H13.5a1.09,1.09,0,0,1-.43-.08,1.17,1.17,0,0,1-.34-.2l-.06,0L8.88,16.71A1.2,1.2,0,0,1,10.52,15l2.84,2.65,6-7.75a1.21,1.21,0,0,1,1.91,1.47Z" transform="translate(-4.15 -4.15)"/>
+                            </svg>
+                            <?php echo $list_item['text']; ?>
+                        </li>
+                        <?php endforeach; ?>
                     </ul>
                     <?php endif; ?>
                     <?php if ($block['buttons']): ?>

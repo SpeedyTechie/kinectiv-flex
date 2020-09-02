@@ -3205,6 +3205,7 @@ function initDialogBoxes() {
     var throttledUpdateDialogBoxPosition = kinectivThrottle(updateDialogBoxPosition, 100);
     var body = $('body');
     var boxWrap = $('<div class="dialog-box" />');
+    var boxBg = $('<div class="dialog-box__bg" />').appendTo(boxWrap);
     var boxContent = $('<div class="dialog-box__content" />').appendTo(boxWrap);
     var box = $('<div class="dialog-box__box" tabindex="-1" />').appendTo(boxContent);
     var boxEnd = $('<div class="dialog-box__end" tabindex="0" />').appendTo(boxContent);
@@ -3216,12 +3217,15 @@ function initDialogBoxes() {
     var individualBoxes = $();
     
     
-    function openDialogBox(id) {
+    function openDialogBox(id, contentAppended) {
         var scrollTop = $(window).scrollTop();
+        var individualBoxToShow = individualBoxes.filter('[data-dialog-box-id="' + id + '"]');
         
         box.children().not(individualBoxes).remove();
         individualBoxes.css('display', 'none');
-        individualBoxes.filter('[data-dialog-box-id="' + id + '"]').css('display', 'block');
+        individualBoxToShow.css('display', 'block');
+        
+        boxBg.removeClass().addClass('dialog-box__bg').addClass('c_bg_' + wpVars.themeMaps[individualBoxToShow.attr('data-theme')][1]);
         
         typeof contentAppended === 'function' && contentAppended();
         
@@ -3287,25 +3291,33 @@ function initDialogBoxes() {
         }
     }
     
-    function createDialogBox(id) {
+    function createDialogBox(id, theme) {
+        theme = (typeof theme === 'string') ? theme : 'main'; // default to main theme if no theme is provided
+        
         var content = $('[data-dialog-box-content="' + id + '"]').removeAttr('data-dialog-box-content');
-        var closeButton = $('<button type="button" class="dialog-box__close"><span class="screen-reader-text">Close</span></button>');
+        var closeButton = $('<button type="button" class="dialog-box__close" />');
         var individualContainer = $('<div />').attr('data-dialog-box-id', id).css('display', 'none');
         
+        closeButton.addClass('c_bg_' + wpVars.themeMaps[theme][5]).addClass('c_h_bg_' + wpVars.themeMaps[theme][4]);
+        closeButton.append('<span class="screen-reader-text">Close</span>');
+        closeButton.append('<svg viewBox="0 0 27.03 27.04" class="dialog-box__close-x"><polygon class="c_fill_' + wpVars.themeMaps[theme][0] + '" points="17.45 13.52 17.45 13.51 27.03 3.94 23.09 0 13.52 9.58 3.94 0 0 3.94 9.58 13.51 9.57 13.52 9.58 13.52 0 23.1 3.94 27.04 13.51 17.46 23.09 27.04 27.03 23.1 17.45 13.52 17.45 13.52"/></svg>');
         closeButton.click(closeDialogBox);
         closeButton.prependTo(content);
+        
+        individualContainer.attr('data-theme', theme);
         
         individualContainer.append(content);
         individualContainer.appendTo(box);
         individualBoxes = individualBoxes.add(individualContainer);
     }
     
-    function createGalleryBox(id, slide) {
+    function createGalleryBox(id, slide, theme) {
         slide = (typeof slide === 'number') ? slide : 0; // default to first if no valid slide index is provided
+        theme = (typeof theme === 'string') ? theme : 'main'; // default to main theme if no theme is provided
         
         var content = $('<div class="box-slider" />');
         var slider = $('<div class="box-slider__slider" />').appendTo(content);
-        var closeButton = $('<button type="button" class="dialog-box__close"><span class="screen-reader-text">Close</span></button>');
+        var closeButton = $('<button type="button" class="dialog-box__close" />');
         
         // build slide for each image in the source element
         $('[data-gallery="' + id + '"]').find('[data-gallery-box-image]').each(function() {
@@ -3316,12 +3328,22 @@ function initDialogBoxes() {
             $('<div class="box-slider__image" role="img" />').attr('aria-label', alt).css('background-image', 'url("' + src + '")').appendTo(slide);
         });
         
+        closeButton.addClass('c_bg_' + wpVars.themeMaps[theme][5]).addClass('c_h_bg_' + wpVars.themeMaps[theme][4]);
+        closeButton.append('<span class="screen-reader-text">Close</span>');
+        closeButton.append('<svg viewBox="0 0 27.03 27.04" class="dialog-box__close-x"><polygon class="c_fill_' + wpVars.themeMaps[theme][0] + '" points="17.45 13.52 17.45 13.51 27.03 3.94 23.09 0 13.52 9.58 3.94 0 0 3.94 9.58 13.51 9.57 13.52 9.58 13.52 0 23.1 3.94 27.04 13.51 17.46 23.09 27.04 27.03 23.1 17.45 13.52 17.45 13.52"/></svg>');
         closeButton.click(closeDialogBox);
         closeButton.prependTo(content);
         
         openGalleryBox(content, function() {
             // initialize slick slider if there is more than one slide in the container
             if (slider.find('.box-slider__slide').length > 1) {
+                var prevButton = $('<button type="button" class="box-slider__nav box-slider__nav_prev" />');
+                var nextButton = $('<button type="button" class="box-slider__nav box-slider__nav_next" />');
+                
+                // update overlay color
+                boxBg.removeClass().addClass('dialog-box__bg').addClass('c_bg_' + wpVars.themeMaps[theme][1]);
+                
+                // init slick
                 slider.slick({
                     accessibility: false,
                     arrows: false,
@@ -3329,12 +3351,23 @@ function initDialogBoxes() {
                     speed: 400
                 });
                 
-                $('<button type="button" class="box-slider__arrow box-slider__arrow_prev"><span class="screen-reader-text">Previous Slide</span></button>').click(function() {
+                // add previous button
+                prevButton.addClass('c_bg_' + wpVars.themeMaps[theme][5]).addClass('c_h_bg_' + wpVars.themeMaps[theme][4]);
+                prevButton.append('<span class="screen-reader-text">Previous Slide</span>');
+                prevButton.append('<svg viewBox="0 0 17.45 27.04" class="testimonials__nav-arrow testimonials__nav-arrow_reverse"><polygon class="c_fill_' + wpVars.themeMaps[theme][0] + '" points="3.94 0 0 3.94 9.58 13.52 0 23.1 3.94 27.04 17.45 13.52 3.94 0"/></svg>');
+                prevButton.click(function() {
                     slider.slick('slickPrev');
-                }).appendTo(content);
-                $('<button type="button" class="box-slider__arrow box-slider__arrow_next"><span class="screen-reader-text">Next Slide</span></button>').click(function() {
+                });
+                prevButton.appendTo(content);
+                
+                // add next button
+                nextButton.addClass('c_bg_' + wpVars.themeMaps[theme][5]).addClass('c_h_bg_' + wpVars.themeMaps[theme][4]);
+                nextButton.append('<span class="screen-reader-text">Next Slide</span>');
+                nextButton.append('<svg viewBox="0 0 17.45 27.04" class="testimonials__nav-arrow"><polygon class="c_fill_' + wpVars.themeMaps[theme][0] + '" points="3.94 0 0 3.94 9.58 13.52 0 23.1 3.94 27.04 17.45 13.52 3.94 0"/></svg>');
+                nextButton.click(function() {
                     slider.slick('slickNext');
-                }).appendTo(content);
+                });
+                nextButton.appendTo(content);
             }
         });
     }
@@ -3356,7 +3389,7 @@ function initDialogBoxes() {
     $(document).on('gform_post_render gform_confirmation_loaded dialog_box_position', positionDialogBox);
     
     boxWrap.click(function(e) {
-        if ($(e.target).hasClass('dialog-box') || $(e.target).hasClass('dialog-box__content')) {
+        if ($(e.target).hasClass('dialog-box') || $(e.target).hasClass('dialog-box__content') || $(e.target).hasClass('dialog-box__bg')) {
             closeDialogBox();
         }
     });
@@ -3376,14 +3409,14 @@ function initDialogBoxes() {
     });
     
     $('[data-dialog-box-content]').each(function() {
-        createDialogBox($(this).attr('data-dialog-box-content'));
+        createDialogBox($(this).attr('data-dialog-box-content'), $(this).attr('data-dialog-theme'));
     });
     
     $('[data-dialog-box]').click(function() {
         openDialogBox($(this).attr('data-dialog-box'));
     });
     $('[data-gallery-box]').click(function() {
-        createGalleryBox($(this).attr('data-gallery-box'), parseInt($(this).attr('data-start')));
+        createGalleryBox($(this).attr('data-gallery-box'), parseInt($(this).attr('data-start')), $(this).attr('data-box-theme'));
     });
 }
 

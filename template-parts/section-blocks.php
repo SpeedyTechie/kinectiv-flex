@@ -32,10 +32,6 @@ $section['options']['layout_block-options']['color_theme'] = $theme; // set them
                 $block_bg_styles = kf_section_bg_styles($section['options']['layout_block-options'], 1);
                 $block_style = $block_bg_styles['style'];
                 $block_classes = $block_bg_styles['classes'];
-                
-                if ($section['options']['layout_size'] == 'full') {
-                    
-                }
                 ?>
                 <div class="text-image__block text-image__block_text text-image__block_<?php echo $section['options']['layout_align']; ?><?php echo $block_classes; ?>"<?php if ($block_style) { echo ' style="' . trim($block_style) . '"'; } ?>>
                     <div class="text-image__content text-image__content_<?php echo $section['options']['layout_size']; ?><?php if ($i_block == 1) { echo ' text-image__content_left'; } ?><?php if ($section['options']['layout_size'] == 'full') { echo ' text-image__content_y_' . $section['options']['layout_block-options']['padding_vertical']; } ?>">

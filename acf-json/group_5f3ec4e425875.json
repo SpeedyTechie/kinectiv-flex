@@ -67,7 +67,7 @@
                     "label": "Logo",
                     "name": "logo",
                     "type": "image",
-                    "instructions": "",
+                    "instructions": "Standard Height: 100 (large), 80 (medium\/default), 60 (small)",
                     "required": 1,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -369,5 +369,5 @@
     "hide_on_screen": "",
     "active": false,
     "description": "",
-    "modified": 1597950484
+    "modified": 1599051637
 }
