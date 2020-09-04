@@ -238,7 +238,7 @@
                             "label": "Image",
                             "name": "image",
                             "type": "image",
-                            "instructions": "Standard Resolution: 550x550 (edge-to-edge), 435 wide (boxed\/default)",
+                            "instructions": "Standard Resolution: 600x600 (edge-to-edge), 485 wide (boxed\/default)",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
@@ -1118,7 +1118,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": true,
+    "active": false,
     "description": "",
-    "modified": 1599051760
+    "modified": 1599070120
 }

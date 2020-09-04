@@ -3476,6 +3476,9 @@ function initLastItemFlexRow() {
     $('.address').each(function() {
         addItemSet($(this).find('.address__line'), 'address__line_last');
     });
+    $('.post-tile__info').each(function() {
+        addItemSet($(this).find('.post-tile__info-item'), 'post-tile__info-item_last');
+    });
     
     triggerLastItemUpdate();
     $(window).on('load', triggerLastItemUpdate);
@@ -3707,6 +3710,90 @@ function initTestimonialSlider() {
 
 
 
+/* AJAX Grid Load */
+function initAjaxGridLoad() {
+    function ajaxLoad(type, page, passthrough) {
+        var request = $.ajax(wpVars.ajaxURL, {
+            method: 'POST',
+            data: {
+                action: 'kf_grid_load',
+                type: type,
+                page_num: page,
+                passthrough_data: passthrough
+            },
+            dataType: 'html'
+        });
+        
+        return request;
+    }
+    
+    
+    $('.tile-grid__wrap[data-type]').each(function() {
+        var gridWrap = $(this);
+        var grid = gridWrap.find('.tile-grid__grid');
+        var gridNoneItem = grid.find('.tile-grid__item_none');
+        var gridMoreItem = grid.find('.tile-grid__item_more');
+        var gridMoreButton = gridMoreItem.find('.tile-grid__more-button');
+        
+        var type = gridWrap.attr('data-type');
+        var passthrough = gridWrap.attr('data-passthrough');
+        
+        var currentPage = 1;
+        
+        
+        function loadGridPage(page) {
+            gridMoreButton.prop('disabled', true).addClass('button_loading'); // disable load more button until loading is complete
+            
+            ajaxLoad(type, page, passthrough).done(function(data) {
+                var jData = $(data);
+                
+                var newItems = jData.filter('.tile-grid__item');
+                var morePages = jData.filter('#more-pages');
+                
+                
+                // add new items to the grid
+                if (newItems.length > 0) {
+                    gridNoneItem.addClass('tile-grid__item_hidden'); // hide no items message
+                    
+                    if (page == 1) {
+                        grid.children('.tile-grid__item').not(gridNoneItem).not(gridMoreItem).remove(); // if loading the first page, remove any existing items
+                    }
+                    
+                    newItems.appendTo(grid); // append new items
+                    
+                    enhanceMouseFocusUpdate();
+                    
+                    // move no items message and load more button to the end
+                    gridNoneItem.appendTo(grid);
+                    gridMoreItem.appendTo(grid);
+                } else if (page == 1) {
+                    gridNoneItem.removeClass('tile-grid__item_hidden'); // if this is the first page and there are no items, show the no items message
+                }
+                
+                // if there are more pages, make sure the load more button is visible, otherwise hide it
+                if (morePages.length > 0) {
+                    gridMoreItem.removeClass('tile-grid__item_hidden');
+                } else {
+                    gridMoreItem.addClass('tile-grid__item_hidden');
+                }
+                
+                currentPage = page; // update current page
+                
+                gridMoreButton.prop('disabled', false).removeClass('button_loading'); // re-enable load more button
+            });
+        }
+        
+        
+        gridWrap.removeAttr('data-type').removeAttr('data-passthrough'); // remove attributes that are no longer needed
+        
+        gridMoreButton.click(function() {
+            loadGridPage(currentPage + 1);
+        });
+    });
+}
+
+
+
 /* General */
 
 $(function() {
@@ -3717,6 +3804,7 @@ $(function() {
     initLastItemFlexRow();
     initEnhanceMouseFocus();
     initDialogBoxes();
+    initAjaxGridLoad();
 });
 
 function kinectivThrottle(func, wait, options) {

@@ -3,25 +3,6 @@
     "title": "[Section] Image Slider",
     "fields": [
         {
-            "key": "field_5f3a7be2c8c02",
-            "label": "Enable Slide Content",
-            "name": "content-enable",
-            "type": "true_false",
-            "instructions": "Enable this option to include titles, text, and links on slides.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 0,
-            "ui": 0,
-            "ui_on_text": "",
-            "ui_off_text": ""
-        },
-        {
             "key": "field_5f36e5093016a",
             "label": "Slides",
             "name": "slides",
@@ -318,6 +299,25 @@
                     ]
                 },
                 {
+                    "key": "field_5f3a7be2c8c02",
+                    "label": "Enable Slide Content",
+                    "name": "layout_content",
+                    "type": "true_false",
+                    "instructions": "Enable this option to include titles, text, and links on slides.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 0,
+                    "ui": 0,
+                    "ui_on_text": "",
+                    "ui_off_text": ""
+                },
+                {
                     "key": "field_5f36daee77333",
                     "label": "Color",
                     "name": "",
@@ -451,5 +451,5 @@
     "hide_on_screen": "",
     "active": false,
     "description": "",
-    "modified": 1597766059
+    "modified": 1599069304
 }

@@ -10,6 +10,7 @@ $section_prev = $pt_sections['prev'];
 $section_next = $pt_sections['next'];
 
 $theme = $section['options']['color_theme'];
+$section['options']['layout_block-options']['color_theme'] = $theme; // set theme for block options (needed to generate bg styles)
 
 // build style attribute and class list
 $bg_styles = kf_section_bg_styles($section['options']);
@@ -18,8 +19,6 @@ $section_style = $bg_styles['style'] . $padding_styles['style'];
 $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
 
 $blocks = ($section['options']['layout_image-position'] == 'left') ? array('image', 'text') : array('text', 'image'); // set order of blocks
-
-$section['options']['layout_block-options']['color_theme'] = $theme; // set theme for block options (needed to generate bg styles)
 ?>
 
 <div class="section c_color_<?php color_id($theme, 3); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>

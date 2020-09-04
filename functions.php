@@ -43,6 +43,7 @@ function kinectiv_flex_scripts() {
 	wp_enqueue_script('kinectiv-flex-script', get_template_directory_uri() . '/js/script.min.js', array('jquery'), '0.1.0', true);
     
     wp_localize_script('kinectiv-flex-script', 'wpVars', array(
+        'ajaxURL' => admin_url('admin-ajax.php'),
         'themeMaps' => kf_color_theme_maps()
     ));
 }
@@ -374,6 +375,71 @@ function kf_get_ancestors($post_id) {
     
     return $ancestors;
 }
+
+
+/**
+ * Get posts
+ */
+function kf_custom_query($type, $single_page = false, $page_num = 1) {
+    // standardize number of posts per page based on type
+    $per_page = array(
+        'post' => 12,
+        'event' => 12
+    );
+    
+    if (array_key_exists($type, $per_page)) {
+        // base arguments
+        $query_args = array(
+            'post_type' => $type,
+            'posts_per_page' => $single_page ? $single_page : $per_page[$type],
+            'paged' => $page_num
+        );
+        
+        
+        $custom_query = new WP_Query($query_args); // execute query
+        
+        return $custom_query;
+    }
+}
+
+
+/**
+ * AJAX Grid Load
+ */
+function kf_ajax_grid_load() {
+    $type = $_POST['type'];
+    $page_num = $_POST['page_num'];
+    $passthrough_data = json_decode(stripslashes($_POST['passthrough_data']), true);
+    
+    
+    $load_query = kf_custom_query($type, false, $page_num);
+    
+    if ($load_query->posts) {
+        foreach ($load_query->posts as $p_post) {
+            global $post;
+            $post = get_post($p_post);
+            setup_postdata($p_post);
+            
+            if ($passthrough_data) acf_register_store('passthrough_preview-' . $type, $passthrough_data);
+            ?>
+            <div class="tile-grid__item tile-grid__item_3">
+                <?php get_template_part('template-parts/preview', $type); ?>
+            </div>
+            <?php
+            if ($passthrough_data) acf_register_store('passthrough_preview-' . $type, array());
+            
+            wp_reset_postdata();
+        }
+    }
+    
+    if ($load_query->max_num_pages > $page_num) {
+        echo '<span id="more-pages"></span>';
+    }
+
+    die();
+}
+add_action('wp_ajax_nopriv_kf_grid_load', 'kf_ajax_grid_load');
+add_action('wp_ajax_kf_grid_load', 'kf_ajax_grid_load');
 
 
 /**

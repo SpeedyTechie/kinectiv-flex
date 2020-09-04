@@ -12,15 +12,14 @@ $section_next = $pt_sections['next'];
 $theme = $section['options']['color_theme'];
 $tile_theme = ($section['options']['layout_tile-options']['layout_color'] == 'custom') ? $section['options']['layout_tile-options']['color_theme'] : $theme;
 $popup_theme = 'main';
+$section['options']['layout_tile-options']['color_theme'] = $tile_theme; // set theme for tile options (needed to generate bg styles)
+$section['options']['layout_popup-options']['color_theme'] = $popup_theme; // set theme for popup options (needed to generate bg styles)
 
 // build style attribute and class list
 $bg_styles = kf_section_bg_styles($section['options']);
 $padding_styles = kf_section_padding_styles($section['options'], $section_prev['options'], $section_next['options']);
 $section_style = $bg_styles['style'] . $padding_styles['style'];
 $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
-
-$section['options']['layout_tile-options']['color_theme'] = $tile_theme; // set theme for tile options (needed to generate bg styles)
-$section['options']['layout_popup-options']['color_theme'] = $popup_theme; // set theme for popup options (needed to generate bg styles)
 ?>
 
 <div class="section c_color_<?php color_id($theme, 5); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
@@ -73,11 +72,7 @@ $section['options']['layout_popup-options']['color_theme'] = $popup_theme; // se
                         <?php endif; ?>
                             <?php if ($base_class == 'text-tile'): ?>
                             <div class="text-tile__tile text-tile__tile_<?php echo $section['options']['layout_tile-options']['layout_align']; ?> c_color_<?php color_id($tile_theme, 3); ?><?php echo $tile_classes; ?>"<?php if ($tile_style) { echo ' style="' . trim($tile_style) . '"'; } ?>>
-                                <?php if ($tile['image']): ?>
-                                <div class="text-tile__top">
-                                    <img src="<?php echo $tile['image']['url']; ?>" alt="<?php echo esc_attr($tile['image']['alt']); ?>" width="<?php echo $tile['image']['width']; ?>" height="<?php echo $tile['image']['height']; ?>" class="text-tile__image" />
-                                </div>
-                                <?php endif; ?>
+                                <?php if ($tile['image']) { ?><img src="<?php echo $tile['image']['url']; ?>" alt="<?php echo esc_attr($tile['image']['alt']); ?>" width="<?php echo $tile['image']['width']; ?>" height="<?php echo $tile['image']['height']; ?>" class="text-tile__image" /><?php } ?>
                                 <?php if ($tile['title'] || $tile['text'] || $action_text): ?>
                                 <div class="text-tile__main">
                                     <?php if ($tile['title'] || $tile['text']): ?>

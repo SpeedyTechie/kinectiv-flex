@@ -1341,6 +1341,9 @@ object {
 .text_bold {
     font-weight: 700;
 }
+.text_italic {
+    font-style: italic;
+}
 .text_line_1-4 {
     line-height: 1.4;
 }
@@ -1457,6 +1460,10 @@ object {
     text-decoration: none;
     border: 0;
     transition: 0.4s;
+}
+.button_loading {
+    opacity: 0.5;
+    cursor: wait;
 }
 
 /*--------------------------------------------------------------
@@ -2240,7 +2247,7 @@ object {
     left: 0;
 }
 .dialog-box__content {
-    max-width: 1300px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 100px;
 }
@@ -2895,11 +2902,23 @@ object {
     width: 33.33%;
     padding: 6px;
 }
+.tile-grid__item_hidden {
+    display: none;
+}
 .tile-grid__item_4 {
     width: 25%;
 }
+.tile-grid__item_full {
+    width: 100%;
+}
 .tile-grid__box {
     display: none;
+}
+.tile-grid__none {
+    padding: 50px 0;
+}
+.tile-grid__more {
+    padding-top: 30px;
 }
 .tile-grid__cta {
     margin: 25px 0 0 40%;
@@ -2947,13 +2966,9 @@ object {
 .text-tile__tile_right {
     text-align: right;
 }
-.text-tile__top {
-    overflow: hidden;
-}
 .text-tile__image {
     display: block;
     width: 100%;
-    transition: 0.4s;
 }
 .text-tile__main {
     flex-grow: 1;
@@ -3084,4 +3099,57 @@ object {
 }
 .info-box__buttons:first-child {
     margin-top: 0;
+}
+
+/*--------------------------------------------------------------
+## Post Tile
+--------------------------------------------------------------*/
+.post-tile  {
+    display: block;
+    height: 100%;
+    text-decoration: none;
+    transition: 0.4s;
+}
+.post-tile:hover,
+.post-tile:focus,
+.post-tile:active {
+    transform: translateY(-5px);
+}
+.post-tile__tile {
+    height: 100%;
+}
+.post-tile__image {
+    padding-top: 42%;
+}
+.post-tile__main {
+    padding: 30px 35px;
+}
+.post-tile__title {
+    margin-bottom: 8px;
+}
+.post-tile__info {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -2px -8px;
+}
+.post-tile__info-item {
+    position: relative;
+    padding: 2px 8px;
+    margin-right: 1px;
+}
+.post-tile__info-item::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    right: -1px;
+    bottom: 2px;
+    margin: 0.3em 0;
+    border-right: 1px solid;
+}
+.post-tile__info-item_last::after,
+.post-tile__info-item:last-child::after {
+    display: none;
+}
+.post-tile__text {
+    margin-top: 10px;
 }

@@ -35,7 +35,7 @@ $image_index = 0;
                         <div class="image-rows__item image-rows__item_<?php echo $image_count; ?>">
                             <div class="image-rows__block">
                                 <img src="<?php echo $image['image']['url']; ?>" alt="<?php echo esc_attr($image['image']['alt']); ?>" width="<?php echo $image['image']['width']; ?>" height="<?php echo $image['image']['height']; ?>" class="image-rows__image" />
-                                <?php if ($section['popups']): ?>
+                                <?php if ($section['options']['layout_popups']): ?>
                                 <button type="button" class="image-rows__button" data-gallery-box="<?php echo $i_section; ?>" data-start="<?php echo $image_index++; ?>">
                                     <span class="screen-reader-text">View Larger</span>
                                 </button>
