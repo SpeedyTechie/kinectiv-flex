@@ -3712,12 +3712,13 @@ function initTestimonialSlider() {
 
 /* AJAX Grid Load */
 function initAjaxGridLoad() {
-    function ajaxLoad(type, page, passthrough) {
+    function ajaxLoad(type, special, page, passthrough) {
         var request = $.ajax(wpVars.ajaxURL, {
             method: 'POST',
             data: {
                 action: 'kf_grid_load',
                 type: type,
+                special: special,
                 page_num: page,
                 passthrough_data: passthrough
             },
@@ -3736,6 +3737,7 @@ function initAjaxGridLoad() {
         var gridMoreButton = gridMoreItem.find('.tile-grid__more-button');
         
         var type = gridWrap.attr('data-type');
+        var special = gridWrap.attr('data-special');
         var passthrough = gridWrap.attr('data-passthrough');
         
         var currentPage = 1;
@@ -3744,7 +3746,7 @@ function initAjaxGridLoad() {
         function loadGridPage(page) {
             gridMoreButton.prop('disabled', true).addClass('button_loading'); // disable load more button until loading is complete
             
-            ajaxLoad(type, page, passthrough).done(function(data) {
+            ajaxLoad(type, special, page, passthrough).done(function(data) {
                 var jData = $(data);
                 
                 var newItems = jData.filter('.tile-grid__item');
@@ -3784,7 +3786,7 @@ function initAjaxGridLoad() {
         }
         
         
-        gridWrap.removeAttr('data-type').removeAttr('data-passthrough'); // remove attributes that are no longer needed
+        gridWrap.removeAttr('data-type').removeAttr('data-special').removeAttr('data-passthrough'); // remove attributes that are no longer needed
         
         gridMoreButton.click(function() {
             loadGridPage(currentPage + 1);

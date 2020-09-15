@@ -63,6 +63,45 @@ add_action('admin_enqueue_scripts', 'ks_admin_scripts');
 
 
 /**
+ * Register custom post types and taxonomies
+ */
+function kf_post_types() {
+    register_post_type('event', array(
+        'labels' => array(
+            'name' => 'Events',
+            'singular_name' => 'Event',
+            'add_new_item' => 'Add Event',
+            'edit_item' => 'Edit Event',
+            'new_item' => 'New Event',
+            'view_item' => 'View Event',
+            'view_items' => 'View Events',
+            'search_items' => 'Search Events',
+            'not_found' => 'No events found',
+            'not_found_in_trash' => 'No events found in trash',
+            'all_items' => 'All Events',
+            'archives' => 'Event Archives',
+            'attributes' => 'Event Attributes',
+            'insert_into_item' => 'Insert into event',
+            'uploaded_to_this_item' => 'Uploaded to this event',
+            'item_published' => 'Event published.',
+            'item_published_privately' => 'Event published privately.',
+            'item_reverted_to_draft' => 'Event reverted to draft.',
+            'item_scheduled' => 'Event scheduled.',
+            'item_updated' => 'Event updated.'
+        ),
+        'public' => true,
+        'menu_position' => 5,
+        'menu_icon' => 'dashicons-calendar-alt',
+        'supports' => array('title', 'revisions'),
+        'rewrite' => array(
+            'with_front' => false
+        )
+    ));
+}
+add_action('init', 'kf_post_types');
+
+
+/**
  * Formatted copyright year
  */
 function kf_get_copyright_year() {
@@ -190,7 +229,7 @@ function kf_acf_format_wysiwyg_value($value, $post_id, $field) {
     $class_list = array(
         'h1' => 'title title_lg',
         'h2' => 'title',
-        'h3' => 'text text_lg text_normal text_line_1-4',
+        'h3' => 'text text_xl text_normal text_line_1-4',
         'h4' => 'text text_md text_bold',
         'h5' => 'text text_md text_bold',
         'h6' => 'text text_sm text_bold'
@@ -380,7 +419,7 @@ function kf_get_ancestors($post_id) {
 /**
  * Get posts
  */
-function kf_custom_query($type, $single_page = false, $page_num = 1) {
+function kf_custom_query($type, $single_page = false, $page_num = 1, $special = null) {
     // standardize number of posts per page based on type
     $per_page = array(
         'post' => 12,
@@ -395,6 +434,53 @@ function kf_custom_query($type, $single_page = false, $page_num = 1) {
             'paged' => $page_num
         );
         
+        // add event arguments
+        if ($type == 'event') {
+            $today_dt = new DateTime('00:00:00', wp_timezone());
+            
+            if ($special == 'past') {
+                // past events
+                $query_args['meta_query'] = array(
+                    'relation' => 'AND',
+                    'order_num_start' => array(
+                        'key' => '_kf_event_order_num_start',
+                        'compare' => 'EXISTS',
+                        'type' => 'NUMERIC'
+                    ),
+                    'order_num_end' => array(
+                        'key' => '_kf_event_order_num_end',
+                        'value' => $today_dt->format('YmdHi'),
+                        'compare' => '<',
+                        'type' => 'NUMERIC'
+                    )
+                );
+                $query_args['orderby'] = array(
+                    'order_num_start' => 'DESC',
+                    'order_num_end' => 'DESC'
+                );
+            } else {
+                // future events
+                $query_args['meta_query'] = array(
+                    'relation' => 'AND',
+                    'order_num_start' => array(
+                        'key' => '_kf_event_order_num_start',
+                        'compare' => 'EXISTS',
+                        'type' => 'NUMERIC'
+                    ),
+                    'order_num_end' => array(
+                        'key' => '_kf_event_order_num_end',
+                        'value' => $today_dt->format('YmdHi'),
+                        'compare' => '>=',
+                        'type' => 'NUMERIC'
+                    )
+                );
+                $query_args['orderby'] = array(
+                    'order_num_start' => 'ASC',
+                    'order_num_end' => 'ASC'
+                );
+            }
+        }
+        
         
         $custom_query = new WP_Query($query_args); // execute query
         
@@ -408,11 +494,11 @@ function kf_custom_query($type, $single_page = false, $page_num = 1) {
  */
 function kf_ajax_grid_load() {
     $type = $_POST['type'];
+    $special = $_POST['special'];
     $page_num = $_POST['page_num'];
     $passthrough_data = json_decode(stripslashes($_POST['passthrough_data']), true);
     
-    
-    $load_query = kf_custom_query($type, false, $page_num);
+    $load_query = kf_custom_query($type, false, $page_num, $special);
     
     if ($load_query->posts) {
         foreach ($load_query->posts as $p_post) {
@@ -440,6 +526,192 @@ function kf_ajax_grid_load() {
 }
 add_action('wp_ajax_nopriv_kf_grid_load', 'kf_ajax_grid_load');
 add_action('wp_ajax_kf_grid_load', 'kf_ajax_grid_load');
+
+
+/**
+ * Event date/time ACF validation
+ */
+function kf_validate_event_dates($valid, $value, $field, $input) {
+    if ($valid) {
+        if ($value) {
+            if (strtotime($value) <= strtotime($_POST['acf']['field_5f5921839dc3a']['field_5f59238da9dc3'])) {
+                $valid = 'The end date must be after the start date. For single day events, leave the "End Date" field empty.';
+            }
+        }
+    }
+    
+    return $valid;
+}
+add_filter('acf/validate_value/key=field_5f5923a1a9dc4', 'kf_validate_event_dates', 10, 4);
+
+function kf_validate_event_times($valid, $value, $field, $input) {
+    if ($valid) {
+        if ($value) {
+            if (strtotime($value) <= strtotime($_POST['acf']['field_5f5921839dc3a']['field_5f59244d92ede'])) {
+                $valid = 'The end time must be after the start time';
+            }
+        }
+    }
+    return $valid;
+}
+add_filter('acf/validate_value/key=field_5f59248492edf', 'kf_validate_event_times', 10, 4);
+
+
+/**
+ * Check if event is in the past
+ */
+function kf_is_past_event($event_id) {
+    $today_dt = new DateTime('00:00:00', wp_timezone());
+    
+    $order_num_end = intval(get_post_meta($event_id, '_kf_event_order_num_end', true));
+    $today_num = intval($today_dt->format('YmdHi'));
+    
+    if ($order_num_end < $today_num) {
+        return true;
+    }
+    
+    return false;
+}
+
+
+/**
+ * Generate order strings for events
+ */
+function kf_event_acf_save_post($post_id) {
+    if (get_post_type($post_id) == 'event') {
+        $f_date = get_field('event_details_date', $post_id);
+        
+        $date_dt = new DateTime($f_date['date'], wp_timezone());
+        $date_end_dt = $f_date['end-date'] ? new DateTime($f_date['end-date'], wp_timezone()) : null;
+        $time_dt = $f_date['time'] ? new DateTime($f_date['time'], wp_timezone()) : null;
+        $time_end_dt = $f_date['end-time'] ? new DateTime($f_date['end-time'], wp_timezone()) : null;
+        
+        // generate order strings
+        $order_num_start = $date_dt->format('Ymd');
+        $order_num_end = $date_dt->format('Ymd');
+        if ($date_end_dt) {
+            $order_num_end = $date_end_dt->format('Ymd');
+        }
+        if ($time_dt) {
+            $order_num_start .= $time_dt->format('Hi');
+            if (!$date_end_dt && $time_end_dt) {
+                $order_num_end .= $time_end_dt->format('Hi');
+            } else {
+                $order_num_end .= '2359'; // use an end time of 11:59pm
+            }
+        } else {
+            $order_num_start .= '0000'; // use a start time of 12:00am
+            $order_num_end .= '2359'; // use an end time of 11:59pm
+        }
+        
+        // add order strings to post meta
+        update_post_meta($post_id, '_kf_event_order_num_start', $order_num_start);
+        update_post_meta($post_id, '_kf_event_order_num_end', $order_num_end);
+    }
+}
+add_action('acf/save_post', 'kf_event_acf_save_post');
+
+
+/**
+ * Customize admin columns for events (add date/time column)
+ */
+function kf_event_custom_columns($columns) {
+    $new_columns['cb'] = $columns['cb'];
+    $new_columns['title'] = $columns['title'];
+    $new_columns['event_date'] = 'Date & Time';
+    unset($columns['cb']);
+    unset($columns['title']);
+    $new_columns = array_merge($new_columns, $columns);
+    
+    return $new_columns;
+}
+add_filter('manage_event_posts_columns', 'kf_event_custom_columns');
+
+function kf_event_custom_column_content($column_name, $post_id) {
+    if ($column_name == 'event_date') {
+        /*$f_date_time = get_field('event_details_date');
+        $f_description = get_field('event_content_description');
+
+        $start_dt = new DateTime($f_date_time['start'], wp_timezone());
+        $end_dt = new DateTime($f_date_time['end'], wp_timezone());
+
+        // create date string
+        $date_string = $start_dt->format('F j') . ' @ ' . $start_dt->format('g:ia');
+
+        if ($f_date_time['end']) {
+            if ($start_dt->format('Y-m-d') == $end_dt->format('Y-m-d')) {
+                $date_string .= ' - ' . $end_dt->format('g:ia');
+            } else {
+                $date_string .= ' - ' . $end_dt->format('F j') . ' @ ' . $end_dt->format('g:ia');
+            }
+        }
+        
+        echo $date_string;*/
+        
+        
+        
+        $f_date = get_field('event_details_date', $post_id);
+        
+        $date_dt = new DateTime($f_date['date'], wp_timezone());
+        $date_end_dt = $f_date['end-date'] ? new DateTime($f_date['end-date'], wp_timezone()) : null;
+        $time_dt = $f_date['time'] ? new DateTime($f_date['time'], wp_timezone()) : null;
+        $time_end_dt = $f_date['end-time'] ? new DateTime($f_date['end-time'], wp_timezone()) : null;
+        
+        // create date string
+        $date_string = $date_dt->format('F j, Y');
+        if ($date_end_dt) {
+            $date_string = $date_dt->format(($date_dt->format('Y') == $date_end_dt->format('Y')) ? 'F j' : 'F j, Y') . ' - ' . $date_end_dt->format('F j, Y'); // include the year in the start date only if it differs from the end date's year
+        }
+        
+        // create time string
+        $time_string = null;
+        if ($time_dt) {
+            $time_string = $time_dt->format('g:ia');
+
+            // if this is a single day event and there's an end time, add it to the string
+            if (!$date_end_dt && $time_end_dt) {
+                $time_string .= ' - ' . $time_end_dt->format('g:ia');
+            }
+        }
+        
+        echo $date_string;
+        if ($time_string) {
+            echo '<br />' . $time_string;
+        }
+    }
+}
+add_action('manage_event_posts_custom_column', 'kf_event_custom_column_content', 10, 2);
+
+function kf_manage_event_sortable_columns($columns) {
+    $columns['event_date'] = 'column_event_date';
+    
+    return $columns;
+}
+add_filter('manage_edit-event_sortable_columns', 'kf_manage_event_sortable_columns');
+
+function kf_event_custom_column_sorting($query) {
+    if(is_admin()) {
+        if($query->get('orderby') == 'column_event_date') {
+            $meta_query = array(
+                'relation' => 'AND',
+                'order_num_start' => array(
+                    'key' => '_kf_event_order_num_start'
+                ),
+                'order_num_end' => array(
+                    'key' => '_kf_event_order_num_end'
+                )
+            );
+            $orderby = array(
+                'order_num_start' => $query->get('order'),
+                'order_num_end' => $query->get('order')
+            );
+            
+            $query->set('meta_query', $meta_query);
+            $query->set('orderby', $orderby);
+        }
+    }
+}
+add_action('pre_get_posts', 'kf_event_custom_column_sorting');
 
 
 /**

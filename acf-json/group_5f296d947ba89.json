@@ -450,6 +450,37 @@
                     "min": "",
                     "max": ""
                 },
+                "layout_5f59289ad7513": {
+                    "key": "layout_5f59289ad7513",
+                    "name": "events",
+                    "label": "Events",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_5f59289fd7514",
+                            "label": "Section",
+                            "name": "section",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "clone": [
+                                "group_5f5927e1a46f9"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
                 "layout_5f34211fcc6ff": {
                     "key": "layout_5f34211fcc6ff",
                     "name": "divider",
@@ -504,5 +535,5 @@
     "hide_on_screen": "",
     "active": false,
     "description": "",
-    "modified": 1599068903
+    "modified": 1599678643
 }

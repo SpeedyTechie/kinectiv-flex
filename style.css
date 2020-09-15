@@ -1333,6 +1333,9 @@ object {
     font-size: 18px;
 }
 .text_lg {
+    font-size: 22px;
+}
+.text_xl {
     font-size: 24px;
 }
 .text_normal {
@@ -2779,7 +2782,7 @@ object {
 .info-cols__list-item {
     position: relative;
     margin-bottom: 10px;
-    padding-left: 36px;
+    padding-left: 2em;
 }
 .info-cols__list-item:last-child {
     margin-bottom: 0;
@@ -3152,4 +3155,77 @@ object {
 }
 .post-tile__text {
     margin-top: 10px;
+}
+
+/*--------------------------------------------------------------
+## Event Tile
+--------------------------------------------------------------*/
+.event-tile  {
+    display: block;
+    height: 100%;
+    text-decoration: none;
+    transition: 0.4s;
+}
+.event-tile:hover,
+.event-tile:focus,
+.event-tile:active {
+    transform: translateY(-5px);
+}
+.event-tile__tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+}
+.event-tile__image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+.event-tile__overlay {
+    opacity: 0.98;
+    background-image: linear-gradient(to bottom, transparent, currentColor);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+.event-tile__main {
+    position: relative;
+    padding: 30px 35px;
+}
+.event-tile__main_image {
+    padding-top: 68%;
+}
+.event-tile__date-part {
+    display: inline-block;
+}
+.event-tile__title {
+    margin: 5px 0 15px;
+}
+.event-tile__title:last-child {
+    margin-bottom: 0;
+}
+.event-tile__info {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -4px -10px;
+}
+.event-tile__info-item {
+    padding: 4px 10px;
+}
+.event-tile__info-line {
+    position: relative;
+    padding-left: 1.7em;
+}
+.event-tile__info-icon {
+    position: absolute;
+    top: 0.1em;
+    left: 0;
+    width: 1.2em;
+    height: 1.2em;
 }
