@@ -9,10 +9,13 @@ $section = $pt_sections['current'];
 $section_prev = $pt_sections['prev'];
 $section_next = $pt_sections['next'];
 
+$theme = $section['options']['color_theme'];
+
 // build style attribute and class list
+$bg_styles = kf_section_bg_styles($section['options']);
 $padding_styles = kf_section_padding_styles($section['options'], $section_prev['options'], $section_next['options']);
-$section_style = $padding_styles['style'];
-$section_classes = $padding_styles['classes'];
+$section_style = $bg_styles['style'] . $padding_styles['style'];
+$section_classes = $bg_styles['classes'] . $padding_styles['classes'];
 ?>
 
 <div class="section<?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>

@@ -2638,6 +2638,12 @@ object {
     max-width: 800px;
     margin: 15px auto 0;
 }
+.cta__text_left {
+    margin-left: 0;
+}
+.cta__text_right {
+    margin-right: 0;
+}
 .cta__text:first-child {
     margin-top: 0;
 }
@@ -2669,6 +2675,12 @@ object {
 .logos__text {
     max-width: 800px;
     margin: 0 auto;
+}
+.logos__text_left {
+    margin-left: 0;
+}
+.logos__text_right {
+    margin-right: 0;
 }
 .logos__logos {
     margin-top: 45px;

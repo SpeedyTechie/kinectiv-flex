@@ -22,7 +22,7 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
     <div class="section__content">
         <div class="logos logos_<?php echo $section['options']['layout_align']; ?>">
             <?php if ($section['title']) { ?><h2 class="logos__title title"><?php echo $section['title']; ?></h2><?php } ?>
-            <?php if ($section['text']) { ?><div class="logos__text text text_md text_wrap text_compact"><?php echo kf_wysiwyg_color_classes($section['text'], $theme); ?></div><?php } ?>
+            <?php if ($section['text']) { ?><div class="logos__text logos__text_<?php echo $section['options']['layout_align']; ?> text text_md text_wrap text_compact"><?php echo kf_wysiwyg_color_classes($section['text'], $theme); ?></div><?php } ?>
             <div class="logos__logos">
                 <?php if ($section['logos']): ?>
                 <div class="logos__grid logos__grid_<?php echo $section['options']['layout_align']; ?> logos__grid_<?php echo $section['options']['layout_logo-size']; ?>">
