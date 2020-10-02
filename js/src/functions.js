@@ -9,7 +9,7 @@ var enhanceMouseFocusNewElements = $();
 function enhanceMouseFocusUpdate() {
     if (enhanceMouseFocusEnabled) {
         // add any new focusable elements
-        enhanceMouseFocusNewElements = $('button, input[type="submit"], input[type="button"], [tabindex]:not(input, textarea)').not(enhanceMouseFocusElements);
+        enhanceMouseFocusNewElements = $('button, input[type="submit"], input[type="button"], [tabindex]:not(input, textarea), a').not(enhanceMouseFocusElements);
         enhanceMouseFocusElements = enhanceMouseFocusElements.add(enhanceMouseFocusNewElements);
         
         // if an element gets focus due to a mouse click, prevent it from keeping focus
@@ -637,6 +637,397 @@ function initAjaxGridLoad() {
 
 
 
+/* Gravity Forms Multi-File Upload Enhancements */
+
+function initGformEnhanceFileInput() {
+    var rafSupported = (typeof window.requestAnimationFrame === 'function' && typeof window.cancelAnimationFrame === 'function');
+    
+    var fileInputs = $();
+    var frameRequest = null;
+    
+    
+    function requestFileInputFrame() {
+        if (rafSupported) {
+            window.cancelAnimationFrame(frameRequest);
+            frameRequest = window.requestAnimationFrame(updateFileInputs);
+        } else {
+            clearTimeout(frameRequest);
+            frameRequest = setTimeout(updateFileInputs, 64);
+        }
+    }
+    
+    function updateFileInputPreview(customPreview, sourcePreview) {
+        var status = '';
+        var progressSource = sourcePreview.find('b');
+        var boxEl = customPreview.find('.kfgf-file-previews__box');
+        var statusEl = customPreview.find('.kfgf-file-previews__status');
+        var progressEl = customPreview.find('.kfgf-file-previews__progress');
+        var cancelEl = customPreview.find('.kfgf-file-previews__cancel');
+        
+        // if this is a new preview, perform initial setup
+        if (customPreview.hasClass('kfgf-file-previews__item_new')) {
+            var name = '';
+            
+            // set name text
+            if (sourcePreview.find('strong').length > 0) {
+                name = sourcePreview.find('strong').text();
+            } else {
+                name = sourcePreview[0].childNodes[0].nodeValue.trim();
+                name = name.substr(0, name.lastIndexOf('(') - 1);
+            }
+            customPreview.find('.kfgf-file-previews__name').text(name);
+            customPreview.find('.kfgf-file-previews__box').attr('title', name);
+            
+            // add cancel event handler
+            cancelEl.click(function() {
+                sourcePreview.find('.gform_delete').trigger('click');
+                sourcePreview.find('a').trigger('click');
+                
+                customPreview.parents('.kfgf-file-previews').find('.kfgf-file-previews__item_error').not('.kfgf-file-previews__item_proto').remove();
+            });
+            
+            customPreview.removeClass('kfgf-file-previews__item_new');
+        }
+        
+        // get status based on the current configuration of the source
+        if (sourcePreview.children().length == 0) {
+            status = 'failed';
+        } else if (progressSource.length == 0) {
+            status = 'complete';
+        } else if (sourcePreview.find('a').length == 0 && sourcePreview.find('img').length == 0 && sourcePreview.find('strong').length == 0) {
+            status = 'cancelled';
+        } else if (progressSource.text().trim() == '') {
+            status = 'waiting';
+        } else {
+            status = 'loading';
+        }
+        
+        // if the status changed since the last frame, update it
+        if (customPreview.data('file-status') != status) {
+            if (status == 'waiting') {
+                statusEl.text('Waiting');
+                statusEl.removeClass('screen-reader-text');
+                
+                progressEl.addClass('kfgf-file-previews__progress_hidden');
+            } else if (status == 'loading') {
+                statusEl.text('Uploading');
+                statusEl.addClass('screen-reader-text');
+                
+                progressEl.removeClass('kfgf-file-previews__progress_hidden');
+            } else if (status == 'complete') {
+                statusEl.text('Uploaded');
+                statusEl.removeClass('screen-reader-text');
+                
+                progressEl.addClass('kfgf-file-previews__progress_hidden');
+            } else if (status == 'failed') {
+                boxEl.addClass('kfgf-file-previews__box_error');
+                
+                statusEl.text('Failed');
+                statusEl.removeClass('screen-reader-text');
+                
+                progressEl.addClass('kfgf-file-previews__progress_hidden');
+                
+                cancelEl.parent().remove();
+            } else if (status == 'cancelled') {
+                boxEl.addClass('kfgf-file-previews__box_error');
+                
+                statusEl.text('Cancelled');
+                statusEl.removeClass('screen-reader-text');
+                
+                progressEl.addClass('kfgf-file-previews__progress_hidden');
+                
+                cancelEl.parent().remove();
+            }
+            
+            customPreview.data('file-status', status);
+        }
+        
+        // update progress bar
+        if (status == 'loading') {
+            progressEl.find('.kfgf-file-previews__progress-bar').css('width', progressSource.text());
+        }
+    }
+    
+    function updateFileInputs() {
+        fileInputs.each(function() {
+            var inputWrap = $(this);
+            
+            // if this file input is still in the DOM, update it (otherwise, remove it from the list)
+            if (jQuery.contains(document, inputWrap[0])) {
+                var inputContainer = inputWrap.find('.ginput_container_fileupload');
+                var errors = inputWrap.find('[id^="gform_multifile_messages_"] li');
+                var previews = inputWrap.find('[id^="gform_preview_"] .ginput_preview');
+                var customPreviewWrap = inputContainer.find('.kfgf-file-previews');
+                var customPreviews = customPreviewWrap.find('.kfgf-file-previews__item_preview').not('.kfgf-file-previews__item_proto');
+                var protoWrap = customPreviewWrap.find('.kfgf-file-previews__proto');
+                var protoError = protoWrap.find('.kfgf-file-previews__item_error');
+                var protoPreview = protoWrap.find('.kfgf-file-previews__item_preview');
+                
+                // add new errors
+                errors.each(function() {
+                    var sourceError = $(this);
+                    var customError = protoError.clone().removeClass('kfgf-file-previews__item_proto');
+                    var prevError = customPreviewWrap.children('.kfgf-file-previews__item_error').last();
+                    
+                    customError.find('.kfgf-file-previews__error-text').text(sourceError.text()); // copy error text
+                    
+                    // insert the new error after the previous one (or at the beginning if there is no previous error)
+                    if (prevError.length > 0) {
+                        customError.insertAfter(prevError);
+                    } else {
+                        customError.prependTo(customPreviewWrap);
+                    }
+                    
+                    sourceError.remove(); // remove source error from DOM
+                });
+                
+                // update existing previews
+                customPreviews.each(function() {
+                    var customPreview = $(this);
+                    var sourcePreview = customPreview.data('src-preview');
+                    
+                    if (sourcePreview && sourcePreview.length > 0 && jQuery.contains(document, sourcePreview[0])) {
+                        previews = previews.not(sourcePreview); // review the source preview from the master list since it is accounted for
+                        
+                        updateFileInputPreview(customPreview, sourcePreview);
+                    } else {
+                        // if there's no source element in the DOM for this custom preview, remove it
+                        customPreview.remove();
+                    }
+                });
+                
+                // add new previews
+                previews.each(function() {
+                    var sourcePreview = $(this);
+                    var customPreview = protoPreview.clone().removeClass('kfgf-file-previews__item_proto');
+                    
+                    customPreview.data('src-preview', sourcePreview);
+                    customPreview.appendTo(customPreviewWrap);
+                    
+                    enhanceMouseFocusUpdate();
+                    
+                    updateFileInputPreview(customPreview, sourcePreview);
+                });
+            } else {
+                // remove this file input from the list
+                fileInputs = fileInputs.not(inputWrap);
+            }
+        });
+        
+        // if there are still active inputs, request the next frame
+        if (fileInputs.length > 0) {
+            requestFileInputFrame();
+        }
+    }
+    
+    function setupFileInputs() {
+        fileInputs = fileInputs.add($('.gfield .ginput_container_fileupload').parents('.gfield').not(fileInputs)); // add any new file inputs
+
+        // start updating
+        if (fileInputs.length > 0) {
+            requestFileInputFrame();
+        }
+    }
+    
+    
+    setupFileInputs();
+    $(document).on('gform_post_render', setupFileInputs);
+}
+
+
+
+/* Gravity Forms List Enhancements */
+
+function initGformEnhanceList() {
+    function updateAddButtons(container) {
+        container.find('.add_list_item').each(function() {
+            var addButton = $(this);
+            
+            // update title and aria-label based on whether the button is disabled
+            if (addButton.hasClass('gfield_icon_disabled')) {
+                addButton.attr('title', 'Maximum number of rows reached');
+                addButton.attr('aria-label', 'Can\'t add another row (Maximum number of rows reached)');
+            } else {
+                addButton.attr('title', '');
+                addButton.attr('aria-label', 'Add another row');
+            }
+        });
+    }
+    
+    
+    if (typeof gform === 'object') {
+        gform.addAction('gform_list_post_item_add', function (item, container) {
+            updateAddButtons(container);
+
+            enhanceMouseFocusUpdate();
+        });
+        gform.addAction('gform_list_post_item_delete', function (container) {
+            updateAddButtons(container);
+        });
+    }
+}
+
+
+
+/* Gravity Forms Stripe Field Enhancements */
+
+function initGformEnhanceStripe() {
+    var rafSupported = (typeof window.requestAnimationFrame === 'function' && typeof window.cancelAnimationFrame === 'function');
+    
+    var stripeFields = $();
+    var frameRequest = null;
+    
+    
+    function requestStripeFieldFrame() {
+        if (rafSupported) {
+            window.cancelAnimationFrame(frameRequest);
+            frameRequest = window.requestAnimationFrame(updateStripeFields);
+        } else {
+            clearTimeout(frameRequest);
+            frameRequest = setTimeout(updateStripeFields, 64);
+        }
+    }
+    
+    function updateStripeFields() {
+        stripeFields.each(function() {
+            var inputWrap = $(this);
+            
+            // if this Stripe field is still in the DOM, update it (otherwise, remove it from the list)
+            if (jQuery.contains(document, inputWrap[0])) {
+                var stripeElement = inputWrap.find('.ginput_container_creditcard .StripeElement');
+                var validationMessage = inputWrap.find('.ginput_container_creditcard .validation_message');
+                var validationClasses = stripeElement.attr('data-validation-classes');
+                
+                // add text/color classes to validation message, and remove this Stripe field from the list
+                if (stripeElement.length > 0 && validationMessage.length > 0) {
+                    if (validationClasses) {
+                        validationMessage.addClass(validationClasses);
+                        stripeElement.removeAttr('data-validation-classes');
+                    }
+                    
+                    stripeFields = stripeFields.not(inputWrap);
+                }
+            } else {
+                // remove this Stripe field from the list
+                stripeFields = stripeFields.not(inputWrap);
+            }
+        });
+        
+        // if there are still active Stripe fields, request the next frame
+        if (stripeFields.length > 0) {
+            requestStripeFieldFrame();
+        }
+    }
+    
+    function setupStripeFields() {
+        stripeFields = stripeFields.add($('.gfield .ginput_container_creditcard').parents('.gfield').not(stripeFields)); // add any new Stripe fields
+        
+        // start updating
+        if (stripeFields.length > 0) {
+            requestStripeFieldFrame();
+        }
+    }
+    
+    
+    setupStripeFields();
+    $(document).on('gform_post_render', setupStripeFields);
+}
+
+
+
+/* Gravity Forms Submit Enhancements */
+
+function initGformEnhanceSubmit() {
+    var rafSupported = (typeof window.requestAnimationFrame === 'function' && typeof window.cancelAnimationFrame === 'function');
+    
+    var gravityForms = $('.gform_wrapper');
+    var frameRequest = null;
+    
+    
+    function requestGformSubmitFrame() {
+        if (rafSupported) {
+            window.cancelAnimationFrame(frameRequest);
+            frameRequest = window.requestAnimationFrame(updateGformSubmit);
+        } else {
+            clearTimeout(frameRequest);
+            frameRequest = setTimeout(updateGformSubmit, 64);
+        }
+    }
+    
+    function updateGformSubmit() {
+        gravityForms.each(function() {
+            var wrapper = $(this);
+            
+            if (wrapper.find('.gform_ajax_spinner').length > 0 && !wrapper.hasClass('loading')) {
+                wrapper.addClass('loading');
+            } else if (wrapper.find('.gform_ajax_spinner').length == 0 && wrapper.hasClass('loading')) {
+                wrapper.removeClass('loading');
+            }
+        });
+        
+        // if there are still active forms, request the next frame
+        if (gravityForms.length > 0) {
+            requestGformSubmitFrame();
+        }
+    }
+    
+    
+    // start updating
+    if (gravityForms.length > 0) {
+        requestGformSubmitFrame();
+    }
+    
+    $(document).on('gform_confirmation_loaded', function(event, formID){
+        gravityForms = gravityForms.not('#gform_wrapper_' + formID); // remove the form from the list once it has been submitted successfully
+    });
+}
+
+
+
+/* Gravity Forms Misc Enhancements */
+
+function initGformEnhanceMisc() {
+    function telMaskFix() {
+        // force cursor to beginning of phone input on focus if field is empty
+        $('input[type="tel"]').each(function() {
+            var input = $(this);
+            
+            if (!input.data('tel-mask-fix')) {
+                input.data('tel-mask-fix', true);
+                
+                input.click(function() {
+                    var inputEl = $(this)[0];
+
+                    if (input.val() == '(___) ___-____') {
+                        if (inputEl.createTextRange) {
+                            var range = inputEl.createTextRange();
+
+                            range.move('character', 0);
+                            range.select();
+                        } else {
+                            if (inputEl.selectionStart) {
+                                inputEl.focus();
+                                inputEl.setSelectionRange(0, 0);
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+    
+    
+    // bind pricing field formatting on initial form load (needed due to some sort of GF glitch)
+    if (typeof gformBindFormatPricingFields === 'function') {
+        gformBindFormatPricingFields();
+    }
+    
+    telMaskFix();
+    $(document).on('gform_post_render', telMaskFix);
+}
+
+
+
 /* General */
 
 $(function() {
@@ -646,6 +1037,11 @@ $(function() {
     initTestimonialSlider();
     initLastItemFlexRow();
     initEnhanceMouseFocus();
+    initGformEnhanceFileInput();
+    initGformEnhanceList();
+    initGformEnhanceStripe();
+    initGformEnhanceSubmit();
+    initGformEnhanceMisc();
     initDialogBoxes();
     initAjaxGridLoad();
 });

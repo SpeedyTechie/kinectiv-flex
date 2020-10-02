@@ -21,3 +21,22 @@
 .acf-input .acf-editor-wrap iframe {
     min-height: 56px;
 }
+
+/*--------------------------------------------------------------
+# Gravity Forms - Field Options
+--------------------------------------------------------------*/
+.gfield #field_settings .enable_enhanced_ui_setting,
+.gfield #field_settings .other_choice_setting,
+.gfield #field_settings .disable_margins_setting,
+.gfield #field_settings #date_picker_container,
+.gfield #field_settings .multiple_files_setting label:not([for="field_max_files"]),
+.gfield #field_settings .multiple_files_setting #field_multiple_files,
+.gfield #field_settings .add_icon_url_setting,
+.gfield #field_settings .delete_icon_url_setting,
+.gfield #field_settings .columns_setting,
+.gfield .ginput_container:not(.ginput_container_textarea) ~ #field_settings .size_setting,
+#confirmation-editor #form_disable_autoformatting,
+#confirmation-editor label[for="form_disable_autoformatting"],
+#confirmation-editor #wp-form_confirmation_message-media-buttons {
+    display: none !important;
+}

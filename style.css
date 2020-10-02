@@ -13,10 +13,8 @@ Description: A theme by Kinectiv
 # Content
 # Links
 # Accessibility
-# Alignments
 # Media
-	## Captions
-	## Galleries
+# Forms
 # Gravity Forms
 # Colors
 # Blocks
@@ -422,13 +420,15 @@ a {
 	color: #3f738d;
     transition: color 0.4s;
 }
-a.light {
+a.light,
+.light a {
     color: #bbc9d8;
 }
 a:visited {
 	color: #3f738d;
 }
-a.light:visited {
+a.light:visited,
+.light a:visited {
     color: #bbc9d8;
 }
 a:hover,
@@ -438,7 +438,10 @@ a:active {
 }
 a.light:hover,
 a.light:focus,
-a.light:active {
+a.light:active,
+.light a:hover,
+.light a:focus,
+.light a:active {
 	color: #eef2f6;
 }
 a:hover,
@@ -474,6 +477,130 @@ object {
 }
 
 /*--------------------------------------------------------------
+# Forms
+--------------------------------------------------------------*/
+input[type="text"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+input[type="email"],
+input[type="search"],
+textarea,
+select {
+    display: block;
+    width: 100%;
+    padding: 0.65em 0.9em;
+    font-size: 16px;
+    line-height: 1.4;
+    border: 0;
+    border-radius: 0;
+    outline: 0;
+}
+input[type="number"] {
+    appearance: none;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    margin: 0;
+    appearance: none;
+}
+textarea {
+    resize: vertical;
+}
+select {
+    background-image: url('images/dynamic/control-arrow-down.php');
+    background-repeat: no-repeat;
+    background-size: 0.75em 0.5em;
+    background-position: right 1em center;
+    padding-right: 2em;
+    appearance: none;
+}
+select[multiple] {
+    background-image: none;
+}
+input[type="search"]::-ms-clear {
+    display: none;
+    width : 0;
+    height: 0;
+}
+input[type="search"]::-ms-reveal {
+    display: none;
+    width : 0;
+    height: 0;
+}
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+    display: none;
+}
+input[type="checkbox"],
+input[type="radio"] {
+    clip: rect(1px, 1px, 1px, 1px);
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+}
+input[type="checkbox"] + label,
+input[type="radio"] + label {
+    position: relative;
+    display: inline-block;
+    padding-left: 26px;
+    line-height: 1.4;
+    user-select: none;
+}
+input[type="checkbox"] + label::before,
+input[type="radio"] + label::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    border: 2px solid;
+    cursor: pointer;
+}
+input[type="radio"] + label::before {
+    border-radius: 50%;
+}
+input[type="checkbox"] + label::after,
+input[type="radio"] + label::after {
+    content: '';
+    opacity: 0;
+    position: absolute;
+    top: 3px;
+    left: 0;
+    cursor: pointer;
+    transition: 0.1s;
+}
+input[type="checkbox"] + label::after {
+    width: 6px;
+    height: 10px;
+    margin: 2px 0 0 5px;
+    border: 3px solid;
+    border-top: 0;
+    border-left: 0;
+    transform: rotate(35deg);
+}
+input[type="radio"] + label::after {
+    background-color: currentColor;
+    width: 8px;
+    height: 8px;
+    margin: 4px 0 0 4px;
+    border-radius: 50%;
+}
+input[type="checkbox"]:checked + label::after,
+input[type="radio"]:checked + label::after {
+    opacity: 1;
+}
+input[type="checkbox"] + label::selection,
+input[type="radio"] + label::selection {
+    background-color: transparent;
+}
+
+/*--------------------------------------------------------------
 # Gravity Forms
 --------------------------------------------------------------*/
 .gform_wrapper .gf_hidden,
@@ -484,6 +611,537 @@ object {
 .gform_wrapper .gfield_visibility_hidden,
 .gform_wrapper .gform_validation_container {
     display: none;
+}
+.gform_wrapper {
+    transition: opacity 0.2s;
+}
+.gform_wrapper.loading {
+    opacity: 0.5;
+    cursor: wait;
+}
+.gform_wrapper.loading form {
+    pointer-events: none;
+}
+.gform_wrapper .validation_error {
+    margin-bottom: 40px;
+    padding: 20px 25px;
+}
+.gform_fields {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin: -10px -8px;
+    padding: 0;
+    list-style: none;
+}
+.gfield {
+    flex: 0 0 auto;
+    width: 100%;
+    padding: 10px 8px;
+}
+.gfield.field_kfgf_width_two-thirds {
+    width: 66.67%;
+}
+.gfield.field_kfgf_width_half {
+    width: 50%;
+}
+.gfield.field_kfgf_width_one-third {
+    width: 33.33%;
+}
+.gfield.gsection:not(:first-child) {
+    padding-top: 30px;
+}
+.gfield .gsection_title {
+    margin-bottom: 5px;
+}
+.gfield .gsection_title:last-child {
+    margin-bottom: 0;
+}
+.gfield .gfield_label,
+.form_saved_message .gfield_label {
+    display: inline-block;
+    margin-bottom: 3px;
+}
+.gfield.hidden_label .gfield_label {
+    border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute !important;
+	width: 1px;
+	word-wrap: normal !important;
+}
+.gfield .ginput_quantity_label {
+    display: block;
+    margin: 8px 0 2px;
+}
+.gfield .copy_values_option_container {
+    margin: 5px 0 8px;
+}
+.gfield.hidden_label .copy_values_option_container {
+    margin-top: 0;
+}
+.gfield .ginput_container,
+.gfield .clear-multi {
+    margin-top: 5px;
+}
+.gfield.hidden_label .ginput_container,
+.gfield.hidden_label .clear-multi,
+.gfield .clear-multi .ginput_container,
+.gfield .ginput_container .clear-multi,
+.gfield .ginput_container_singleproduct {
+    margin-top: 0;
+}
+.gfield .ginput_complex,
+.gfield .clear-multi {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-right: -4px;
+    margin-bottom: -8px;
+    margin-left: -4px;
+}
+.gfield .ginput_complex > span,
+.gfield .ginput_complex > div,
+.gfield .clear-multi > div {
+    flex: 1 0 auto;
+    display: block;
+    padding: 0 4px 8px;
+}
+.gfield .ginput_complex > .name_prefix {
+    width: 13%;
+}
+.gfield .ginput_complex > .name_first,
+.gfield .ginput_complex > .name_middle,
+.gfield .ginput_complex > .name_last {
+    flex-grow: 2;
+    width: 25%;
+}
+.gfield .ginput_complex > .name_suffix {
+    width: 12%;
+}
+.gfield .ginput_complex > .address_line_1,
+.gfield .ginput_complex > .address_line_2,
+.gfield .ginput_complex > .address_country {
+    width: 100%;
+}
+.gfield .ginput_complex > .address_city,
+.gfield .ginput_complex > .address_state {
+    width: 40%;
+}
+.gfield .ginput_complex > .address_zip {
+    width: 20%;
+}
+.gfield .clear-multi .gfield_date_day,
+.gfield .clear-multi .gfield_date_month,
+.gfield .clear-multi .gfield_date_year,
+.gfield .clear-multi .gfield_date_dropdown_day,
+.gfield .clear-multi .gfield_date_dropdown_month,
+.gfield .clear-multi .gfield_date_dropdown_year,
+.gfield .clear-multi .gfield_time_hour,
+.gfield .clear-multi .gfield_time_minute, 
+.gfield .clear-multi .gfield_time_ampm {
+    width: 33.33%;
+}
+.gfield .ginput_container_creditcard .ginput_full {
+    width: 100%;
+}
+.gfield .gfield_checkbox,
+.gfield .gfield_radio {
+    margin: 0;
+    padding: 0;
+    line-height: 1.4;
+    list-style: none;
+}
+.gfield.field_kfgf_layout_horizontal .gfield_checkbox,
+.gfield.field_kfgf_layout_horizontal .gfield_radio {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -5px -15px;
+}
+.gfield .gfield_checkbox li,
+.gfield .gfield_radio li {
+    margin-bottom: 5px;
+}
+.gfield .gfield_checkbox li:last-child,
+.gfield .gfield_radio li:last-child {
+    margin-bottom: 0;
+}
+.gfield.field_kfgf_layout_horizontal .gfield_checkbox li,
+.gfield.field_kfgf_layout_horizontal .gfield_radio li {
+    margin-bottom: 0;
+    padding: 5px 15px;
+}
+.gfield .gfield_checkbox .gchoice_select_all {
+    font-style: italic;
+}
+.gfield textarea.small {
+    height: 150px;
+}
+.gfield textarea.medium {
+    height: 225px;
+}
+.gfield textarea.large {
+    height: 300px;
+}
+.gfield .gform_drop_area {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+    padding: 50px 25px;
+    text-align: center;
+    border-width: 2px;
+    border-style: solid;
+}
+.gfield .gform_drop_instructions {
+    margin: 10px 10px 10px 0;
+    line-height: 1.4;
+}
+.gfield .gform_custom_extension_list {
+    width: 100%;
+    margin-top: 10px;
+}
+.gfield .ginput_container_fileupload .validation_message {
+    display: none;
+}
+.gfield .ginput_container_fileupload [id^="gform_preview_"],
+.gfield .ginput_container_fileupload ~ [id^="gform_preview_"] {
+    display: none;
+}
+.gfield .gfield_list {
+    margin-bottom: 0;
+    border-spacing: 0;
+}
+.gfield .gfield_list .gfield_list_group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.gfield .gfield_list .gfield_list_group:last-child {
+    margin-bottom: 0;
+}
+.gfield .gfield_list .gfield_list_cell {
+    width: 100%;
+    margin-right: 8px;
+    padding: 0;
+}
+.gfield .gfield_list .gfield_list_icons {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    padding: 0;
+}
+.gfield .gfield_list .add_list_item,
+.gfield .gfield_list .delete_list_item {
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 20px;
+    transition: 0.4s;
+}
+.gfield .gfield_list .add_list_item {
+    margin-right: 4px;
+}
+.gfield .gfield_list .gfield_icon_disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.gfield .gfield_list .add_list_item::before,
+.gfield .gfield_list .delete_list_item::before,
+.gfield .gfield_list .add_list_item::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    right: 5px;
+    margin-top: -1px;
+    border-top: 2px solid;
+}
+.gfield .gfield_list .add_list_item::after {
+    transform: rotate(90deg);
+}
+.gfield .StripeElement {
+    background-color: currentColor;
+    height: auto;
+    border: 0;
+    border-radius: 0;
+}
+.gfield .StripeElement--webkit-autofill {
+    background-color: currentColor !important;
+}
+.gfield .gfield_time_hour i {
+    display: none;
+}
+.gfield .ginput_complex label,
+.gfield .clear-multi label {
+    display: inline-block;
+}
+.gfield.field_sublabel_below .ginput_complex label,
+.gfield.field_sublabel_below .clear-multi label {
+    margin-top: 2px;
+}
+.gfield.field_sublabel_above .ginput_complex label,
+.gfield.field_sublabel_above .clear-multi label {
+    margin-bottom: 2px;
+}
+.gfield .ginput_complex .gf_clear_complex {
+    display: none;
+}
+.gfield .ginput_counter {
+    margin-top: 3px;
+    font-size: 12px;
+    line-height: 1.2;
+}
+.gfield.field_description_below .gfield_description {
+    margin-top: 8px;
+}
+.gfield.field_description_above .gfield_description {
+    margin-bottom: 8px;
+}
+.gfield.field_description_below .validation_message,
+.gfield.field_description_above .validation_message,
+.form_saved_message .validation_message {
+    margin-top: 8px;
+    margin-bottom: 0;
+}
+.gfield.field_description_below .validation_message:empty,
+.gfield.field_description_above .validation_message:empty {
+    margin-top: 0;
+}
+.gform_footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 35px -8px -6px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+.gform_footer .gform_button,
+.gform_footer .gform_save_link {
+    margin: 6px 8px;
+}
+.gform_footer .gform_ajax_spinner,
+.form_saved_message .gform_ajax_spinner {
+    display: none;
+}
+.form_saved_message [name="gform_send_resume_link_button"] {
+    margin-top: 20px;
+}
+
+/*--------------------------------------------------------------
+## Date Picker
+--------------------------------------------------------------*/
+#ui-datepicker-div {
+    display: none;
+}
+.ui-datepicker {
+    background-color: #f3f3f3;
+	width: 225px;
+	height: auto;
+	margin: 5px auto 0;
+    color: #6d6d6d;
+	box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.4);
+}
+.ui-datepicker a {
+	text-decoration: none;
+}
+.ui-datepicker table {
+	width: 100%;
+	border-collapse: collapse;
+}
+.ui-datepicker-header {
+    position: relative;
+}
+.ui-datepicker-title {
+    display: flex;
+    padding: 10px 30px;
+}
+.ui-datepicker-title select {
+    background-image: url('images/dynamic/control-arrow-down.php?color=a5');
+	font-size: 14px;
+    font-weight: 700;
+    margin: 0 2px;
+}
+.ui-datepicker-title select:first-child {
+    margin-left: 0;
+}
+.ui-datepicker-title select:last-child {
+    margin-right: 0;
+}
+.ui-datepicker-prev, 
+.ui-datepicker-next {
+    background-image: url('images/dynamic/control-arrow.php?color=a5');
+    background-repeat: no-repeat;
+    background-size: 8px 12px;
+    background-position: center center;
+    position: absolute;
+	display: block;
+    top: 10px;
+    bottom: 10px;
+	width: 30px;
+    cursor: pointer;
+}
+.ui-datepicker-prev {
+    left: 0;
+    transform:scaleX(-1);
+}
+.ui-datepicker-next {
+    right: 0;
+}
+.ui-datepicker-prev span, 
+.ui-datepicker-next span {
+    border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute !important;
+	width: 1px;
+	word-wrap: normal !important;
+}
+.ui-datepicker th {
+	text-transform: uppercase;
+	text-align: center;
+	font-size: 10px;
+    font-weight: 700;
+	padding: 5px 0;
+    border-top: 1px solid #a8a8a8;
+}
+.ui-datepicker tbody td {
+	padding: 0;
+	border-top: 1px solid #a8a8a8;
+	border-right: 1px solid #a8a8a8;
+}
+.ui-datepicker tbody td:last-child {
+	border-right: 0px;
+}
+.ui-datepicker td span, 
+.ui-datepicker td a {
+	display: block;
+    color: #6d6d6d;
+    font-size: 14px;
+	font-weight: 700;
+	text-align: center;
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+}
+.ui-datepicker-calendar .ui-state-default {
+	background: #f3f3f3
+}
+.ui-datepicker-today .ui-state-default {
+    background: #fff;
+    color: #000;
+}
+.ui-datepicker-calendar .ui-state-hover {
+	background: #fff;
+}
+.ui-datepicker-calendar .ui-state-active {
+	background: #6d6d6d;
+	color: #fff;
+}
+.ui-datepicker-unselectable .ui-state-default {
+	background: #a8a8a8;
+}
+td.ui-datepicker-unselectable.ui-state-disabled {
+	background-color: #a8a8a8;
+}
+table.ui-datepicker-calendar {
+	margin: 0;
+}
+body div#ui-datepicker-div[style] {
+	z-index: 99999;
+}
+
+/*--------------------------------------------------------------
+## Custom File Input Previews
+--------------------------------------------------------------*/
+.kfgf-file-previews {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: -6px -8px;
+}
+.kfgf-file-previews__proto {
+    display: none;
+}
+.kfgf-file-previews__item {
+    flex: 0 0 auto;
+    width: 33.33%;
+    padding: 6px 8px;
+}
+.kfgf-file-previews__item_error {
+    width: 100%;
+}
+.kfgf-file-previews__box {
+    position: relative;
+    padding: 20px;
+}
+.kfgf-file-previews__box::before {
+    content: '';
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transition: 0.4s;
+}
+.kfgf-file-previews__box_error::before {
+    opacity: 1;
+}
+.kfgf-file-previews__name {
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.kfgf-file-previews__bottom {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+.kfgf-file-previews__bottom-main {
+    width: 100%;
+}
+.kfgf-file-previews__progress_hidden {
+    display: none;
+}
+.kfgf-file-previews__progress {
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+}
+.kfgf-file-previews__progress-bar {
+    width: 0;
+    height: 100%;
+    border-radius: 3px;
+    transition: 0.2s;
+}
+.kfgf-file-previews__bottom-side {
+    flex: 0 0 auto;
+    margin-left: 10px;
+}
+.kfgf-file-previews__cancel {
+    display: block;
+    background-color: transparent;
+    padding: 5px;
+    border: 0;
+}
+.kfgf-file-previews__cancel-x {
+    display: block;
+    width: 9px;
+    height: 9px;
+}
+.kfgf-file-previews__cancel-x-fill {
+    transition: 0.4s;
 }
 
 /*--------------------------------------------------------------
@@ -507,6 +1165,12 @@ object {
 .c_color_a5:visited {
     color: #000;
 }
+.c_color_ax0:visited {
+    color: #f3b0b0;
+}
+.c_color_ax1:visited {
+    color: #b42222;
+}
 .c_color_b0:visited {
     color: #fafdff;
 }
@@ -524,6 +1188,12 @@ object {
 }
 .c_color_b5:visited {
     color: #161a1e;
+}
+.c_color_bx0:visited {
+    color: #f3b0a0;
+}
+.c_color_bx1:visited {
+    color: #b42212;
 }
 .c_bg_a0,
 .c_h_bg_a0:hover,
@@ -556,7 +1226,8 @@ object {
 .c_h_bfr_color_a0:active::before,
 .c_h_aft_color_a0:hover::after,
 .c_h_aft_color_a0:focus::after,
-.c_h_aft_color_a0:active::after {
+.c_h_aft_color_a0:active::after,
+.c_placeholder_a0::placeholder {
     color: #fff;
 }
 .c_border_a0,
@@ -619,7 +1290,8 @@ object {
 .c_h_bfr_color_a1:active::before,
 .c_h_aft_color_a1:hover::after,
 .c_h_aft_color_a1:focus::after,
-.c_h_aft_color_a1:active::after {
+.c_h_aft_color_a1:active::after,
+.c_placeholder_a1::placeholder {
     color: #f3f3f3;
 }
 .c_border_a1,
@@ -682,7 +1354,8 @@ object {
 .c_h_bfr_color_a2:active::before,
 .c_h_aft_color_a2:hover::after,
 .c_h_aft_color_a2:focus::after,
-.c_h_aft_color_a2:active::after {
+.c_h_aft_color_a2:active::after,
+.c_placeholder_a2::placeholder {
     color: #a8a8a8;
 }
 .c_border_a2,
@@ -745,7 +1418,8 @@ object {
 .c_h_bfr_color_a3:active::before,
 .c_h_aft_color_a3:hover::after,
 .c_h_aft_color_a3:focus::after,
-.c_h_aft_color_a3:active::after {
+.c_h_aft_color_a3:active::after,
+.c_placeholder_a3::placeholder {
     color: #6d6d6d;
 }
 .c_border_a3,
@@ -808,7 +1482,8 @@ object {
 .c_h_bfr_color_a4:active::before,
 .c_h_aft_color_a4:hover::after,
 .c_h_aft_color_a4:focus::after,
-.c_h_aft_color_a4:active::after {
+.c_h_aft_color_a4:active::after,
+.c_placeholder_a4::placeholder {
     color: #3d3d3d;
 }
 .c_border_a4,
@@ -871,7 +1546,8 @@ object {
 .c_h_bfr_color_a5:active::before,
 .c_h_aft_color_a5:hover::after,
 .c_h_aft_color_a5:focus::after,
-.c_h_aft_color_a5:active::after {
+.c_h_aft_color_a5:active::after,
+.c_placeholder_a5::placeholder {
     color: #000;
 }
 .c_border_a5,
@@ -902,6 +1578,134 @@ object {
 .c_h-parent:focus .c_h-child_stroke_a5,
 .c_h-parent:active .c_h-child_stroke_a5 {
     stroke: #000;
+}
+.c_bg_ax0,
+.c_h_bg_ax0:hover,
+.c_h_bg_ax0:focus,
+.c_h_bg_ax0:active,
+.c_h-parent:hover .c_h-child_bg_ax0,
+.c_h-parent:focus .c_h-child_bg_ax0,
+.c_h-parent:active .c_h-child_bg_ax0,
+.c_bfr_bg_ax0::before,
+.c_aft_bg_ax0::after,
+.c_h_bfr_bg_ax0:hover::before,
+.c_h_bfr_bg_ax0:focus::before,
+.c_h_bfr_bg_ax0:active::before,
+.c_h_aft_bg_ax0:hover::after,
+.c_h_aft_bg_ax0:focus::after,
+.c_h_aft_bg_ax0:active::after {
+    background-color: #f3b0b0;
+}
+.c_color_ax0,
+.c_h_color_ax0:hover,
+.c_h_color_ax0:focus,
+.c_h_color_ax0:active,
+.c_h-parent:hover .c_h-child_color_ax0,
+.c_h-parent:focus .c_h-child_color_ax0,
+.c_h-parent:active .c_h-child_color_ax0,
+.c_bfr_color_ax0::before,
+.c_aft_color_ax0::after,
+.c_h_bfr_color_ax0:hover::before,
+.c_h_bfr_color_ax0:focus::before,
+.c_h_bfr_color_ax0:active::before,
+.c_h_aft_color_ax0:hover::after,
+.c_h_aft_color_ax0:focus::after,
+.c_h_aft_color_ax0:active::after,
+.c_placeholder_ax0::placeholder {
+    color: #f3b0b0;
+}
+.c_border_ax0,
+.c_h_border_ax0:hover,
+.c_h_border_ax0:focus,
+.c_h_border_ax0:active,
+.c_h-parent:hover .c_h-child_border_ax0,
+.c_h-parent:focus .c_h-child_border_ax0,
+.c_h-parent:active .c_h-child_border_ax0,
+.c_bfr_border_ax0::before,
+.c_aft_border_ax0::after,
+.c_h_bfr_border_ax0:hover::before,
+.c_h_bfr_border_ax0:focus::before,
+.c_h_bfr_border_ax0:active::before,
+.c_h_aft_border_ax0:hover::after,
+.c_h_aft_border_ax0:focus::after,
+.c_h_aft_border_ax0:active::after {
+    border-color: #f3b0b0;
+}
+.c_fill_ax0,
+.c_h-parent:hover .c_h-child_fill_ax0,
+.c_h-parent:focus .c_h-child_fill_ax0,
+.c_h-parent:active .c_h-child_fill_ax0 {
+    fill: #f3b0b0;
+}
+.c_stroke_ax0,
+.c_h-parent:hover .c_h-child_stroke_ax0,
+.c_h-parent:focus .c_h-child_stroke_ax0,
+.c_h-parent:active .c_h-child_stroke_ax0 {
+    stroke: #f3b0b0;
+}
+.c_bg_ax1,
+.c_h_bg_ax1:hover,
+.c_h_bg_ax1:focus,
+.c_h_bg_ax1:active,
+.c_h-parent:hover .c_h-child_bg_ax1,
+.c_h-parent:focus .c_h-child_bg_ax1,
+.c_h-parent:active .c_h-child_bg_ax1,
+.c_bfr_bg_ax1::before,
+.c_aft_bg_ax1::after,
+.c_h_bfr_bg_ax1:hover::before,
+.c_h_bfr_bg_ax1:focus::before,
+.c_h_bfr_bg_ax1:active::before,
+.c_h_aft_bg_ax1:hover::after,
+.c_h_aft_bg_ax1:focus::after,
+.c_h_aft_bg_ax1:active::after {
+    background-color: #b42222;
+}
+.c_color_ax1,
+.c_h_color_ax1:hover,
+.c_h_color_ax1:focus,
+.c_h_color_ax1:active,
+.c_h-parent:hover .c_h-child_color_ax1,
+.c_h-parent:focus .c_h-child_color_ax1,
+.c_h-parent:active .c_h-child_color_ax1,
+.c_bfr_color_ax1::before,
+.c_aft_color_ax1::after,
+.c_h_bfr_color_ax1:hover::before,
+.c_h_bfr_color_ax1:focus::before,
+.c_h_bfr_color_ax1:active::before,
+.c_h_aft_color_ax1:hover::after,
+.c_h_aft_color_ax1:focus::after,
+.c_h_aft_color_ax1:active::after,
+.c_placeholder_ax1::placeholder {
+    color: #b42222;
+}
+.c_border_ax1,
+.c_h_border_ax1:hover,
+.c_h_border_ax1:focus,
+.c_h_border_ax1:active,
+.c_h-parent:hover .c_h-child_border_ax1,
+.c_h-parent:focus .c_h-child_border_ax1,
+.c_h-parent:active .c_h-child_border_ax1,
+.c_bfr_border_ax1::before,
+.c_aft_border_ax1::after,
+.c_h_bfr_border_ax1:hover::before,
+.c_h_bfr_border_ax1:focus::before,
+.c_h_bfr_border_ax1:active::before,
+.c_h_aft_border_ax1:hover::after,
+.c_h_aft_border_ax1:focus::after,
+.c_h_aft_border_ax1:active::after {
+    border-color: #b42222;
+}
+.c_fill_ax1,
+.c_h-parent:hover .c_h-child_fill_ax1,
+.c_h-parent:focus .c_h-child_fill_ax1,
+.c_h-parent:active .c_h-child_fill_ax1 {
+    fill: #b42222;
+}
+.c_stroke_ax1,
+.c_h-parent:hover .c_h-child_stroke_ax1,
+.c_h-parent:focus .c_h-child_stroke_ax1,
+.c_h-parent:active .c_h-child_stroke_ax1 {
+    stroke: #b42222;
 }
 .c_bg_b0,
 .c_h_bg_b0:hover,
@@ -934,7 +1738,8 @@ object {
 .c_h_bfr_color_b0:active::before,
 .c_h_aft_color_b0:hover::after,
 .c_h_aft_color_b0:focus::after,
-.c_h_aft_color_b0:active::after {
+.c_h_aft_color_b0:active::after,
+.c_placeholder_b0::placeholder {
     color: #fafdff;
 }
 .c_border_b0,
@@ -997,7 +1802,8 @@ object {
 .c_h_bfr_color_b1:active::before,
 .c_h_aft_color_b1:hover::after,
 .c_h_aft_color_b1:focus::after,
-.c_h_aft_color_b1:active::after {
+.c_h_aft_color_b1:active::after,
+.c_placeholder_b1::placeholder {
     color: #c8e0f1;
 }
 .c_border_b1,
@@ -1060,7 +1866,8 @@ object {
 .c_h_bfr_color_b2:active::before,
 .c_h_aft_color_b2:hover::after,
 .c_h_aft_color_b2:focus::after,
-.c_h_aft_color_b2:active::after {
+.c_h_aft_color_b2:active::after,
+.c_placeholder_b2::placeholder {
     color: #90a6cb;
 }
 .c_border_b2,
@@ -1123,7 +1930,8 @@ object {
 .c_h_bfr_color_b3:active::before,
 .c_h_aft_color_b3:hover::after,
 .c_h_aft_color_b3:focus::after,
-.c_h_aft_color_b3:active::after {
+.c_h_aft_color_b3:active::after,
+.c_placeholder_b3::placeholder {
     color: #38536f;
 }
 .c_border_b3,
@@ -1186,7 +1994,8 @@ object {
 .c_h_bfr_color_b4:active::before,
 .c_h_aft_color_b4:hover::after,
 .c_h_aft_color_b4:focus::after,
-.c_h_aft_color_b4:active::after {
+.c_h_aft_color_b4:active::after,
+.c_placeholder_b4::placeholder {
     color: #253143;
 }
 .c_border_b4,
@@ -1249,7 +2058,8 @@ object {
 .c_h_bfr_color_b5:active::before,
 .c_h_aft_color_b5:hover::after,
 .c_h_aft_color_b5:focus::after,
-.c_h_aft_color_b5:active::after {
+.c_h_aft_color_b5:active::after,
+.c_placeholder_b5::placeholder {
     color: #161a1e;
 }
 .c_border_b5,
@@ -1280,6 +2090,134 @@ object {
 .c_h-parent:focus .c_h-child_stroke_b5,
 .c_h-parent:active .c_h-child_stroke_b5 {
     stroke: #161a1e;
+}
+.c_bg_bx0,
+.c_h_bg_bx0:hover,
+.c_h_bg_bx0:focus,
+.c_h_bg_bx0:active,
+.c_h-parent:hover .c_h-child_bg_bx0,
+.c_h-parent:focus .c_h-child_bg_bx0,
+.c_h-parent:active .c_h-child_bg_bx0,
+.c_bfr_bg_bx0::before,
+.c_aft_bg_bx0::after,
+.c_h_bfr_bg_bx0:hover::before,
+.c_h_bfr_bg_bx0:focus::before,
+.c_h_bfr_bg_bx0:active::before,
+.c_h_aft_bg_bx0:hover::after,
+.c_h_aft_bg_bx0:focus::after,
+.c_h_aft_bg_bx0:active::after {
+    background-color: #f3b0a0;
+}
+.c_color_bx0,
+.c_h_color_bx0:hover,
+.c_h_color_bx0:focus,
+.c_h_color_bx0:active,
+.c_h-parent:hover .c_h-child_color_bx0,
+.c_h-parent:focus .c_h-child_color_bx0,
+.c_h-parent:active .c_h-child_color_bx0,
+.c_bfr_color_bx0::before,
+.c_aft_color_bx0::after,
+.c_h_bfr_color_bx0:hover::before,
+.c_h_bfr_color_bx0:focus::before,
+.c_h_bfr_color_bx0:active::before,
+.c_h_aft_color_bx0:hover::after,
+.c_h_aft_color_bx0:focus::after,
+.c_h_aft_color_bx0:active::after,
+.c_placeholder_bx0::placeholder {
+    color: #f3b0a0;
+}
+.c_border_bx0,
+.c_h_border_bx0:hover,
+.c_h_border_bx0:focus,
+.c_h_border_bx0:active,
+.c_h-parent:hover .c_h-child_border_bx0,
+.c_h-parent:focus .c_h-child_border_bx0,
+.c_h-parent:active .c_h-child_border_bx0,
+.c_bfr_border_bx0::before,
+.c_aft_border_bx0::after,
+.c_h_bfr_border_bx0:hover::before,
+.c_h_bfr_border_bx0:focus::before,
+.c_h_bfr_border_bx0:active::before,
+.c_h_aft_border_bx0:hover::after,
+.c_h_aft_border_bx0:focus::after,
+.c_h_aft_border_bx0:active::after {
+    border-color: #f3b0a0;
+}
+.c_fill_bx0,
+.c_h-parent:hover .c_h-child_fill_bx0,
+.c_h-parent:focus .c_h-child_fill_bx0,
+.c_h-parent:active .c_h-child_fill_bx0 {
+    fill: #f3b0a0;
+}
+.c_stroke_bx0,
+.c_h-parent:hover .c_h-child_stroke_bx0,
+.c_h-parent:focus .c_h-child_stroke_bx0,
+.c_h-parent:active .c_h-child_stroke_bx0 {
+    stroke: #f3b0a0;
+}
+.c_bg_bx1,
+.c_h_bg_bx1:hover,
+.c_h_bg_bx1:focus,
+.c_h_bg_bx1:active,
+.c_h-parent:hover .c_h-child_bg_bx1,
+.c_h-parent:focus .c_h-child_bg_bx1,
+.c_h-parent:active .c_h-child_bg_bx1,
+.c_bfr_bg_bx1::before,
+.c_aft_bg_bx1::after,
+.c_h_bfr_bg_bx1:hover::before,
+.c_h_bfr_bg_bx1:focus::before,
+.c_h_bfr_bg_bx1:active::before,
+.c_h_aft_bg_bx1:hover::after,
+.c_h_aft_bg_bx1:focus::after,
+.c_h_aft_bg_bx1:active::after {
+    background-color: #b42212;
+}
+.c_color_bx1,
+.c_h_color_bx1:hover,
+.c_h_color_bx1:focus,
+.c_h_color_bx1:active,
+.c_h-parent:hover .c_h-child_color_bx1,
+.c_h-parent:focus .c_h-child_color_bx1,
+.c_h-parent:active .c_h-child_color_bx1,
+.c_bfr_color_bx1::before,
+.c_aft_color_bx1::after,
+.c_h_bfr_color_bx1:hover::before,
+.c_h_bfr_color_bx1:focus::before,
+.c_h_bfr_color_bx1:active::before,
+.c_h_aft_color_bx1:hover::after,
+.c_h_aft_color_bx1:focus::after,
+.c_h_aft_color_bx1:active::after,
+.c_placeholder_bx1::placeholder {
+    color: #b42212;
+}
+.c_border_bx1,
+.c_h_border_bx1:hover,
+.c_h_border_bx1:focus,
+.c_h_border_bx1:active,
+.c_h-parent:hover .c_h-child_border_bx1,
+.c_h-parent:focus .c_h-child_border_bx1,
+.c_h-parent:active .c_h-child_border_bx1,
+.c_bfr_border_bx1::before,
+.c_aft_border_bx1::after,
+.c_h_bfr_border_bx1:hover::before,
+.c_h_bfr_border_bx1:focus::before,
+.c_h_bfr_border_bx1:active::before,
+.c_h_aft_border_bx1:hover::after,
+.c_h_aft_border_bx1:focus::after,
+.c_h_aft_border_bx1:active::after {
+    border-color: #b42212;
+}
+.c_fill_bx1,
+.c_h-parent:hover .c_h-child_fill_bx1,
+.c_h-parent:focus .c_h-child_fill_bx1,
+.c_h-parent:active .c_h-child_fill_bx1 {
+    fill: #b42212;
+}
+.c_stroke_bx1,
+.c_h-parent:hover .c_h-child_stroke_bx1,
+.c_h-parent:focus .c_h-child_stroke_bx1,
+.c_h-parent:active .c_h-child_stroke_bx1 {
+    stroke: #b42212;
 }
 
 /*--------------------------------------------------------------
@@ -1467,6 +2405,10 @@ object {
 .button_loading {
     opacity: 0.5;
     cursor: wait;
+}
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 /*--------------------------------------------------------------
@@ -3240,4 +4182,36 @@ object {
     left: 0;
     width: 1.2em;
     height: 1.2em;
+}
+
+/*--------------------------------------------------------------
+## Basic Form
+--------------------------------------------------------------*/
+.basic-form {
+    max-width: 750px;
+    margin: 0 auto;
+}
+.basic-form_center {
+    text-align: center;
+}
+.basic-form_right {
+    text-align: right;
+}
+.basic-form__text {
+    margin-top: 10px;
+}
+.basic-form__text:first-child {
+    margin-top: 0;
+}
+.basic-form__form {
+    margin-top: 50px;
+}
+.basic-form__form:first-child {
+    margin-top: 0;
+}
+.basic-form__form > p,
+.basic-form__form .gf_submission_limit_message p {
+    /* style for Gravity Forms messages such as entry limit, scheduled, login required */
+    margin: 0;
+    font-style: italic;
 }
