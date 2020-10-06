@@ -72,7 +72,7 @@
                             </div>
                             <?php endforeach; ?>
                             <div class="breadcrumbs__item breadcrumbs__item_title">
-                                <span class="breadcrumbs__title"><?php echo get_the_title(); ?></span>
+                                <span class="breadcrumbs__title"><?php echo is_404() ? 'Page not found' : get_the_title(); ?></span>
                             </div>
                         </div>
                     </div>

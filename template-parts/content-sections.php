@@ -1,9 +1,11 @@
 <?php
-$f_sections = get_field('page_content_sections');
+$f_sections = get_field('page_content_sections'); // get sections for standard pages
 if (is_singular('post')) {
-    $f_sections = get_field('post_content_sections');
+    $f_sections = get_field('post_content_sections'); // get sections for single posts
 } elseif (is_singular('event')) {
-    $f_sections = get_field('event_content_sections');
+    $f_sections = get_field('event_content_sections'); // get sections for single events
+} elseif (is_404()) {
+    $f_sections = get_field('404_content_sections', 'option'); // get sections for 404 page
 }
 
 if ($f_sections) {

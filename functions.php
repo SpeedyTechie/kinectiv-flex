@@ -457,6 +457,11 @@ function kf_get_ancestors($post_id) {
         $ancestors[get_permalink($front_id)] = get_the_title($front_id);
     }
     
+    // if this is a 404 page, return only the front page as an ancestor
+    if (is_404()) {
+        return $ancestors;
+    }
+    
     // build breadcrumb array based on the post type
     if ($post_type == 'post') {
         $f_posts_page = get_field('config_posts_page', 'option');
