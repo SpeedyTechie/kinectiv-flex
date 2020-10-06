@@ -5,6 +5,7 @@ $pt_tile_options = $passthrough->get('tile_options');
 
 
 $f_image = get_field('event_preview_image');
+
 $f_date = get_field('event_details_date');
 $f_location = get_field('event_details_location');
 

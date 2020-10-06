@@ -1,9 +1,9 @@
 {
-    "key": "group_5f62156b5de55",
-    "title": "[Section] Form",
+    "key": "group_5f7759ab0cf8f",
+    "title": "[Section] Contact Info",
     "fields": [
         {
-            "key": "field_5f6215811eb42",
+            "key": "field_5f775bf0bb839",
             "label": "Title",
             "name": "title",
             "type": "text",
@@ -22,7 +22,7 @@
             "maxlength": ""
         },
         {
-            "key": "field_5f6215e61eb43",
+            "key": "field_5f7782719879d",
             "label": "Text",
             "name": "text",
             "type": "wysiwyg",
@@ -44,23 +44,7 @@
             "enable_autoembed": 0
         },
         {
-            "key": "field_5f6216221eb44",
-            "label": "Form",
-            "name": "form",
-            "type": "gf_select",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "allow_null": 1,
-            "multiple": 0
-        },
-        {
-            "key": "field_5f62217503836",
+            "key": "field_5f775bfebb83a",
             "label": "<span class=\"dashicons dashicons-admin-settings\"><\/span> Options",
             "name": "",
             "type": "accordion",
@@ -77,7 +61,7 @@
             "endpoint": 0
         },
         {
-            "key": "field_5f62217e03837",
+            "key": "field_5f775c0abb83b",
             "label": "",
             "name": "options",
             "type": "group",
@@ -92,7 +76,7 @@
             "layout": "block",
             "sub_fields": [
                 {
-                    "key": "field_5f6221b203838",
+                    "key": "field_5f775ddcbb83c",
                     "label": "Layout",
                     "name": "",
                     "type": "accordion",
@@ -109,9 +93,9 @@
                     "endpoint": 0
                 },
                 {
-                    "key": "field_5f6221cf0383c",
-                    "label": "Alignment",
-                    "name": "layout_align",
+                    "key": "field_5f7b267f3c06b",
+                    "label": "Alignment (Title & Text)",
+                    "name": "layout_align-title",
                     "type": "button_group",
                     "instructions": "",
                     "required": 0,
@@ -127,12 +111,12 @@
                         "right": "<span class=\"dashicons dashicons-editor-alignright\"><\/span> Right"
                     },
                     "allow_null": 0,
-                    "default_value": "",
+                    "default_value": "center",
                     "layout": "horizontal",
                     "return_format": "value"
                 },
                 {
-                    "key": "field_5f6221b903839",
+                    "key": "field_5f775faebb83d",
                     "label": "Color",
                     "name": "",
                     "type": "accordion",
@@ -149,7 +133,7 @@
                     "endpoint": 0
                 },
                 {
-                    "key": "field_5f6222400383d",
+                    "key": "field_5f775fb3bb83e",
                     "label": "Color Options",
                     "name": "color",
                     "type": "clone",
@@ -170,7 +154,7 @@
                     "prefix_name": 1
                 },
                 {
-                    "key": "field_5f6221bd0383a",
+                    "key": "field_5f775fe4bb83f",
                     "label": "Background",
                     "name": "",
                     "type": "accordion",
@@ -187,7 +171,7 @@
                     "endpoint": 0
                 },
                 {
-                    "key": "field_5f6223af0383e",
+                    "key": "field_5f775febbb840",
                     "label": "Background Options",
                     "name": "bg",
                     "type": "clone",
@@ -208,7 +192,7 @@
                     "prefix_name": 1
                 },
                 {
-                    "key": "field_5f6221c20383b",
+                    "key": "field_5f77609bbb841",
                     "label": "Padding",
                     "name": "",
                     "type": "accordion",
@@ -225,7 +209,7 @@
                     "endpoint": 0
                 },
                 {
-                    "key": "field_5f6223c30383f",
+                    "key": "field_5f7760a0bb842",
                     "label": "Padding Options",
                     "name": "padding",
                     "type": "clone",
@@ -265,5 +249,5 @@
     "hide_on_screen": "",
     "active": false,
     "description": "",
-    "modified": 1601906394
+    "modified": 1601913560
 }

@@ -322,7 +322,7 @@
             "label": "Featured Image",
             "name": "event_content_image",
             "type": "image",
-            "instructions": "",
+            "instructions": "Standard Resolution: 800x720",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -380,5 +380,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1599838827
+    "modified": 1602004221
 }

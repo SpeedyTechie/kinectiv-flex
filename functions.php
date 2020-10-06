@@ -395,6 +395,12 @@ function kf_get_bg_color($options) {
         $hex = $options['bg_color']; // if this section is using a custom bg color, get the hex code
     }
     
+    $hex = kf_hex_3_to_6($hex); // convert 3 to 6 digit hex
+    
+    return $hex;
+}
+
+function kf_hex_3_to_6($hex) {
     // convert 3 to 6 digit hex
     if (strlen($hex) == 4) {
         $hex = '#' . $hex[1] . $hex[1] . $hex[2] . $hex[2] . $hex[3] . $hex[3];
@@ -442,6 +448,7 @@ function kf_advanced_bg_image_styles($options) {
  * Get page ancestors
  */
 function kf_get_ancestors($post_id) {
+    $post_type = get_post_type($post_id); // get post type
     $front_id = intval(get_option('page_on_front')); // get front page ID
     $ancestors = array(); // create an array to store ancestors (format URL => Page Title)
     
@@ -451,10 +458,20 @@ function kf_get_ancestors($post_id) {
     }
     
     // build breadcrumb array based on the post type
-    if (is_singular('post')) {
+    if ($post_type == 'post') {
+        $f_posts_page = get_field('config_posts_page', 'option');
         
-    } elseif (is_singular('event')) {
+        if ($f_posts_page) {
+            $ancestors = kf_get_ancestors($f_posts_page->ID); // use the posts page ancestors as a starting point
+            $ancestors[get_permalink($f_posts_page->ID)] = $f_posts_page->post_title; // add the posts page itself to the ancestors array
+        }
+    } elseif ($post_type == 'event') {
+        $f_events_page = get_field('config_events_page', 'option');
         
+        if ($f_events_page) {
+            $ancestors = kf_get_ancestors($f_events_page->ID); // use the events page ancestors as a starting point
+            $ancestors[get_permalink($f_events_page->ID)] = $f_events_page->post_title; // add the events page itself to the ancestors array
+        }
     } else {
         $wp_ancestors = get_post_ancestors($post_id); // get list of post ancestors from WordPress
         
@@ -804,8 +821,11 @@ function kf_show_gform($form_id, $theme) {
     $field_values = array(
         '_kf_temp_color_theme' => $theme
     );
-    
-    gravity_form($form_id, false, false, false, $field_values, true, 0);
+    ?>
+    <div class="gravity-form-wrap">
+        <?php gravity_form($form_id, false, false, false, $field_values, true, 0); ?>
+    </div>
+    <?php
 }
 
 

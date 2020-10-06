@@ -279,20 +279,22 @@ function initLastItemFlexRow() {
     
     
     function addLastItemClass(items, className) {
-        var lastItem = false;
+        var prevItem = false; // store the previous item in the loop (start as false, since the first item has no previous)
         
+        // loop through each item in the set and determine which items are the last in their respective row
         items.each(function() {
-            if (lastItem && lastItem.offset().top != $(this).offset().top) {
-                lastItem.addClass(className);
-            } else if (lastItem) {
-                lastItem.removeClass(className);
+            if (prevItem && prevItem.offset().top != $(this).offset().top) {
+                prevItem.addClass(className); // if the current item is positioned lower than the previous, add class to the previous item (since it must be the last in its row)
+            } else if (prevItem) {
+                prevItem.removeClass(className); // remove class from any item that is not last
             }
             
-            lastItem = $(this);
-        }).last().addClass(className);
+            prevItem = $(this); // update the previous item
+        }).last().addClass(className); // add class to final item in the set (since that will always be the last in its row)
     }
     
     function triggerLastItemUpdate() {
+        // update each item set
         $.each(itemSets, function(i, set) {
             addLastItemClass(set.items, set.className);
         });
@@ -300,6 +302,7 @@ function initLastItemFlexRow() {
     
     function addItemSet(items, className) {
         if (items.length > 1) {
+            // add new item set to list
             itemSets.push({
                 items: items,
                 className: className
@@ -319,6 +322,9 @@ function initLastItemFlexRow() {
     });
     $('.post-tile__info').each(function() {
         addItemSet($(this).find('.post-tile__info-item'), 'post-tile__info-item_last');
+    });
+    $('.post-intro__info').each(function() {
+        addItemSet($(this).find('.post-intro__info-item'), 'post-intro__info-item_last');
     });
     
     triggerLastItemUpdate();

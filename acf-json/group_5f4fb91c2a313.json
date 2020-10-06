@@ -82,7 +82,7 @@
             "label": "Featured Image",
             "name": "post_content_image",
             "type": "image",
-            "instructions": "",
+            "instructions": "Standard Width: 1350",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -142,5 +142,5 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1599160772
+    "modified": 1601924664
 }

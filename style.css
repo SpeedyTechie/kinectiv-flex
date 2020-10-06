@@ -603,6 +603,12 @@ input[type="radio"] + label::selection {
 /*--------------------------------------------------------------
 # Gravity Forms
 --------------------------------------------------------------*/
+.gravity-form-wrap > p,
+.gravity-form-wrap .gf_submission_limit_message p {
+    /* style for Gravity Forms messages such as entry limit, scheduled, login required */
+    margin: 0;
+    font-style: italic;
+}
 .gform_wrapper .gf_hidden,
 .gform_wrapper .gform_hidden,
 .gform_wrapper input.gform_hidden,
@@ -745,6 +751,10 @@ input[type="radio"] + label::selection {
 .gfield .clear-multi .gfield_time_minute, 
 .gfield .clear-multi .gfield_time_ampm {
     width: 33.33%;
+}
+.gfield .ginput_container_email .ginput_left,
+.gfield .ginput_container_email .ginput_right {
+    width: 50%;
 }
 .gfield .ginput_container_creditcard .ginput_full {
     width: 100%;
@@ -2239,6 +2249,9 @@ body div#ui-datepicker-div[style] {
 .title_sm {
     font-size: 24px;
 }
+.title_md {
+    font-size: 45px;
+}
 .title_lg {
     font-size: 54px;
 }
@@ -2409,6 +2422,9 @@ body div#ui-datepicker-div[style] {
 .button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+.button_loading:disabled {
+    cursor: wait;
 }
 
 /*--------------------------------------------------------------
@@ -2845,6 +2861,9 @@ body div#ui-datepicker-div[style] {
 }
 .section__content_w_full {
     max-width: none;
+}
+.section__content_x_sm {
+    padding: 0 60px;
 }
 
 /*--------------------------------------------------------------
@@ -4209,9 +4228,141 @@ body div#ui-datepicker-div[style] {
 .basic-form__form:first-child {
     margin-top: 0;
 }
-.basic-form__form > p,
-.basic-form__form .gf_submission_limit_message p {
-    /* style for Gravity Forms messages such as entry limit, scheduled, login required */
-    margin: 0;
-    font-style: italic;
+
+/*--------------------------------------------------------------
+## Contact Info
+--------------------------------------------------------------*/
+.contact-info__text {
+    max-width: 800px;
+    margin: 15px auto 0;
+}
+.contact-info__text_left {
+    margin-left: 0;
+}
+.contact-info__text_center {
+    text-align: center;
+}
+.contact-info__text_right {
+    margin-right: 0;
+    text-align: right;
+}
+.contact-info__text:first-child {
+    margin-top: 0;
+}
+
+/*--------------------------------------------------------------
+## Post Intro
+--------------------------------------------------------------*/
+.post-intro__image {
+    display: block;
+    width: 100%;
+    margin-bottom: 30px;
+}
+.post-intro__main {
+    display: flex;
+    align-items: flex-start;
+}
+.post-intro__col {
+    flex: 1 1 auto;
+}
+.post-intro__col_side {
+    flex: 0 0 auto;
+    padding: 15px 0 0 60px;
+}
+.post-intro__title {
+    margin-bottom: 15px;
+}
+.post-intro__info {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -3px -15px;
+}
+.post-intro__info-item {
+    position: relative;
+    padding: 3px 15px;
+    margin-right: 1px;
+}
+.post-intro__info-item::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    right: -1px;
+    bottom: 3px;
+    margin: 0.3em 0;
+    border-right: 1px solid;
+}
+.post-intro__info-item_last::after,
+.post-intro__info-item:last-child::after {
+    display: none;
+}
+
+/*--------------------------------------------------------------
+## Event Intro
+--------------------------------------------------------------*/
+.event-intro {
+    display: flex;
+    justify-content: center;
+}
+.event-intro__item {
+    flex: 0 0 auto;
+    width: 50%;
+}
+.event-intro__item:only-child {
+    width: 100%;
+    max-width: 900px;
+}
+.event-intro__block {
+    height: 100%;
+}
+.event-intro__block_text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.event-intro__image {
+    height: 100%;
+    padding-top: 90%;
+}
+.event-intro__content {
+    padding: 55px 60px;
+}
+.event-intro__date {
+    margin-top: 8px;
+}
+.event-intro__date-part {
+    display: inline-block;
+}
+.event-intro__text {
+    margin-top: 25px;
+}
+.event-intro__info {
+    margin-top: 35px;
+}
+.event-intro__info-cols {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -5px -15px;
+}
+.event-intro__info-item {
+    padding: 5px 15px;
+}
+.event-intro__info-group {
+    position: relative;
+    padding-left: 1.7em;
+}
+.event-intro__info-icon {
+    position: absolute;
+    top: 0.1em;
+    left: 0;
+    width: 1.2em;
+    height: 1.2em;
+}
+.event-intro__info-line {
+    display: block;
+}
+.event-intro__info-part {
+    display: inline-block;
+}
+.event-intro__buttons {
+    margin-top: 35px;
 }
