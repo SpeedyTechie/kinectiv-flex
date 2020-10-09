@@ -63,7 +63,7 @@ $bg_image_styles = kf_advanced_bg_image_styles($section['options']['layout_advan
                             <div class="button-group button-group_<?php echo $section['options']['layout_align']; ?>">
                                 <?php foreach ($slide['buttons'] as $button): ?>
                                 <div class="button-group__item">
-                                    <a href="<?php echo esc_url($button['link']['url']); ?>" target="<?php echo $button['link']['target']; ?>" class="button c_bg_<?php color_id($theme_inverse, 3); ?> c_h_bg_<?php color_id($theme_inverse, 4); ?> c_color_<?php color_id($theme_inverse, 0); ?>"><?php echo $button['link']['title']; ?></a>
+                                    <a href="<?php echo esc_url($button['link']['url']); ?>" target="<?php echo $button['link']['target']; ?>" class="button c_bg_<?php color_id($theme_inverse, 3); ?> c_h_bg_<?php color_id($theme_inverse, 4); ?> c_color_<?php color_id($theme_inverse, 0); ?> c_h_color_<?php color_id($theme_inverse, 0); ?>"><?php echo $button['link']['title']; ?></a>
                                 </div>
                                 <?php endforeach; ?>
                             </div>

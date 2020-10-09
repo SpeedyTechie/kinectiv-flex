@@ -997,7 +997,7 @@ function kf_gform_field_content($field_content, $field) {
                     }
                     
                     // add classes to new button
-                    $classes = 'c_bg_' . color_id($theme, 3, true) . ' c_h_bg_' . color_id($theme, 4, true) . ' c_color_' . color_id($theme, 0, true);
+                    $classes = 'c_bg_' . color_id($theme, 3, true) . ' c_h_bg_' . color_id($theme, 4, true) . ' c_color_' . color_id($theme, 0, true) . ' c_h_color_' . color_id($theme, 0, true);
                     $button_element->setAttribute('class', trim($button_element->getAttribute('class') . ' ' . $classes));
                     
                     $input_element->parentNode->replaceChild($button_element, $input_element); // replace existing button with new button
@@ -1390,7 +1390,7 @@ function kf_gform_submit_button($button, $form) {
     }
     
     // add classes to new button
-    $classes = 'c_bg_' . color_id($theme, 3, true) . ' c_h_bg_' . color_id($theme, 4, true) . ' c_color_' . color_id($theme, 0, true);
+    $classes = 'c_bg_' . color_id($theme, 3, true) . ' c_h_bg_' . color_id($theme, 4, true) . ' c_color_' . color_id($theme, 0, true) . ' c_h_color_' . color_id($theme, 0, true);
     $button_element->setAttribute('class', trim($button_element->getAttribute('class') . ' ' . $classes));
     
     $input_element->parentNode->replaceChild($button_element, $input_element); // replace existing button with new button
@@ -1583,7 +1583,7 @@ function kf_gform_pre_replace_merge_tags_save_continue($text, $form, $entry, $ur
                 <?php if (!is_null($resume_email) && !GFCommon::is_valid_email($resume_email)) { ?><div class="validation_message text text_line_1-4 text_xs text_italic c_color_<?php aux_color_id($theme, 1); ?>">Please enter a valid email address.</div><?php } ?>
                 <input type="hidden" name="gform_resume_token" value="{save_token}" />
                 <input type="hidden" name="gform_send_resume_link" value="<?php echo $form_id; ?>" />
-                <button type="submit" name="gform_send_resume_link_button" id="gform_send_resume_link_button_<?php echo $form_id; ?>" class="button c_bg_<?php color_id($theme, 3); ?> c_h_bg_<?php color_id($theme, 4); ?> c_color_<?php color_id($theme, 0); ?>"<?php echo $ajax ? ' onclick="jQuery(\'#gform_' . $form_id . '\').trigger(\'submit\',[true]);"' : '' ?>>Send Link</button>
+                <button type="submit" name="gform_send_resume_link_button" id="gform_send_resume_link_button_<?php echo $form_id; ?>" class="button c_bg_<?php color_id($theme, 3); ?> c_h_bg_<?php color_id($theme, 4); ?> c_color_<?php color_id($theme, 0); ?> c_h_color_<?php color_id($theme, 0); ?>"<?php echo $ajax ? ' onclick="jQuery(\'#gform_' . $form_id . '\').trigger(\'submit\',[true]);"' : '' ?>>Send Link</button>
                 <?php if (rgar($form, 'requireLogin')) { echo wp_nonce_field('gform_send_resume_link', '_gform_send_resume_link_nonce', true, false); } ?>
             </form>
             <script>if (typeof enhanceMouseFocusUpdate === 'function') { enhanceMouseFocusUpdate(); }</script>

@@ -46,7 +46,7 @@ if ($f_content) {
                 </div>
                 <?php if ($f_posts_page): ?>
                 <div class="post-intro__col post-intro__col_side">
-                    <a href="<?php echo get_permalink($f_posts_page->ID); ?>" class="button c_bg_<?php color_id($theme, 3); ?> c_h_bg_<?php color_id($theme, 4); ?> c_color_<?php color_id($theme, 0); ?>">Back to Blog</a>
+                    <a href="<?php echo get_permalink($f_posts_page->ID); ?>" class="button c_bg_<?php color_id($theme, 3); ?> c_h_bg_<?php color_id($theme, 4); ?> c_color_<?php color_id($theme, 0); ?> c_h_color_<?php color_id($theme, 0); ?>">Back to Blog</a>
                 </div>
                 <?php endif; ?>
             </div>

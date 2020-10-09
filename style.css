@@ -498,7 +498,7 @@ select {
     outline: 0;
 }
 input[type="number"] {
-    appearance: none;
+    appearance: textfield;
 }
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
@@ -533,6 +533,9 @@ input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration {
+    display: none;
+}
+select::-ms-expand {
     display: none;
 }
 input[type="checkbox"],
@@ -836,6 +839,7 @@ input[type="radio"] + label::selection {
     margin-bottom: 0;
 }
 .gfield .gfield_list .gfield_list_cell {
+    display: block;
     width: 100%;
     margin-right: 8px;
     padding: 0;
@@ -1236,7 +1240,9 @@ body div#ui-datepicker-div[style] {
 .c_h_bfr_color_a0:active::before,
 .c_h_aft_color_a0:hover::after,
 .c_h_aft_color_a0:focus::after,
-.c_h_aft_color_a0:active::after,
+.c_h_aft_color_a0:active::after {
+    color: #fff;
+}
 .c_placeholder_a0::placeholder {
     color: #fff;
 }
@@ -1300,7 +1306,9 @@ body div#ui-datepicker-div[style] {
 .c_h_bfr_color_a1:active::before,
 .c_h_aft_color_a1:hover::after,
 .c_h_aft_color_a1:focus::after,
-.c_h_aft_color_a1:active::after,
+.c_h_aft_color_a1:active::after {
+    color: #f3f3f3;
+}
 .c_placeholder_a1::placeholder {
     color: #f3f3f3;
 }
@@ -1364,7 +1372,9 @@ body div#ui-datepicker-div[style] {
 .c_h_bfr_color_a2:active::before,
 .c_h_aft_color_a2:hover::after,
 .c_h_aft_color_a2:focus::after,
-.c_h_aft_color_a2:active::after,
+.c_h_aft_color_a2:active::after {
+    color: #a8a8a8;
+}
 .c_placeholder_a2::placeholder {
     color: #a8a8a8;
 }
@@ -1428,7 +1438,9 @@ body div#ui-datepicker-div[style] {
 .c_h_bfr_color_a3:active::before,
 .c_h_aft_color_a3:hover::after,
 .c_h_aft_color_a3:focus::after,
-.c_h_aft_color_a3:active::after,
+.c_h_aft_color_a3:active::after {
+    color: #6d6d6d;
+}
 .c_placeholder_a3::placeholder {
     color: #6d6d6d;
 }
@@ -1492,7 +1504,9 @@ body div#ui-datepicker-div[style] {
 .c_h_bfr_color_a4:active::before,
 .c_h_aft_color_a4:hover::after,
 .c_h_aft_color_a4:focus::after,
-.c_h_aft_color_a4:active::after,
+.c_h_aft_color_a4:active::after {
+    color: #3d3d3d;
+}
 .c_placeholder_a4::placeholder {
     color: #3d3d3d;
 }
@@ -1556,7 +1570,9 @@ body div#ui-datepicker-div[style] {
 .c_h_bfr_color_a5:active::before,
 .c_h_aft_color_a5:hover::after,
 .c_h_aft_color_a5:focus::after,
-.c_h_aft_color_a5:active::after,
+.c_h_aft_color_a5:active::after {
+    color: #000;
+}
 .c_placeholder_a5::placeholder {
     color: #000;
 }
@@ -1620,7 +1636,9 @@ body div#ui-datepicker-div[style] {
 .c_h_bfr_color_ax0:active::before,
 .c_h_aft_color_ax0:hover::after,
 .c_h_aft_color_ax0:focus::after,
-.c_h_aft_color_ax0:active::after,
+.c_h_aft_color_ax0:active::after {
+    color: #f3b0b0;
+}
 .c_placeholder_ax0::placeholder {
     color: #f3b0b0;
 }
@@ -1684,7 +1702,9 @@ body div#ui-datepicker-div[style] {
 .c_h_bfr_color_ax1:active::before,
 .c_h_aft_color_ax1:hover::after,
 .c_h_aft_color_ax1:focus::after,
-.c_h_aft_color_ax1:active::after,
+.c_h_aft_color_ax1:active::after {
+    color: #b42222;
+}
 .c_placeholder_ax1::placeholder {
     color: #b42222;
 }
@@ -1748,7 +1768,9 @@ body div#ui-datepicker-div[style] {
 .c_h_bfr_color_b0:active::before,
 .c_h_aft_color_b0:hover::after,
 .c_h_aft_color_b0:focus::after,
-.c_h_aft_color_b0:active::after,
+.c_h_aft_color_b0:active::after {
+    color: #fafdff;
+}
 .c_placeholder_b0::placeholder {
     color: #fafdff;
 }
@@ -1812,7 +1834,9 @@ body div#ui-datepicker-div[style] {
 .c_h_bfr_color_b1:active::before,
 .c_h_aft_color_b1:hover::after,
 .c_h_aft_color_b1:focus::after,
-.c_h_aft_color_b1:active::after,
+.c_h_aft_color_b1:active::after {
+    color: #c8e0f1;
+}
 .c_placeholder_b1::placeholder {
     color: #c8e0f1;
 }
@@ -1876,7 +1900,9 @@ body div#ui-datepicker-div[style] {
 .c_h_bfr_color_b2:active::before,
 .c_h_aft_color_b2:hover::after,
 .c_h_aft_color_b2:focus::after,
-.c_h_aft_color_b2:active::after,
+.c_h_aft_color_b2:active::after {
+    color: #90a6cb;
+}
 .c_placeholder_b2::placeholder {
     color: #90a6cb;
 }
@@ -1940,7 +1966,9 @@ body div#ui-datepicker-div[style] {
 .c_h_bfr_color_b3:active::before,
 .c_h_aft_color_b3:hover::after,
 .c_h_aft_color_b3:focus::after,
-.c_h_aft_color_b3:active::after,
+.c_h_aft_color_b3:active::after {
+    color: #38536f;
+}
 .c_placeholder_b3::placeholder {
     color: #38536f;
 }
@@ -2004,7 +2032,9 @@ body div#ui-datepicker-div[style] {
 .c_h_bfr_color_b4:active::before,
 .c_h_aft_color_b4:hover::after,
 .c_h_aft_color_b4:focus::after,
-.c_h_aft_color_b4:active::after,
+.c_h_aft_color_b4:active::after {
+    color: #253143;
+}
 .c_placeholder_b4::placeholder {
     color: #253143;
 }
@@ -2068,7 +2098,9 @@ body div#ui-datepicker-div[style] {
 .c_h_bfr_color_b5:active::before,
 .c_h_aft_color_b5:hover::after,
 .c_h_aft_color_b5:focus::after,
-.c_h_aft_color_b5:active::after,
+.c_h_aft_color_b5:active::after {
+    color: #161a1e;
+}
 .c_placeholder_b5::placeholder {
     color: #161a1e;
 }
@@ -2132,7 +2164,9 @@ body div#ui-datepicker-div[style] {
 .c_h_bfr_color_bx0:active::before,
 .c_h_aft_color_bx0:hover::after,
 .c_h_aft_color_bx0:focus::after,
-.c_h_aft_color_bx0:active::after,
+.c_h_aft_color_bx0:active::after {
+    color: #f3b0a0;
+}
 .c_placeholder_bx0::placeholder {
     color: #f3b0a0;
 }
@@ -2196,7 +2230,9 @@ body div#ui-datepicker-div[style] {
 .c_h_bfr_color_bx1:active::before,
 .c_h_aft_color_bx1:hover::after,
 .c_h_aft_color_bx1:focus::after,
-.c_h_aft_color_bx1:active::after,
+.c_h_aft_color_bx1:active::after {
+    color: #b42212;
+}
 .c_placeholder_bx1::placeholder {
     color: #b42212;
 }
@@ -2248,6 +2284,9 @@ body div#ui-datepicker-div[style] {
 }
 .title_sm {
     font-size: 24px;
+}
+.title_default-size {
+    font-size: 36px;
 }
 .title_md {
     font-size: 45px;
@@ -2393,6 +2432,7 @@ body div#ui-datepicker-div[style] {
 }
 .text_wrap ul li,
 .text_wrap ol li {
+    max-width: 100%;
     margin-bottom: 0.3em;
 }
 .text_wrap ul li:last-child,
@@ -2413,6 +2453,7 @@ body div#ui-datepicker-div[style] {
     text-align: center;
     text-decoration: none;
     border: 0;
+    border-radius: 0;
     transition: 0.4s;
 }
 .button_loading {
@@ -3226,6 +3267,7 @@ body div#ui-datepicker-div[style] {
     right: 0;
     padding: 7px;
     border: 0;
+    border-radius: 0;
     transform: translate(50%, -50%);
     transition: 0.4s;
 }
@@ -3260,6 +3302,7 @@ body div#ui-datepicker-div[style] {
     top: 50%;
     padding: 7px;
     border: 0;
+    border-radius: 0;
     transition: 0.4s;
 }
 .box-slider__nav_prev {
@@ -3326,6 +3369,7 @@ body div#ui-datepicker-div[style] {
     width: 115px;
     padding: 0;
     border: 0;
+    border-radius: 0;
 }
 .image-slider__nav_border_y,
 .image-slider__nav_border_top {
@@ -3799,6 +3843,7 @@ body div#ui-datepicker-div[style] {
     top: 50%;
     padding: 7px;
     border: 0;
+    border-radius: 0;
     transform: translateY(-50%);
     transition: 0.4s;
 }
@@ -3917,7 +3962,8 @@ body div#ui-datepicker-div[style] {
 ## Text Tile
 --------------------------------------------------------------*/
 .text-tile  {
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100%;
     padding: 0;
@@ -3931,6 +3977,7 @@ body div#ui-datepicker-div[style] {
     transform: translateY(-5px);
 }
 .text-tile__tile {
+    flex: 1 0 auto;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -3943,6 +3990,7 @@ body div#ui-datepicker-div[style] {
     text-align: right;
 }
 .text-tile__image {
+    flex: 0 0 auto;
     display: block;
     width: 100%;
 }
@@ -3985,7 +4033,8 @@ body div#ui-datepicker-div[style] {
 ## Image Tile
 --------------------------------------------------------------*/
 .image-tile  {
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100%;
     padding: 0;
@@ -3999,6 +4048,7 @@ body div#ui-datepicker-div[style] {
     transform: translateY(-5px);
 }
 .image-tile__tile {
+    flex: 1 0 auto;
     display: flex;
     flex-direction: column;
     height: 100%;
