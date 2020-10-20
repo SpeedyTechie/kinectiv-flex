@@ -345,6 +345,28 @@ big {
 	font-size: 125%;
 }
 
+@media (max-width: 850px) {
+    body,
+    button,
+    optgroup {
+        font-size: 15px;
+    }
+}
+@media (max-width: 550px) {
+    body,
+    button,
+    optgroup {
+        font-size: 14px;
+    }
+}
+@media (max-width: 400px) {
+    body,
+    button,
+    optgroup {
+        font-size: 13px;
+    }
+}
+
 /*--------------------------------------------------------------
 # Elements
 --------------------------------------------------------------*/
@@ -2307,6 +2329,192 @@ body div#ui-datepicker-div[style] {
     text-align: right;
 }
 
+@media (max-width: 1400px) {
+    .title_md {
+        font-size: 42px;
+    }
+}
+@media (max-width: 1250px) {
+    .title {
+        font-size: 34px;
+    }
+    .title_xs {
+        font-size: 18px;
+    }
+    .title_sm {
+        font-size: 24px;
+    }
+    .title_default-size {
+        font-size: 34px;
+    }
+    .title_md {
+        font-size: 40px;
+    }
+    .title_lg {
+        font-size: 54px;
+    }
+}
+@media (max-width: 1100px) {
+    .title {
+        font-size: 32px;
+    }
+    .title_xs {
+        font-size: 18px;
+    }
+    .title_sm {
+        font-size: 24px;
+    }
+    .title_default-size {
+        font-size: 32px;
+    }
+    .title_md {
+        font-size: 38px;
+    }
+    .title_lg {
+        font-size: 54px;
+    }
+}
+@media (max-width: 1000px) {
+    .title {
+        font-size: 30px;
+    }
+    .title_xs {
+        font-size: 18px;
+    }
+    .title_sm {
+        font-size: 24px;
+    }
+    .title_default-size {
+        font-size: 30px;
+    }
+    .title_md {
+        font-size: 36px;
+    }
+    .title_lg {
+        font-size: 54px;
+    }
+}
+@media (max-width: 850px) {
+    .title {
+        font-size: 28px;
+    }
+    .title_xs {
+        font-size: 18px;
+    }
+    .title_sm {
+        font-size: 24px;
+    }
+    .title_default-size {
+        font-size: 28px;
+    }
+    .title_md {
+        font-size: 34px;
+    }
+    .title_lg {
+        font-size: 54px;
+    }
+}
+@media (max-width: 750px) {
+    .title {
+        font-size: 26px;
+    }
+    .title_xs {
+        font-size: 18px;
+    }
+    .title_sm {
+        font-size: 24px;
+    }
+    .title_default-size {
+        font-size: 26px;
+    }
+    .title_md {
+        font-size: 32px;
+    }
+    .title_lg {
+        font-size: 54px;
+    }
+}
+@media (max-width: 650px) {
+    .title {
+        font-size: 24px;
+    }
+    .title_xs {
+        font-size: 18px;
+    }
+    .title_sm {
+        font-size: 24px;
+    }
+    .title_default-size {
+        font-size: 24px;
+    }
+    .title_md {
+        font-size: 30px;
+    }
+    .title_lg {
+        font-size: 54px;
+    }
+}
+@media (max-width: 550px) {
+    .title {
+        font-size: 22px;
+    }
+    .title_xs {
+        font-size: 18px;
+    }
+    .title_sm {
+        font-size: 24px;
+    }
+    .title_default-size {
+        font-size: 22px;
+    }
+    .title_md {
+        font-size: 26px;
+    }
+    .title_lg {
+        font-size: 54px;
+    }
+}
+@media (max-width: 450px) {
+    .title {
+        font-size: 20px;
+    }
+    .title_xs {
+        font-size: 18px;
+    }
+    .title_sm {
+        font-size: 24px;
+    }
+    .title_default-size {
+        font-size: 20px;
+    }
+    .title_md {
+        font-size: 24px;
+    }
+    .title_lg {
+        font-size: 54px;
+    }
+}
+@media (max-width: 400px) {
+    .title {
+        font-size: 18px;
+    }
+    .title_xs {
+        font-size: 18px;
+    }
+    .title_sm {
+        font-size: 24px;
+    }
+    .title_default-size {
+        font-size: 18px;
+    }
+    .title_md {
+        font-size: 22px;
+    }
+    .title_lg {
+        font-size: 54px;
+    }
+}
+
 /*--------------------------------------------------------------
 ## Text
 --------------------------------------------------------------*/
@@ -2351,10 +2559,10 @@ body div#ui-datepicker-div[style] {
 }
 .text_wrap h1,
 .text_wrap h2,
-.text_wrap h3,
-.text_wrap h4 {
+.text_wrap h3 {
     margin: 1em 0 0;
 }
+.text_wrap h4,
 .text_wrap h5,
 .text_wrap h6 {
     margin: 1.2em 0 0;
@@ -2440,6 +2648,130 @@ body div#ui-datepicker-div[style] {
     margin-bottom: 0;
 }
 
+@media (max-width: 1000px) {
+    .text_lg {
+        font-size: 20px;
+    }
+    .text_xl {
+        font-size: 22px;
+    }
+}
+@media (max-width: 850px) {
+    .text_sm {
+        font-size: 15px;
+    }
+    .text_md {
+        font-size: 16px;
+    }
+    .text_lg {
+        font-size: 18px;
+    }
+    .text_xl {
+        font-size: 20px;
+    }
+    .text_wrap h1,
+    .text_wrap h2,
+    .text_wrap h3 {
+        margin: 1.2em 0 0;
+    }
+    .text_wrap blockquote {
+        font-size: 16px;
+    }
+    .text_wrap.text_left blockquote {
+        margin-left: 2em;
+    }
+    .text_wrap.text_center blockquote {
+        margin-left: 2em;
+        margin-right: 2em;
+    }
+    .text_wrap.text_right blockquote {
+        margin-right: 2em;
+    }
+    .text_wrap.text_left ul,
+    .text_wrap.text_left ol {
+        margin-left: 1em;
+    }
+    .text_wrap.text_center ul,
+    .text_wrap.text_center ol {
+        margin-left: 1em;
+        margin-right: 1em;
+    }
+    .text_wrap.text_right ul,
+    .text_wrap.text_right ol {
+        margin-right: 1em;
+    }
+}
+@media (max-width: 550px) {
+    .text_sm {
+        font-size: 14px;
+    }
+    .text_md {
+        font-size: 15px;
+    }
+    .text_lg {
+        font-size: 16px;
+    }
+    .text_xl {
+        font-size: 18px;
+    }
+    .text_wrap blockquote {
+        font-size: 15px;
+    }
+    .text_wrap blockquote {
+        margin: 1.5em 0;
+    }
+    .text_wrap.text_left blockquote {
+        margin-left: 1em;
+    }
+    .text_wrap.text_center blockquote {
+        margin-left: 1em;
+        margin-right: 1em;
+    }
+    .text_wrap.text_right blockquote {
+        margin-right: 1em;
+    }
+    .text_wrap.text_left ul,
+    .text_wrap.text_left ol {
+        margin-left: 0;
+    }
+    .text_wrap.text_center ul,
+    .text_wrap.text_center ol {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .text_wrap.text_right ul,
+    .text_wrap.text_right ol {
+        margin-right: 0;
+    }
+}
+@media (max-width: 400px) {
+    .text_sm {
+        font-size: 13px;
+    }
+    .text_md {
+        font-size: 14px;
+    }
+    .text_lg {
+        font-size: 15px;
+    }
+    .text_xl {
+        font-size: 16px;
+    }
+    .text_wrap h1,
+    .text_wrap h2,
+    .text_wrap h3 {
+        margin: 1.3em 0 0;
+    }
+    .text_wrap h4,
+    .text_wrap h5,
+    .text_wrap h6 {
+        margin: 1.3em 0 0;
+    }
+    .text_wrap blockquote {
+        font-size: 14px;
+    }
+}
+
 /*--------------------------------------------------------------
 ## Button
 --------------------------------------------------------------*/
@@ -2466,6 +2798,24 @@ body div#ui-datepicker-div[style] {
 }
 .button_loading:disabled {
     cursor: wait;
+}
+
+@media (max-width: 850px) {
+    .button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
+@media (max-width: 550px) {
+    .button {
+        padding: 7px 14px;
+        font-size: 13px;
+    }
+}
+@media (max-width: 400px) {
+    .button {
+        font-size: 12px;
+    }
 }
 
 /*--------------------------------------------------------------
@@ -2907,6 +3257,420 @@ body div#ui-datepicker-div[style] {
     padding: 0 60px;
 }
 
+@media (max-width: 1250px) {
+    .section {
+        padding: 80px 0;
+    }
+    .section_y_xs,
+    .section_top_xs {
+        padding-top: 25px;
+    }
+    .section_y_xs,
+    .section_bottom_xs {
+        padding-bottom: 25px;
+    }
+    .section_y_sm,
+    .section_top_sm {
+        padding-top: 55px;
+    }
+    .section_y_sm,
+    .section_bottom_sm {
+        padding-bottom: 55px;
+    }
+    .section_y_lg,
+    .section_top_lg {
+        padding-top: 110px;
+    }
+    .section_y_lg,
+    .section_bottom_lg {
+        padding-bottom: 110px;
+    }
+    .section_y_xl,
+    .section_top_xl {
+        padding-top: 135px;
+    }
+    .section_y_xl,
+    .section_bottom_xl {
+        padding-bottom: 135px;
+    }
+    .section_y_hg,
+    .section_top_hg {
+        padding-top: 165px;
+    }
+    .section_y_hg,
+    .section_bottom_hg {
+        padding-bottom: 165px;
+    }
+    .section_y_none,
+    .section_top_none {
+        padding-top: 0;
+    }
+    .section_y_none,
+    .section_bottom_none {
+        padding-bottom: 0;
+    }
+    .section__content {
+        padding: 0 100px;
+    }
+    .section__content_x_sm {
+        padding: 0 60px;
+    }
+}
+@media (max-width: 1100px) {
+    .section {
+        padding: 75px 0;
+    }
+    .section_y_xs,
+    .section_top_xs {
+        padding-top: 25px;
+    }
+    .section_y_xs,
+    .section_bottom_xs {
+        padding-bottom: 25px;
+    }
+    .section_y_sm,
+    .section_top_sm {
+        padding-top: 50px;
+    }
+    .section_y_sm,
+    .section_bottom_sm {
+        padding-bottom: 50px;
+    }
+    .section_y_lg,
+    .section_top_lg {
+        padding-top: 100px;
+    }
+    .section_y_lg,
+    .section_bottom_lg {
+        padding-bottom: 100px;
+    }
+    .section_y_xl,
+    .section_top_xl {
+        padding-top: 125px;
+    }
+    .section_y_xl,
+    .section_bottom_xl {
+        padding-bottom: 125px;
+    }
+    .section_y_hg,
+    .section_top_hg {
+        padding-top: 155px;
+    }
+    .section_y_hg,
+    .section_bottom_hg {
+        padding-bottom: 155px;
+    }
+    .section_y_none,
+    .section_top_none {
+        padding-top: 0;
+    }
+    .section_y_none,
+    .section_bottom_none {
+        padding-bottom: 0;
+    }
+    .section__content {
+        padding: 0 75px;
+    }
+    .section__content_x_sm {
+        padding: 0 60px;
+    }
+}
+@media (max-width: 1000px) {
+    .section {
+        padding: 70px 0;
+    }
+    .section_y_xs,
+    .section_top_xs {
+        padding-top: 20px;
+    }
+    .section_y_xs,
+    .section_bottom_xs {
+        padding-bottom: 20px;
+    }
+    .section_y_sm,
+    .section_top_sm {
+        padding-top: 45px;
+    }
+    .section_y_sm,
+    .section_bottom_sm {
+        padding-bottom: 45px;
+    }
+    .section_y_lg,
+    .section_top_lg {
+        padding-top: 90px;
+    }
+    .section_y_lg,
+    .section_bottom_lg {
+        padding-bottom: 90px;
+    }
+    .section_y_xl,
+    .section_top_xl {
+        padding-top: 110px;
+    }
+    .section_y_xl,
+    .section_bottom_xl {
+        padding-bottom: 110px;
+    }
+    .section_y_hg,
+    .section_top_hg {
+        padding-top: 140px;
+    }
+    .section_y_hg,
+    .section_bottom_hg {
+        padding-bottom: 140px;
+    }
+    .section_y_none,
+    .section_top_none {
+        padding-top: 0;
+    }
+    .section_y_none,
+    .section_bottom_none {
+        padding-bottom: 0;
+    }
+    .section__content {
+        padding: 0 65px;
+    }
+    .section__content_x_sm {
+        padding: 0 60px;
+    }
+}
+@media (max-width: 850px) {
+    .section {
+        padding: 55px 0;
+    }
+    .section_y_xs,
+    .section_top_xs {
+        padding-top: 20px;
+    }
+    .section_y_xs,
+    .section_bottom_xs {
+        padding-bottom: 20px;
+    }
+    .section_y_sm,
+    .section_top_sm {
+        padding-top: 40px;
+    }
+    .section_y_sm,
+    .section_bottom_sm {
+        padding-bottom: 40px;
+    }
+    .section_y_lg,
+    .section_top_lg {
+        padding-top: 75px;
+    }
+    .section_y_lg,
+    .section_bottom_lg {
+        padding-bottom: 75px;
+    }
+    .section_y_xl,
+    .section_top_xl {
+        padding-top: 95px;
+    }
+    .section_y_xl,
+    .section_bottom_xl {
+        padding-bottom: 95px;
+    }
+    .section_y_hg,
+    .section_top_hg {
+        padding-top: 110px;
+    }
+    .section_y_hg,
+    .section_bottom_hg {
+        padding-bottom: 110px;
+    }
+    .section_y_none,
+    .section_top_none {
+        padding-top: 0;
+    }
+    .section_y_none,
+    .section_bottom_none {
+        padding-bottom: 0;
+    }
+    .section__content {
+        padding: 0 50px;
+    }
+    .section__content_x_sm {
+        padding: 0 60px;
+    }
+}
+@media (max-width: 550px) {
+    .section {
+        padding: 50px 0;
+    }
+    .section_y_xs,
+    .section_top_xs {
+        padding-top: 20px;
+    }
+    .section_y_xs,
+    .section_bottom_xs {
+        padding-bottom: 20px;
+    }
+    .section_y_sm,
+    .section_top_sm {
+        padding-top: 40px;
+    }
+    .section_y_sm,
+    .section_bottom_sm {
+        padding-bottom: 40px;
+    }
+    .section_y_lg,
+    .section_top_lg {
+        padding-top: 65px;
+    }
+    .section_y_lg,
+    .section_bottom_lg {
+        padding-bottom: 65px;
+    }
+    .section_y_xl,
+    .section_top_xl {
+        padding-top: 80px;
+    }
+    .section_y_xl,
+    .section_bottom_xl {
+        padding-bottom: 80px;
+    }
+    .section_y_hg,
+    .section_top_hg {
+        padding-top: 90px;
+    }
+    .section_y_hg,
+    .section_bottom_hg {
+        padding-bottom: 90px;
+    }
+    .section_y_none,
+    .section_top_none {
+        padding-top: 0;
+    }
+    .section_y_none,
+    .section_bottom_none {
+        padding-bottom: 0;
+    }
+    .section__content {
+        padding: 0 40px;
+    }
+    .section__content_x_sm {
+        padding: 0 60px;
+    }
+}
+@media (max-width: 450px) {
+    .section {
+        padding: 45px 0;
+    }
+    .section_y_xs,
+    .section_top_xs {
+        padding-top: 15px;
+    }
+    .section_y_xs,
+    .section_bottom_xs {
+        padding-bottom: 15px;
+    }
+    .section_y_sm,
+    .section_top_sm {
+        padding-top: 35px;
+    }
+    .section_y_sm,
+    .section_bottom_sm {
+        padding-bottom: 35px;
+    }
+    .section_y_lg,
+    .section_top_lg {
+        padding-top: 60px;
+    }
+    .section_y_lg,
+    .section_bottom_lg {
+        padding-bottom: 60px;
+    }
+    .section_y_xl,
+    .section_top_xl {
+        padding-top: 75px;
+    }
+    .section_y_xl,
+    .section_bottom_xl {
+        padding-bottom: 75px;
+    }
+    .section_y_hg,
+    .section_top_hg {
+        padding-top: 85px;
+    }
+    .section_y_hg,
+    .section_bottom_hg {
+        padding-bottom: 85px;
+    }
+    .section_y_none,
+    .section_top_none {
+        padding-top: 0;
+    }
+    .section_y_none,
+    .section_bottom_none {
+        padding-bottom: 0;
+    }
+    .section__content {
+        padding: 0 35px;
+    }
+    .section__content_x_sm {
+        padding: 0 60px;
+    }
+}
+@media (max-width: 400px) {
+    .section {
+        padding: 40px 0;
+    }
+    .section_y_xs,
+    .section_top_xs {
+        padding-top: 10px;
+    }
+    .section_y_xs,
+    .section_bottom_xs {
+        padding-bottom: 10px;
+    }
+    .section_y_sm,
+    .section_top_sm {
+        padding-top: 25px;
+    }
+    .section_y_sm,
+    .section_bottom_sm {
+        padding-bottom: 25px;
+    }
+    .section_y_lg,
+    .section_top_lg {
+        padding-top: 55px;
+    }
+    .section_y_lg,
+    .section_bottom_lg {
+        padding-bottom: 55px;
+    }
+    .section_y_xl,
+    .section_top_xl {
+        padding-top: 70px;
+    }
+    .section_y_xl,
+    .section_bottom_xl {
+        padding-bottom: 70px;
+    }
+    .section_y_hg,
+    .section_top_hg {
+        padding-top: 80px;
+    }
+    .section_y_hg,
+    .section_bottom_hg {
+        padding-bottom: 80px;
+    }
+    .section_y_none,
+    .section_top_none {
+        padding-top: 0;
+    }
+    .section_y_none,
+    .section_bottom_none {
+        padding-bottom: 0;
+    }
+    .section__content {
+        padding: 0 25px;
+    }
+    .section__content_x_sm {
+        padding: 0 60px;
+    }
+}
+
 /*--------------------------------------------------------------
 ## Background Image
 --------------------------------------------------------------*/
@@ -2982,6 +3746,22 @@ body div#ui-datepicker-div[style] {
     margin-top: 0;
 }
 
+@media (max-width: 1000px) {
+    .long-text__buttons {
+        margin-top: 35px;
+    }
+}
+@media (max-width: 550px) {
+    .long-text__buttons {
+        margin-top: 30px;
+    }
+}
+@media (max-width: 400px) {
+    .long-text__buttons {
+        margin-top: 25px;
+    }
+}
+
 /*--------------------------------------------------------------
 ## Button Group
 --------------------------------------------------------------*/
@@ -3002,6 +3782,23 @@ body div#ui-datepicker-div[style] {
 }
 .button-group__item {
     padding: 6px;
+}
+
+@media (max-width: 850px) {
+    .button-group {
+        margin: -5px;
+    }
+    .button-group__item {
+        padding: 5px;
+    }
+}
+@media (max-width: 550px) {
+    .button-group {
+        margin: -4px;
+    }
+    .button-group__item {
+        padding: 4px;
+    }
 }
 
 /*--------------------------------------------------------------
@@ -3269,12 +4066,15 @@ body div#ui-datepicker-div[style] {
     border: 0;
     border-radius: 0;
     transform: translate(50%, -50%);
-    transition: 0.4s;
+    transition: 0.4s, visibility 0s; /* visibility 0s to fix firefox glitch on box open */
 }
 .dialog-box__close-x {
     display: block;
     width: 14px;
     height: 14px;
+}
+.dialog-box .button {
+    transition: 0.4s, visibility 0s; /* visibility 0s to fix firefox glitch on box open */
 }
 
 /*--------------------------------------------------------------
@@ -3303,7 +4103,7 @@ body div#ui-datepicker-div[style] {
     padding: 7px;
     border: 0;
     border-radius: 0;
-    transition: 0.4s;
+    transition: 0.4s, visibility 0s; /* visibility 0s to fix firefox glitch on box open */
 }
 .box-slider__nav_prev {
     left: 0;
