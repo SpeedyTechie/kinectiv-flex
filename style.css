@@ -2382,7 +2382,7 @@ body div#ui-datepicker-div[style] {
         font-size: 18px;
     }
     .title_sm {
-        font-size: 24px;
+        font-size: 22px;
     }
     .title_default-size {
         font-size: 30px;
@@ -2402,7 +2402,7 @@ body div#ui-datepicker-div[style] {
         font-size: 18px;
     }
     .title_sm {
-        font-size: 24px;
+        font-size: 20px;
     }
     .title_default-size {
         font-size: 28px;
@@ -2422,7 +2422,7 @@ body div#ui-datepicker-div[style] {
         font-size: 18px;
     }
     .title_sm {
-        font-size: 24px;
+        font-size: 20px;
     }
     .title_default-size {
         font-size: 26px;
@@ -2442,7 +2442,7 @@ body div#ui-datepicker-div[style] {
         font-size: 18px;
     }
     .title_sm {
-        font-size: 24px;
+        font-size: 20px;
     }
     .title_default-size {
         font-size: 24px;
@@ -2462,7 +2462,7 @@ body div#ui-datepicker-div[style] {
         font-size: 18px;
     }
     .title_sm {
-        font-size: 24px;
+        font-size: 18px;
     }
     .title_default-size {
         font-size: 22px;
@@ -2482,7 +2482,7 @@ body div#ui-datepicker-div[style] {
         font-size: 18px;
     }
     .title_sm {
-        font-size: 24px;
+        font-size: 16px;
     }
     .title_default-size {
         font-size: 20px;
@@ -2502,7 +2502,7 @@ body div#ui-datepicker-div[style] {
         font-size: 18px;
     }
     .title_sm {
-        font-size: 24px;
+        font-size: 16px;
     }
     .title_default-size {
         font-size: 18px;
@@ -3925,6 +3925,15 @@ body div#ui-datepicker-div[style] {
     margin-top: 0;
 }
 
+@media (max-width: 400px) {
+    .title-caption__title {
+        margin-bottom: 15px;
+    }
+    .title-caption__caption {
+        margin-top: 15px;
+    }
+}
+
 /*--------------------------------------------------------------
 ## Image Rows
 --------------------------------------------------------------*/
@@ -3975,6 +3984,15 @@ body div#ui-datepicker-div[style] {
     display: none;
 }
 
+@media (max-width: 550px) {
+    .image-rows__row {
+        margin: 0 -1px 2px;
+    }
+    .image-rows__item {
+        padding: 0 1px;
+    }
+}
+
 /*--------------------------------------------------------------
 ## Image Masonry
 --------------------------------------------------------------*/
@@ -4016,6 +4034,15 @@ body div#ui-datepicker-div[style] {
 }
 .image-masonry__dialog-image {
     display: none;
+}
+
+@media (max-width: 550px) {
+    .image-masonry {
+        margin: -1px;
+    }
+    .image-masonry__item {
+        padding: 1px;
+    }
 }
 
 /*--------------------------------------------------------------
