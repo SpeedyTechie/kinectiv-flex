@@ -4486,6 +4486,74 @@ body div#ui-datepicker-div[style] {
     margin-top: 0;
 }
 
+@media (max-width: 1250px) {
+    .cta__graphic {
+        max-width: 700px;
+    }
+    .cta__graphic_sm {
+        max-width: 425px;
+    }
+    .cta__graphic_lg {
+        max-width: none;
+    }
+}
+@media (max-width: 1100px) {
+    .cta__graphic_sm {
+        max-width: 400px;
+    }
+}
+@media (max-width: 1000px) {
+    .cta__graphic {
+        max-width: 650px;
+        margin-bottom: 30px;
+    }
+    .cta__graphic_sm {
+        max-width: 375px;
+    }
+    .cta__graphic_lg {
+        max-width: none;
+    }
+}
+@media (max-width: 850px) {
+    .cta__graphic {
+        max-width: 600px;
+        margin-bottom: 25px;
+    }
+    .cta__graphic_sm {
+        max-width: 350px;
+    }
+    .cta__graphic_lg {
+        max-width: none;
+    }
+    .cta__text {
+        margin-top: 10px;
+    }
+    .cta__buttons {
+        margin-top: 20px;
+    }
+}
+@media (max-width: 650px) {
+    .cta__graphic_sm {
+        max-width: 325px;
+    }
+}
+@media (max-width: 550px) {
+    .cta__graphic_sm {
+        max-width: 300px;
+    }
+}
+@media (max-width: 450px) {
+    .cta__graphic {
+        margin-bottom: 20px;
+    }
+    .cta__text {
+        margin-top: 8px;
+    }
+    .cta__buttons {
+        margin-top: 15px;
+    }
+}
+
 /*--------------------------------------------------------------
 ## Logos
 --------------------------------------------------------------*/
