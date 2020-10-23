@@ -4635,6 +4635,139 @@ body div#ui-datepicker-div[style] {
     margin-top: 50px;
 }
 
+@media (max-width: 1000px) {
+    .logos__title {
+        margin-bottom: 30px;
+    }
+    .logos__logo {
+        height: 75px;
+    }
+    .logos__logo_sm {
+        height: 55px;
+    }
+    .logos__logo_lg {
+        height: 95px;
+    }
+}
+@media (max-width: 850px) {
+    .logos__title {
+        margin-bottom: 25px;
+    }
+    .logos__logos {
+        margin-top: 40px;
+    }
+    .logos__logo {
+        height: 70px;
+    }
+    .logos__logo_sm {
+        height: 50px;
+    }
+    .logos__logo_lg {
+        height: 85px;
+    }
+    .logos__buttons {
+        margin-top: 45px;
+    }
+}
+@media (max-width: 750px) {
+    .logos__grid {
+        margin: -10px -15px;
+    }
+    .logos__grid_sm {
+        margin: -8px -12px;
+    }
+    .logos__grid_lg {
+        margin: -12px -18px;
+    }
+    .logos__item {
+        padding: 10px 15px;
+    }
+    .logos__item_sm {
+        padding: 8px 12px;
+    }
+    .logos__item_lg {
+        padding: 12px 18px;
+    }
+    .logos__logo {
+        height: 65px;
+    }
+    .logos__logo_sm {
+        height: 50px;
+    }
+    .logos__logo_lg {
+        height: 80px;
+    }
+}
+@media (max-width: 550px) {
+    .logos__title {
+        margin-bottom: 20px;
+    }
+    .logos__logo {
+        height: 60px;
+    }
+    .logos__logo_sm {
+        height: 45px;
+    }
+    .logos__logo_lg {
+        height: 75px;
+    }
+}
+@media (max-width: 450px) {
+    .logos__logos {
+        margin-top: 35px;
+    }
+    .logos__grid {
+        margin: -8px -12px;
+    }
+    .logos__grid_sm {
+        margin: -6px -10px;
+    }
+    .logos__grid_lg {
+        margin: -10px -15px;
+    }
+    .logos__item {
+        padding: 8px 12px;
+    }
+    .logos__item_sm {
+        padding: 6px 10px;
+    }
+    .logos__item_lg {
+        padding: 10px 15px;
+    }
+    .logos__title {
+        margin-bottom: 15px;
+    }
+    .logos__logo {
+        height: 55px;
+    }
+    .logos__logo_sm {
+        height: 40px;
+    }
+    .logos__logo_lg {
+        height: 70px;
+    }
+    .logos__buttons {
+        margin-top: 40px;
+    }
+}
+@media (max-width: 400px) {
+    .logos__logos {
+        margin-top: 30px;
+    }
+    .logos__logo {
+        height: 50px;
+    }
+    .logos__logo_sm {
+        height: 40px;
+    }
+    .logos__logo_lg {
+        height: 65px;
+    }
+    .logos__buttons {
+        margin-top: 35px;
+    }
+}
+
 /*--------------------------------------------------------------
 ## Info Columns
 --------------------------------------------------------------*/
