@@ -39,8 +39,9 @@ function kinectiv_flex_scripts() {
     
     wp_deregister_script('wp-embed');
     wp_deregister_script('jquery');
-    wp_enqueue_script('jquery', 'https://code.jquery.com/jquery-1.12.4.min.js', array(), null, false);
+    wp_enqueue_script('jquery', 'https://code.jquery.com/jquery-3.5.1.min.js', array(), null, false);
 	wp_enqueue_script('kinectiv-flex-script', get_template_directory_uri() . '/js/script.min.js', array('jquery'), '0.1.0', true);
+    wp_enqueue_script('google-maps', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCQh3qjcFENy2DkpAL4R2gJopWPnqzY3B8&callback=initGoogleMaps', array('kinectiv-flex-script'), null, true);
     
     wp_localize_script('kinectiv-flex-script', 'wpVars', array(
         'ajaxURL' => admin_url('admin-ajax.php'),
@@ -2227,3 +2228,14 @@ function ks_include_custom_acf_field_types() {
     include_once(get_template_directory() . '/includes/acf-custom/fields/acf-gf-select.php'); // add Gravity Form field type
 }
 add_action('acf/include_field_types', 'ks_include_custom_acf_field_types');
+
+
+/**
+ * Set Google Maps API key for ACF
+ */
+function kf_acf_google_map_api($api){
+    $api['key'] = 'AIzaSyCQh3qjcFENy2DkpAL4R2gJopWPnqzY3B8';
+    
+    return $api;
+}
+add_filter('acf/fields/google_map/api', 'kf_acf_google_map_api');

@@ -215,7 +215,7 @@ function initDialogBoxes() {
     
     function preloadGalleryBoxImages() {
         $('[data-gallery-box-image]').each(function() {
-            $('<img />').attr('src', $(this).attr('data-gallery-box-image')).load(function() {
+            $('<img />').attr('src', $(this).attr('data-gallery-box-image')).on('load', function() {
                 $(this).remove();
             });
         });
@@ -224,7 +224,7 @@ function initDialogBoxes() {
     
     $('.site').prepend(boxWrap);
     
-    $(window).load(preloadGalleryBoxImages);
+    $(window).on('load', preloadGalleryBoxImages);
     
     $(window).resize(throttledUpdateDialogBoxPosition);
     $(document).on('gform_post_render gform_confirmation_loaded dialog_box_position', positionDialogBox);
@@ -1030,6 +1030,66 @@ function initGformEnhanceMisc() {
     
     telMaskFix();
     $(document).on('gform_post_render', telMaskFix);
+}
+
+
+
+/* Google Maps */
+
+function initGoogleMaps() {
+    $('.g-map').each(function() {
+        var wrap = $(this);
+        var canvas = wrap.find('.g-map__canvas');
+        var mapData = wrap.find('.g-map__data');
+        var markers = mapData.find('.g-map__marker');
+        
+        var centerLoc = markers.first().attr('data-loc').split(',');
+        
+        var latLng = {
+            lat: parseFloat(centerLoc[0]),
+            lng: parseFloat(centerLoc[1])
+        };
+        var zoom = parseInt(mapData.attr('data-zoom'));
+        
+        var map = new google.maps.Map(canvas[0], {
+            center: latLng,
+            zoom: zoom,
+            disableDefaultUI: true,
+            scrollwheel: false
+        });
+        
+        var bounds = new google.maps.LatLngBounds();
+        
+        
+        markers.each(function() {
+            var markerEl = $(this);
+            var markerLoc = markerEl.attr('data-loc').split(',');
+            var markerLatLng = {
+                lat: parseFloat(markerLoc[0]),
+                lng: parseFloat(markerLoc[1])
+            };
+            
+            var marker = new google.maps.Marker({
+                map: map,
+                title: markerEl.text(),
+                position: markerLatLng
+            });
+            
+            bounds.extend(marker.getPosition());
+            
+            if ($(this)[0].hasAttribute('data-link')) {
+                var link = $(this).attr('data-link');
+                
+                marker.addListener('click', function(){
+                    window.open(link);
+                });
+            }
+        });
+        
+        if (mapData.attr('data-fit') == 'true' && markers.length > 1) {
+            map.fitBounds(bounds);
+        }
+    });
 }
 
 

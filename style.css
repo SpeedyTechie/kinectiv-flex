@@ -2333,6 +2333,9 @@ body div#ui-datepicker-div[style] {
     .title_md {
         font-size: 42px;
     }
+    .title_lg {
+        font-size: 52px;
+    }
 }
 @media (max-width: 1250px) {
     .title {
@@ -2351,7 +2354,7 @@ body div#ui-datepicker-div[style] {
         font-size: 40px;
     }
     .title_lg {
-        font-size: 54px;
+        font-size: 50px;
     }
 }
 @media (max-width: 1100px) {
@@ -2371,7 +2374,7 @@ body div#ui-datepicker-div[style] {
         font-size: 38px;
     }
     .title_lg {
-        font-size: 54px;
+        font-size: 46px;
     }
 }
 @media (max-width: 1000px) {
@@ -2391,7 +2394,7 @@ body div#ui-datepicker-div[style] {
         font-size: 36px;
     }
     .title_lg {
-        font-size: 54px;
+        font-size: 42px;
     }
 }
 @media (max-width: 850px) {
@@ -2411,7 +2414,7 @@ body div#ui-datepicker-div[style] {
         font-size: 34px;
     }
     .title_lg {
-        font-size: 54px;
+        font-size: 38px;
     }
 }
 @media (max-width: 750px) {
@@ -2431,7 +2434,7 @@ body div#ui-datepicker-div[style] {
         font-size: 32px;
     }
     .title_lg {
-        font-size: 54px;
+        font-size: 36px;
     }
 }
 @media (max-width: 650px) {
@@ -2451,7 +2454,7 @@ body div#ui-datepicker-div[style] {
         font-size: 30px;
     }
     .title_lg {
-        font-size: 54px;
+        font-size: 34px;
     }
 }
 @media (max-width: 550px) {
@@ -2471,7 +2474,7 @@ body div#ui-datepicker-div[style] {
         font-size: 26px;
     }
     .title_lg {
-        font-size: 54px;
+        font-size: 30px;
     }
 }
 @media (max-width: 450px) {
@@ -2491,7 +2494,7 @@ body div#ui-datepicker-div[style] {
         font-size: 24px;
     }
     .title_lg {
-        font-size: 54px;
+        font-size: 28px;
     }
 }
 @media (max-width: 400px) {
@@ -2511,7 +2514,7 @@ body div#ui-datepicker-div[style] {
         font-size: 22px;
     }
     .title_lg {
-        font-size: 54px;
+        font-size: 26px;
     }
 }
 
@@ -5326,6 +5329,105 @@ body div#ui-datepicker-div[style] {
 }
 .contact-info__text:first-child {
     margin-top: 0;
+}
+.contact-info__columns {
+    display: flex;
+    justify-content: center;
+    margin: 55px -40px 0;
+}
+.contact-info__columns:first-child {
+    margin-top: 0;
+}
+.contact-info__col {
+    flex: 1 1 auto;
+    width: 50%;
+    max-width: 700px;
+    padding: 0 40px;
+}
+.contact-info__col_w_full {
+    max-width: none;
+}
+.contact-info__subtitle {
+    margin-bottom: 30px;
+}
+.contact-info__subtitle:last-child {
+    margin-bottom: 0;
+}
+.contact-info__boxes {
+    margin: -8px;
+}
+.contact-info__boxes_full {
+    display: flex;
+}
+.contact-info__box {
+    padding: 8px;
+}
+.contact-info__boxes_full .contact-info__box {
+    flex: 1 0 auto;
+    width: 50%;
+}
+.contact-info__map {
+    height: 100%;
+    padding-top: 80%;
+}
+.contact-info__info {
+    height: 100%;
+    padding: 40px 30px;
+}
+.contact-info__info-section {
+    position: relative;
+    margin-bottom: 25px;
+    padding-left: 2.4em;
+}
+.contact-info__info-icon {
+    position: absolute;
+    top: 0.1em;
+    left: 0;
+    width: 1.2em;
+    height: 1.2em;
+}
+.contact-info__info-section:last-child {
+    margin-bottom: 0;
+}
+.contact-info__info-row {
+    margin-bottom: 6px;
+}
+.contact-info__info-row:last-child {
+    margin-bottom: 0;
+}
+.contact-info__info-label {
+    display: inline-block;
+}
+.contact-info__info-label_social {
+    margin-right: 10px;
+}
+.contact-info__info-label_social:last-child {
+    margin-right: 0;
+}
+.contact-info__info-detail {
+    display: inline-block;
+    text-decoration: none;
+}
+.contact-info__info-social {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/*--------------------------------------------------------------
+## Google Maps
+--------------------------------------------------------------*/
+.g-map {
+    position: relative;
+}
+.g-map__canvas {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+.g-map__data {
+    display: none;
 }
 
 /*--------------------------------------------------------------
