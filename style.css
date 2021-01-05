@@ -2402,7 +2402,7 @@ body div#ui-datepicker-div[style] {
         font-size: 28px;
     }
     .title_xs {
-        font-size: 18px;
+        font-size: 16px;
     }
     .title_sm {
         font-size: 20px;
@@ -2422,7 +2422,7 @@ body div#ui-datepicker-div[style] {
         font-size: 26px;
     }
     .title_xs {
-        font-size: 18px;
+        font-size: 16px;
     }
     .title_sm {
         font-size: 20px;
@@ -2442,7 +2442,7 @@ body div#ui-datepicker-div[style] {
         font-size: 24px;
     }
     .title_xs {
-        font-size: 18px;
+        font-size: 16px;
     }
     .title_sm {
         font-size: 20px;
@@ -2462,7 +2462,7 @@ body div#ui-datepicker-div[style] {
         font-size: 22px;
     }
     .title_xs {
-        font-size: 18px;
+        font-size: 15px;
     }
     .title_sm {
         font-size: 18px;
@@ -2482,7 +2482,7 @@ body div#ui-datepicker-div[style] {
         font-size: 20px;
     }
     .title_xs {
-        font-size: 18px;
+        font-size: 15px;
     }
     .title_sm {
         font-size: 16px;
@@ -2502,7 +2502,7 @@ body div#ui-datepicker-div[style] {
         font-size: 18px;
     }
     .title_xs {
-        font-size: 18px;
+        font-size: 14px;
     }
     .title_sm {
         font-size: 16px;
@@ -4847,6 +4847,102 @@ body div#ui-datepicker-div[style] {
 }
 .info-cols__buttons:first-child {
     margin-top: 0;
+}
+
+@media (max-width: 1250px) {
+    .info-cols__columns_2 {
+        column-gap: 85px;
+    }
+}
+@media (max-width: 1100px) {
+    .info-cols__title {
+        margin-bottom: 50px;
+    }
+    .info-cols__columns_2 {
+        column-gap: 65px;
+    }
+    .info-cols__item {
+        margin-bottom: 40px;
+    }
+    .info-cols__text {
+        margin-top: 10px;
+    }
+    .info-cols__list {
+        margin-top: 15px;
+    }
+    .info-cols__list-item {
+        margin-bottom: 8px;
+    }
+    .info-cols__buttons {
+        margin-top: 20px;
+    }
+}
+@media (max-width: 1000px) {
+    .info-cols__title {
+        margin-bottom: 45px;
+    }
+    .info-cols__columns_2 {
+        column-gap: 55px;
+    }
+}
+@media (max-width: 850px) {
+    .info-cols__title {
+        margin-bottom: 35px;
+    }
+    .info-cols__columns_2 {
+        column-gap: 40px;
+    }
+    .info-cols__item {
+        margin-bottom: 30px;
+    }
+    .info-cols__text {
+        margin-top: 8px;
+    }
+    .info-cols__list {
+        margin-top: 10px;
+    }
+    .info-cols__list-item {
+        margin-bottom: 5px;
+    }
+    .info-cols__buttons {
+        margin-top: 15px;
+    }
+}
+@media (max-width: 750px) {
+    .info-cols__columns_2 {
+        column-count: 1;
+    }
+    .info-cols__item {
+        margin-bottom: 35px;
+    }
+}
+@media (max-width: 550px) {
+    .info-cols__title {
+        margin-bottom: 30px;
+    }
+    .info-cols__item {
+        margin-bottom: 30px;
+    }
+}
+@media (max-width: 450px) {
+    .info-cols__title {
+        margin-bottom: 25px;
+    }
+    .info-cols__item {
+        margin-bottom: 25px;
+    }
+    .info-cols__text {
+        margin-top: 5px;
+    }
+    .info-cols__list {
+        margin-top: 8px;
+    }
+    .info-cols__list-item {
+        margin-bottom: 3px;
+    }
+    .info-cols__buttons {
+        margin-top: 12px;
+    }
 }
 
 /*--------------------------------------------------------------
