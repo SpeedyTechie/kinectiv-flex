@@ -803,12 +803,37 @@ if (function_exists('acf_add_options_page')) {
 
 
 /**
- * Remove Site Icon control from Theme Customization
+ * Purge Kinsta Cache when ACF options page is updated
+ */
+function ks_save_options_page($post_id) {
+    // check if this is an options page
+    if ($post_id == 'options') {
+        // check if this site is hosted on a Kinsta production environment with caching
+        if (wp_get_environment_type() == 'production' && class_exists('Kinsta\Cache')) {
+            wp_remote_get('https://localhost/kinsta-clear-cache-all', [
+               'sslverify' => false, 
+               'timeout'   => 5
+            ]); // purge the cache
+        }
+    }
+}
+add_action('acf/save_post', 'ks_save_options_page');
+
+
+/**
+ * Remove unnecessary panels/controls from WP Customizer
  */
 function ks_customize_register($wp_customize) {
-    $wp_customize->remove_control('site_icon');
+    $wp_customize->remove_control('site_icon'); // remove site icon control
+    $wp_customize->remove_panel('nav_menus'); // remove menus panel
 }
-add_action('customize_register', 'ks_customize_register', 20);  
+add_action('customize_register', 'ks_customize_register', 20);
+
+
+/**
+ * Disable WP Theme Editor
+ */	
+define('DISALLOW_FILE_EDIT', true);
 
 
 /**
