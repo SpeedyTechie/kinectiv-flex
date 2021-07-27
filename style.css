@@ -13,7 +13,6 @@ Description: A theme by Kinectiv
 # Content
 # Links
 # Accessibility
-# Media
 # Forms
 # Gravity Forms
 # Colors
@@ -38,6 +37,12 @@ html {
  */
 body {
 	margin: 0;
+}
+/**
+ * Render the `main` element consistently in IE.
+ */
+main {
+	display: block;
 }
 /**
  * Correct the font size and margin on `h1` elements within `section` and
@@ -376,7 +381,7 @@ html {
 *,
 *:before,
 *:after {
-	box-sizing: inherit; /* Inherit box-sizing to make it easier to change the property for components that leverage other behavior; see https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
+	box-sizing: inherit;
 }
 body {
 	background: #f3f3f3;
@@ -402,17 +407,22 @@ li > ol {
 	margin-left: 1.5em;
 }
 dt {
-	font-weight: bold;
+	font-weight: 700;
 }
 dd {
 	margin: 0 1.5em 1.5em;
 }
+embed,
+iframe,
+object {
+	max-width: 100%;
+}
 img {
-	height: auto; /* Make sure images are scaled correctly. */
-	max-width: 100%; /* Adhere to container width. */
+	height: auto;
+	max-width: 100%;
 }
 figure {
-	margin: 1em 0; /* Extra wide images within figure tags don't overflow the content area. */
+	margin: 1em 0;
 }
 table {
 	margin: 0 0 1.5em;
@@ -474,7 +484,6 @@ a:active {
 /*--------------------------------------------------------------
 # Accessibility
 --------------------------------------------------------------*/
-/* Text meant only for screen readers. */
 .screen-reader-text {
 	border: 0;
 	clip: rect(1px, 1px, 1px, 1px);
@@ -485,17 +494,7 @@ a:active {
 	padding: 0;
 	position: absolute !important;
 	width: 1px;
-	word-wrap: normal !important; /* Many screen reader and browser combinations announce broken words as they would appear visually. */
-}
-
-/*--------------------------------------------------------------
-# Media
---------------------------------------------------------------*/
-/* Make sure embeds and iframes fit their containers. */
-embed,
-iframe,
-object {
-	max-width: 100%;
+	word-wrap: normal !important;
 }
 
 /*--------------------------------------------------------------
@@ -634,15 +633,6 @@ input[type="radio"] + label::selection {
     margin: 0;
     font-style: italic;
 }
-.gform_wrapper .gf_hidden,
-.gform_wrapper .gform_hidden,
-.gform_wrapper input.gform_hidden,
-.gform_wrapper input[type=hidden],
-.gform_wrapper .gf_invisible,
-.gform_wrapper .gfield_visibility_hidden,
-.gform_wrapper .gform_validation_container {
-    display: none;
-}
 .gform_wrapper {
     transition: opacity 0.2s;
 }
@@ -653,9 +643,21 @@ input[type="radio"] + label::selection {
 .gform_wrapper.loading form {
     pointer-events: none;
 }
-.gform_wrapper .validation_error {
+.gform_wrapper .gform_validation_errors {
     margin-bottom: 40px;
+}
+.gform_wrapper .gform_submission_error {
+    margin-bottom: 10px;
     padding: 20px 25px;
+}
+.gform_wrapper .gform_submission_error:last-child {
+    margin-bottom: 0;
+}
+.gform_wrapper .gform_validation_errors ol {
+    margin: 20px 0 0;
+}
+.gform_wrapper .gform_submission_error .gform-icon {
+    display: none;
 }
 .gform_fields {
     display: flex;
@@ -665,22 +667,51 @@ input[type="radio"] + label::selection {
     padding: 0;
     list-style: none;
 }
+.gform_wrapper.gravity-theme .gform_body .gform_fields {
+    display: flex;
+    grid-gap: 0;
+}
 .gfield {
     flex: 0 0 auto;
     width: 100%;
     padding: 10px 8px;
 }
-.gfield.field_kfgf_width_two-thirds {
-    width: 66.67%;
-}
-.gfield.field_kfgf_width_half {
-    width: 50%;
-}
-.gfield.field_kfgf_width_one-third {
-    width: 33.33%;
+.gform_wrapper.gravity-theme fieldset.gfield {
+    margin: 10px 0; /* margin instead of vertical padding to avoid fieldset weirdness */
+    padding: 0 8px;
 }
 .gfield.gsection:not(:first-child) {
     padding-top: 30px;
+}
+.gfield.gfield--width-eleven-twelfths {
+    width: 91.67%;
+}
+.gfield.gfield--width-five-sixths {
+    width: 83.33%;
+}
+.gfield.gfield--width-three-quarter {
+    width: 75%;
+}
+.gfield.gfield--width-two-thirds {
+    width: 66.67%;
+}
+.gfield.gfield--width-seven-twelfths {
+    width: 58.33%;
+}
+.gfield.gfield--width-half {
+    width: 50%;
+}
+.gfield.gfield--width-five-twelfths {
+    width: 41.67%;
+}
+.gfield.gfield--width-third {
+    width: 33.33%;
+}
+.gfield.gfield--width-quarter {
+    width: 25%;
+}
+.gfield.spacer {
+    padding: 0;
 }
 .gfield .gsection_title {
     margin-bottom: 5px;
@@ -693,7 +724,15 @@ input[type="radio"] + label::selection {
     display: inline-block;
     margin-bottom: 3px;
 }
-.gfield.hidden_label .gfield_label {
+.gfield .ginput_quantity_label {
+    display: block;
+    margin: 8px 0 2px;
+}
+.gform_wrapper .gfield_required::before {
+    content: '*';
+}
+.gform_wrapper .gfield_required_text {
+    display: block;
     border: 0;
 	clip: rect(1px, 1px, 1px, 1px);
 	clip-path: inset(50%);
@@ -705,9 +744,8 @@ input[type="radio"] + label::selection {
 	width: 1px;
 	word-wrap: normal !important;
 }
-.gfield .ginput_quantity_label {
-    display: block;
-    margin: 8px 0 2px;
+.gform_wrapper .gfield_required_text::before {
+    display: none;
 }
 .gfield .copy_values_option_container {
     margin: 5px 0 8px;
@@ -715,19 +753,15 @@ input[type="radio"] + label::selection {
 .gfield.hidden_label .copy_values_option_container {
     margin-top: 0;
 }
-.gfield .ginput_container,
-.gfield .clear-multi {
+.gfield .ginput_container {
     margin-top: 5px;
 }
+.gfield.field_sublabel_above .ginput_container,
 .gfield.hidden_label .ginput_container,
-.gfield.hidden_label .clear-multi,
-.gfield .clear-multi .ginput_container,
-.gfield .ginput_container .clear-multi,
 .gfield .ginput_container_singleproduct {
     margin-top: 0;
 }
-.gfield .ginput_complex,
-.gfield .clear-multi {
+.gfield .ginput_complex {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
@@ -736,8 +770,7 @@ input[type="radio"] + label::selection {
     margin-left: -4px;
 }
 .gfield .ginput_complex > span,
-.gfield .ginput_complex > div,
-.gfield .clear-multi > div {
+.gfield .ginput_complex > div {
     flex: 1 0 auto;
     display: block;
     padding: 0 4px 8px;
@@ -766,16 +799,19 @@ input[type="radio"] + label::selection {
 .gfield .ginput_complex > .address_zip {
     width: 20%;
 }
-.gfield .clear-multi .gfield_date_day,
-.gfield .clear-multi .gfield_date_month,
-.gfield .clear-multi .gfield_date_year,
-.gfield .clear-multi .gfield_date_dropdown_day,
-.gfield .clear-multi .gfield_date_dropdown_month,
-.gfield .clear-multi .gfield_date_dropdown_year,
-.gfield .clear-multi .gfield_time_hour,
-.gfield .clear-multi .gfield_time_minute, 
-.gfield .clear-multi .gfield_time_ampm {
+.gfield .ginput_complex .gfield_date_day,
+.gfield .ginput_complex .gfield_date_month,
+.gfield .ginput_complex .gfield_date_year,
+.gfield .ginput_complex .gfield_date_dropdown_day,
+.gfield .ginput_complex .gfield_date_dropdown_month,
+.gfield .ginput_complex .gfield_date_dropdown_year,
+.gfield .ginput_complex .gfield_time_hour,
+.gfield .ginput_complex .gfield_time_minute, 
+.gfield .ginput_complex .gfield_time_ampm {
     width: 33.33%;
+}
+.gfield .ginput_complex > .hour_minute_colon {
+    display: none;
 }
 .gfield .ginput_container_email .ginput_left,
 .gfield .ginput_container_email .ginput_right {
@@ -783,6 +819,25 @@ input[type="radio"] + label::selection {
 }
 .gfield .ginput_container_creditcard .ginput_full {
     width: 100%;
+}
+.gfield .ginput_complex > .gf_clear_complex {
+    display: none;
+}
+.gform_wrapper.gravity-theme .gform_fields .gfield input.large,
+.gform_wrapper.gravity-theme .gform_fields .gfield input.medium,
+.gform_wrapper.gravity-theme .gform_fields .gfield input.small,
+.gform_wrapper.gravity-theme .gform_fields .gfield select.large,
+.gform_wrapper.gravity-theme .gform_fields .gfield select.medium,
+.gform_wrapper.gravity-theme .gform_fields .gfield select.small,
+.gform_wrapper .ginput_complex input[type="text"],
+.gform_wrapper .ginput_complex input[type="number"],
+.gform_wrapper .ginput_complex input[type="email"],
+.gform_wrapper .ginput_complex select,
+.gform_wrapper input.datepicker {
+    width: 100%;
+}
+.gform_wrapper.gravity-theme .gform_body .gform_fields .gfield textarea {
+    height: 225px;
 }
 .gfield .gfield_checkbox,
 .gfield .gfield_radio {
@@ -797,32 +852,34 @@ input[type="radio"] + label::selection {
     flex-wrap: wrap;
     margin: -5px -15px;
 }
-.gfield .gfield_checkbox li,
-.gfield .gfield_radio li {
+.gfield .gfield_checkbox .gchoice,
+.gfield .gfield_radio .gchoice {
     margin-bottom: 5px;
 }
-.gfield .gfield_checkbox li:last-child,
-.gfield .gfield_radio li:last-child {
+.gfield .gfield_checkbox .gchoice:last-child,
+.gfield .gfield_radio .gchoice:last-child {
     margin-bottom: 0;
 }
-.gfield.field_kfgf_layout_horizontal .gfield_checkbox li,
-.gfield.field_kfgf_layout_horizontal .gfield_radio li {
+.gfield.field_kfgf_layout_horizontal .gfield_checkbox .gchoice,
+.gfield.field_kfgf_layout_horizontal .gfield_radio .gchoice {
     margin-bottom: 0;
     padding: 5px 15px;
 }
-.gfield .gfield_checkbox .gchoice_select_all {
-    font-style: italic;
+.gfield .gfield_checkbox button {
+    margin-top: 5px;
 }
-.gfield textarea.small {
-    height: 150px;
+.gfield.field_kfgf_layout_horizontal .gfield_checkbox button {
+    margin: 5px 15px;
 }
-.gfield textarea.medium {
-    height: 225px;
+.gfield .gfield_radio input[type="text"] {
+    width: 100%;
+    margin-top: 5px;
 }
-.gfield textarea.large {
-    height: 300px;
+.gfield .gfield_radio input[type="text"][disabled] {
+    display: none;
 }
 .gfield .gform_drop_area {
+    background-color: transparent;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -832,12 +889,13 @@ input[type="radio"] + label::selection {
     text-align: center;
     border-width: 2px;
     border-style: solid;
+    border-radius: 0;
 }
-.gfield .gform_drop_instructions {
+.gfield .gform_drop_area .gform_drop_instructions {
     margin: 10px 10px 10px 0;
     line-height: 1.4;
 }
-.gfield .gform_custom_extension_list {
+.gfield .gform_drop_area .gform_fileupload_rules {
     width: 100%;
     margin-top: 10px;
 }
@@ -848,37 +906,28 @@ input[type="radio"] + label::selection {
 .gfield .ginput_container_fileupload ~ [id^="gform_preview_"] {
     display: none;
 }
-.gfield .gfield_list {
-    margin-bottom: 0;
-    border-spacing: 0;
-}
-.gfield .gfield_list .gfield_list_group {
-    display: flex;
-    align-items: center;
+.gform_wrapper.gravity-theme .gfield .gfield_list .gfield_list_group {
     margin-bottom: 8px;
 }
-.gfield .gfield_list .gfield_list_group:last-child {
+.gform_wrapper.gravity-theme .gfield .gfield_list .gfield_list_group:last-child {
     margin-bottom: 0;
 }
 .gfield .gfield_list .gfield_list_cell {
-    display: block;
-    width: 100%;
     margin-right: 8px;
-    padding: 0;
 }
-.gfield .gfield_list .gfield_list_icons {
-    display: flex;
-    align-items: center;
-    flex: 0 0 auto;
-    padding: 0;
+.gform_wrapper.gravity-theme .gfield .gfield_list .gfield_list_icons {
+    width: auto;
 }
-.gfield .gfield_list .add_list_item,
-.gfield .gfield_list .delete_list_item {
+.gform_wrapper.gravity-theme .gfield .gfield_list .gfield_list_icons .add_list_item,
+.gform_wrapper.gravity-theme .gfield .gfield_list .gfield_list_icons .delete_list_item {
+    opacity: 1;
+    background: currentColor;
     position: relative;
     display: block;
     width: 20px;
     height: 20px;
-    transition: 0.4s;
+    margin-left: 0;
+    transition: 0.4s, visibility 0s;
 }
 .gfield .gfield_list .add_list_item {
     margin-right: 4px;
@@ -901,6 +950,9 @@ input[type="radio"] + label::selection {
 .gfield .gfield_list .add_list_item::after {
     transform: rotate(90deg);
 }
+.gform_wrapper .ui-datepicker-trigger {
+    display: none;
+}
 .gfield .StripeElement {
     background-color: currentColor;
     height: auto;
@@ -910,28 +962,24 @@ input[type="radio"] + label::selection {
 .gfield .StripeElement--webkit-autofill {
     background-color: currentColor !important;
 }
-.gfield .gfield_time_hour i {
-    display: none;
+.gfield .ginput_stripe_creditcard input {
+    padding: 0.65em 0.9em;
 }
-.gfield .ginput_complex label,
-.gfield .clear-multi label {
+.gfield .ginput_complex label {
     display: inline-block;
 }
-.gfield.field_sublabel_below .ginput_complex label,
-.gfield.field_sublabel_below .clear-multi label {
+.gfield.field_sublabel_below .ginput_complex label {
     margin-top: 2px;
 }
-.gfield.field_sublabel_above .ginput_complex label,
-.gfield.field_sublabel_above .clear-multi label {
+.gfield.field_sublabel_above .ginput_complex label {
     margin-bottom: 2px;
 }
-.gfield .ginput_complex .gf_clear_complex {
-    display: none;
-}
-.gfield .ginput_counter {
+.gform_wrapper.gravity-theme .gform_fields .ginput_counter,
+.gform_wrapper .instruction {
     margin-top: 3px;
     font-size: 12px;
     line-height: 1.2;
+    color: inherit;
 }
 .gfield.field_description_below .gfield_description {
     margin-top: 8px;
@@ -941,7 +989,7 @@ input[type="radio"] + label::selection {
 }
 .gfield.field_description_below .validation_message,
 .gfield.field_description_above .validation_message,
-.form_saved_message .validation_message {
+.form_saved_message .gform_validation_message {
     margin-top: 8px;
     margin-bottom: 0;
 }
@@ -961,6 +1009,9 @@ input[type="radio"] + label::selection {
 .gform_footer .gform_save_link {
     margin: 6px 8px;
 }
+.gform_footer .gform_save_link svg {
+    display: none;
+}
 .gform_footer .gform_ajax_spinner,
 .form_saved_message .gform_ajax_spinner {
     display: none;
@@ -973,76 +1024,63 @@ input[type="radio"] + label::selection {
 ## Date Picker
 --------------------------------------------------------------*/
 #ui-datepicker-div {
-    display: none;
-}
-.ui-datepicker {
     background-color: #f3f3f3;
-	width: 225px;
-	height: auto;
-	margin: 5px auto 0;
+    width: 225px;
+    margin: 5px 0 0;
+    padding: 0;
     color: #6d6d6d;
+    border: 0;
 	box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.4);
 }
-.ui-datepicker a {
-	text-decoration: none;
-}
-.ui-datepicker table {
-	width: 100%;
-	border-collapse: collapse;
-}
-.ui-datepicker-header {
+#ui-datepicker-div .ui-datepicker-header {
     position: relative;
+    margin: 0;
+    padding: 0;
+    border: 0;
 }
-.ui-datepicker-title {
+#ui-datepicker-div .ui-datepicker-prev, 
+#ui-datepicker-div .ui-datepicker-next {
+    background-image: url('images/dynamic/control-arrow.php?color=a5');
+    background-repeat: no-repeat;
+    background-size: 8px 12px;
+    background-position: center center;
+	display: block;
+    top: 10px;
+    bottom: 10px;
+	width: 30px;
+}
+#ui-datepicker-div .ui-datepicker-prev {
+    left: 0;
+    transform: scaleX(-1);
+}
+#ui-datepicker-div .ui-datepicker-next {
+    right: 0;
+}
+#ui-datepicker-div .ui-datepicker-prev::before,
+#ui-datepicker-div .ui-datepicker-next::before {
+    display: none;
+}
+#ui-datepicker-div .ui-datepicker-title {
     display: flex;
     padding: 10px 30px;
 }
-.ui-datepicker-title select {
+#ui-datepicker-div .ui-datepicker-title select {
     background-image: url('images/dynamic/control-arrow-down.php?color=a5');
 	font-size: 14px;
     font-weight: 700;
     margin: 0 2px;
 }
-.ui-datepicker-title select:first-child {
+#ui-datepicker-div .ui-datepicker-title select:first-child {
     margin-left: 0;
 }
-.ui-datepicker-title select:last-child {
+#ui-datepicker-div .ui-datepicker-title select:last-child {
     margin-right: 0;
 }
-.ui-datepicker-prev, 
-.ui-datepicker-next {
-    background-image: url('images/dynamic/control-arrow.php?color=a5');
-    background-repeat: no-repeat;
-    background-size: 8px 12px;
-    background-position: center center;
-    position: absolute;
-	display: block;
-    top: 10px;
-    bottom: 10px;
-	width: 30px;
-    cursor: pointer;
+#ui-datepicker-div .ui-datepicker-calendar {
+    margin: 0;
+	border-collapse: collapse;
 }
-.ui-datepicker-prev {
-    left: 0;
-    transform:scaleX(-1);
-}
-.ui-datepicker-next {
-    right: 0;
-}
-.ui-datepicker-prev span, 
-.ui-datepicker-next span {
-    border: 0;
-	clip: rect(1px, 1px, 1px, 1px);
-	clip-path: inset(50%);
-	height: 1px;
-	margin: -1px;
-	overflow: hidden;
-	padding: 0;
-	position: absolute !important;
-	width: 1px;
-	word-wrap: normal !important;
-}
-.ui-datepicker th {
+#ui-datepicker-div .ui-datepicker-calendar th {
 	text-transform: uppercase;
 	text-align: center;
 	font-size: 10px;
@@ -1050,17 +1088,27 @@ input[type="radio"] + label::selection {
 	padding: 5px 0;
     border-top: 1px solid #a8a8a8;
 }
-.ui-datepicker tbody td {
-	padding: 0;
+#ui-datepicker-div .ui-datepicker-calendar td {
+    padding: 0;
 	border-top: 1px solid #a8a8a8;
 	border-right: 1px solid #a8a8a8;
 }
-.ui-datepicker tbody td:last-child {
-	border-right: 0px;
+#ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-unselectable {
+    background-color: #a8a8a8;
 }
-.ui-datepicker td span, 
-.ui-datepicker td a {
-	display: block;
+#ui-datepicker-div .ui-datepicker-calendar td:last-child {
+    border-right: 0;
+}
+#ui-datepicker-div .ui-datepicker-calendar .ui-datepicker-other-month span.ui-state-default {
+    display: none;
+}
+#ui-datepicker-div .ui-datepicker-calendar .ui-datepicker-unselectable span.ui-state-default {
+    background-color: #a8a8a8;
+}
+#ui-datepicker-div .ui-datepicker-calendar a.ui-state-default,
+#ui-datepicker-div .ui-datepicker-calendar span.ui-state-default {
+    display: block;
+    background-color: #f3f3f3;
     color: #6d6d6d;
     font-size: 14px;
 	font-weight: 700;
@@ -1068,32 +1116,18 @@ input[type="radio"] + label::selection {
 	width: 100%;
 	height: 30px;
 	line-height: 30px;
+    border-radius: 0;
 }
-.ui-datepicker-calendar .ui-state-default {
-	background: #f3f3f3
-}
-.ui-datepicker-today .ui-state-default {
-    background: #fff;
+#ui-datepicker-div .ui-datepicker-calendar .ui-datepicker-today a.ui-state-default {
+    background-color: #fff;
     color: #000;
 }
-.ui-datepicker-calendar .ui-state-hover {
-	background: #fff;
+#ui-datepicker-div .ui-datepicker-calendar a.ui-state-hover {
+    background-color: #fff;
 }
-.ui-datepicker-calendar .ui-state-active {
-	background: #6d6d6d;
+#ui-datepicker-div .ui-datepicker-calendar a.ui-state-active {
+    background-color: #6d6d6d;
 	color: #fff;
-}
-.ui-datepicker-unselectable .ui-state-default {
-	background: #a8a8a8;
-}
-td.ui-datepicker-unselectable.ui-state-disabled {
-	background-color: #a8a8a8;
-}
-table.ui-datepicker-calendar {
-	margin: 0;
-}
-body div#ui-datepicker-div[style] {
-	z-index: 99999;
 }
 
 /*--------------------------------------------------------------
@@ -5020,6 +5054,21 @@ body div#ui-datepicker-div[style] {
 }
 .testimonials__text:last-child {
     margin-bottom: 0;
+}
+.testimonials__name {
+    margin-bottom: 3px;
+}
+.testimonials__name:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 1100px) {
+    .testimonials_slick {
+        padding: 0 55px;
+    }
+    .testimonials__item_slick {
+        padding: 0 25px;
+    }
 }
 
 /*--------------------------------------------------------------

@@ -14,6 +14,8 @@ if (!function_exists('ks_setup')) {
 			'comment-list',
 			'gallery',
 			'caption',
+            'style',
+            'script'
 		));
 	}
 }
@@ -39,7 +41,7 @@ function kinectiv_flex_scripts() {
     
     wp_deregister_script('wp-embed');
     wp_deregister_script('jquery');
-    wp_enqueue_script('jquery', 'https://code.jquery.com/jquery-3.5.1.min.js', array(), null, false);
+    wp_enqueue_script('jquery', 'https://code.jquery.com/jquery-3.5.1.min.js', array(), null, true);
 	wp_enqueue_script('kinectiv-flex-script', get_template_directory_uri() . '/js/script.min.js', array('jquery'), '0.1.0', true);
     wp_enqueue_script('google-maps', 'https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initGoogleMaps', array('kinectiv-flex-script'), null, true);
     
@@ -108,7 +110,7 @@ add_action('init', 'kf_post_types');
  * Formatted copyright year
  */
 function kf_get_copyright_year() {
-    $year = '2020'; // year site was first published
+    $year = '2021'; // year site was first published
     $today_dt = current_datetime();
     
     // if the current year is not the publish year, convert to a range (e.g. "2018-2020")
@@ -627,7 +629,7 @@ function kf_validate_event_times($valid, $value, $field, $input) {
     if ($valid) {
         if ($value) {
             if (strtotime($value) <= strtotime($_POST['acf']['field_5f5921839dc3a']['field_5f59244d92ede'])) {
-                $valid = 'The end time must be after the start time';
+                $valid = 'The end time must be after the start time.';
             }
         }
     }
@@ -863,19 +865,6 @@ add_filter('gform_add_field_buttons', 'kf_filter_gform_add_field_buttons');
 
 
 /**
- * Gravity Forms - remove unwanted form settings
- */
-function kf_gform_form_settings($settings, $form) {
-    unset($settings[__('Form Layout', 'gravityforms')]['form_label_placement']); // remove label placement setting
-    unset($settings[__('Form Button', 'gravityforms')]['form_button_type']); // remove button type setting
-    unset($settings[__('Form Options', 'gravityforms')]['enable_animation']); // remove animated transitions setting
-    
-    return $settings;
-}
-add_filter('gform_form_settings', 'kf_gform_form_settings', 10, 2);
-
-
-/**
  * Gravity Forms - store theme in ACF store for access while modifying form markup
  */
 function kf_get_theme_gform_form_args($form_args) {
@@ -937,27 +926,16 @@ function kf_gform_field_content($field_content, $field) {
         
         // modifications for specific field types
         if ($field->type == 'section') {
-            // change section header element from h2 to h3 and add classes
-            foreach ($dom->getElementsByTagName('h2') as $h2_element) {
-                $classes = explode(' ', $h2_element->getAttribute('class'));
+            // add classes to section title (or remove if there's no title)
+            foreach ($dom->getElementsByTagName('h3') as $h3_element) {
+                $classes = explode(' ', $h3_element->getAttribute('class'));
                 
                 if (in_array('gsection_title', $classes)) {
                     if ($field->label) {
-                        // replace h2 with h3
-                        $h3_element = $dom->createElement('h3');
-                        foreach ($h2_element->childNodes as $child) {
-                            $h3_element->appendChild($child);
-                        }
-                        foreach ($h2_element->attributes as $attribute) {
-                            $h3_element->setAttribute($attribute->name, $attribute->value);
-                        }
-                        $h2_element->parentNode->replaceChild($h3_element, $h2_element);
-
-                        // add classes
                         $classes[] = 'text text_xl text_normal text_line_1-4 c_color_' . color_id($theme, 3, true);
                         $h3_element->setAttribute('class', implode(' ', $classes));
                     } else {
-                        $h2_element->parentNode->removeChild($h2_element); // if there's no title text, just remove the element
+                        $h3_element->parentNode->removeChild($h3_element); // if there's no title text, just remove the element
                     }
                 }
             }
@@ -984,24 +962,13 @@ function kf_gform_field_content($field_content, $field) {
         } elseif ($field->type == 'fileupload' || ($field->type == 'post_custom_field' && $field->inputType == 'fileupload')) {
             $drop_area = null;
             
-            // add replace button input with button element and add color classes
-            foreach ($dom->getElementsByTagName('input') as $input_element) {
-                $type = $input_element->getAttribute('type');
+            // add color classes to button
+            foreach ($dom->getElementsByTagName('button') as $button_element) {
+                $classes = explode(' ', $button_element->getAttribute('class'));
                 
-                if ($type == 'button') {
-                    // create new button and duplicate all attributes from existing button
-                    $button_element = $dom->createElement('button');
-                    $button_element->appendChild($dom->createTextNode('Select Files'));
-                    $input_element->removeAttribute('value');
-                    foreach($input_element->attributes as $attribute) {
-                        $button_element->setAttribute($attribute->name, $attribute->value);
-                    }
-                    
-                    // add classes to new button
-                    $classes = 'c_bg_' . color_id($theme, 3, true) . ' c_h_bg_' . color_id($theme, 4, true) . ' c_color_' . color_id($theme, 0, true) . ' c_h_color_' . color_id($theme, 0, true);
-                    $button_element->setAttribute('class', trim($button_element->getAttribute('class') . ' ' . $classes));
-                    
-                    $input_element->parentNode->replaceChild($button_element, $input_element); // replace existing button with new button
+                if (in_array('gform_button_select_files', $classes)) {
+                    $classes[] = 'c_bg_' . color_id($theme, 3, true) . ' c_h_bg_' . color_id($theme, 4, true) . ' c_color_' . color_id($theme, 0, true) . ' c_h_color_' . color_id($theme, 0, true);
+                    $button_element->setAttribute('class', implode(' ', $classes));
                 }
             }
             
@@ -1026,12 +993,12 @@ function kf_gform_field_content($field_content, $field) {
                         if ($div_child_element->nodeName == 'span') {
                             $div_child_classes = explode(' ', $div_child_element->getAttribute('class'));
                             
-                            if (in_array('screen-reader-text', $div_child_classes)) {
+                            if (in_array('gform_fileupload_rules', $div_child_classes)) {
                                 $remove_key = array_search('screen-reader-text', $div_child_classes);
                                 if ($remove_key !== false) {
                                     unset($div_child_classes[$remove_key]);
                                 }
-                                $div_child_classes[] = 'gform_custom_extension_list text text_xs text_italic text_line_1-4 c_color_' . color_id($theme, 3, true); 
+                                $div_child_classes[] = 'text text_xs text_italic text_line_1-4 c_color_' . color_id($theme, 3, true); 
                                 $div_child_element->setAttribute('class', implode(' ', $div_child_classes));
                                 
                                 // move span within drop area
@@ -1097,17 +1064,12 @@ function kf_gform_field_content($field_content, $field) {
             }
         } elseif ($field->type == 'list' || ($field->type == 'post_custom_field' && $field->inputType == 'list')) {
             // add color classes to add/remove buttons and remove img tags
-            foreach ($dom->getElementsByTagName('a') as $a_element) {
-                $classes = explode(' ', $a_element->getAttribute('class'));
+            foreach ($dom->getElementsByTagName('button') as $button_element) {
+                $classes = explode(' ', $button_element->getAttribute('class'));
                 
                 if (in_array('add_list_item', $classes) || in_array('delete_list_item', $classes)) {
-                    $classes[] = 'c_bg_' . color_id($theme, 3, true) . ' c_h_bg_' . color_id($theme, 5, true) . ' c_color_' . color_id($theme, 1, true) . ' c_h_color_' . color_id($theme, 1, true);
-                    $a_element->setAttribute('class', implode(' ', $classes));
-                    
-                    // remove img tags
-                    foreach ($a_element->getElementsByTagName('img') as $img_element) {
-                        $a_element->removeChild($img_element);
-                    }
+                    $classes[] = 'c_color_' . color_id($theme, 3, true) . ' c_h_color_' . color_id($theme, 5, true) . ' c_bfr_color_' . color_id($theme, 1, true) . ' c_aft_color_' . color_id($theme, 1, true);
+                    $button_element->setAttribute('class', implode(' ', $classes));
                 }
             }
         } elseif ($field->type == 'consent') {
@@ -1140,6 +1102,15 @@ function kf_gform_field_content($field_content, $field) {
                     }
                 }
             }
+        } elseif ($field->type == 'date') {
+            // disable autocomplete if datepicker is enabled
+            foreach ($dom->getElementsByTagName('input') as $input_element) {
+                $classes = explode(' ', $input_element->getAttribute('class'));
+                
+                if (in_array('datepicker', $classes)) {
+                    $input_element->setAttribute('autocomplete', 'off');
+                }
+            }
         }
         
         // add classes to field labels
@@ -1153,6 +1124,20 @@ function kf_gform_field_content($field_content, $field) {
                 }
                 
                 $label_element->setAttribute('class', implode(' ', $classes));
+            }
+        }
+        
+        // add classes to fieldset legends (to match standard labels)
+        foreach ($dom->getElementsByTagName('legend') as $legend_element) {
+            $classes = explode(' ', $legend_element->getAttribute('class'));
+            
+            if (in_array('gfield_label', $classes)) {
+                $classes[] = 'text text_bold text_line_1-4';
+                if ($field->failed_validation) {
+                    $classes[] = 'c_color_' . aux_color_id($theme, 1, true);
+                }
+                
+                $legend_element->setAttribute('class', implode(' ', $classes));
             }
         }
         
@@ -1213,24 +1198,21 @@ function kf_gform_field_content($field_content, $field) {
             }
         }
         
-        // add color classes to checkbox labels (for ::before and ::after)
-        foreach ($dom->getElementsByTagName('ul') as $ul_element) {
-            $ul_classes = explode(' ', $ul_element->getAttribute('class'));
+        // add color classes to checkbox and radio button labels (for ::before and ::after), add classes to checkbox select all button
+        foreach ($dom->getElementsByTagName('div') as $div_element) {
+            $div_classes = explode(' ', $div_element->getAttribute('class'));
 
-            if (in_array('gfield_checkbox', $ul_classes)) {
-                foreach ($ul_element->getElementsByTagName('label') as $label_element) {
+            if (in_array('gfield_checkbox', $div_classes)) {
+                foreach ($div_element->getElementsByTagName('label') as $label_element) {
                     $label_classes = 'c_bfr_color_' . color_id($theme, 3, true) . ' c_aft_color_' . color_id($theme, 5, true);
                     $label_element->setAttribute('class', trim($label_element->getAttribute('class') . ' ' . $label_classes));
                 }
-            }
-        }
-        
-        // add color classes to radio button labels (for ::before and ::after)
-        foreach ($dom->getElementsByTagName('ul') as $ul_element) {
-            $ul_classes = explode(' ', $ul_element->getAttribute('class'));
-
-            if (in_array('gfield_radio', $ul_classes)) {
-                foreach ($ul_element->getElementsByTagName('label') as $label_element) {
+                foreach ($div_element->getElementsByTagName('button') as $button_element) {
+                    $button_classes = 'button c_bg_' . color_id($theme, 3, true) . ' c_h_bg_' . color_id($theme, 4, true) . ' c_color_' . color_id($theme, 0, true) . ' c_h_color_' . color_id($theme, 0, true);
+                    $button_element->setAttribute('class', trim($button_element->getAttribute('class') . ' ' . $button_classes));
+                }
+            } elseif (in_array('gfield_radio', $div_classes)) {
+                foreach ($div_element->getElementsByTagName('label') as $label_element) {
                     $label_classes = 'c_bfr_color_' . color_id($theme, 3, true) . ' c_aft_color_' . color_id($theme, 5, true);
                     $label_element->setAttribute('class', trim($label_element->getAttribute('class') . ' ' . $label_classes));
                 }
@@ -1254,6 +1236,139 @@ function kf_gform_field_content($field_content, $field) {
             if (in_array('ginput_total', $classes)) {
                 $classes[] = 'text text_lg text_bold text_line_1-4 c_color_' . color_id($theme, 3, true);
                 $span_element->setAttribute('class', implode(' ', $classes));
+            }
+        }
+        foreach ($dom->getElementsByTagName('label') as $label_element) {
+            $classes = explode(' ', $label_element->getAttribute('class'));
+            
+            if (in_array('ginput_product_price_label', $classes)) {
+                $classes[] = 'text text_italic text_line_1-4 c_color_' . color_id($theme, 3, true);
+                $label_element->setAttribute('class', implode(' ', $classes));
+            }
+        }
+        foreach ($dom->getElementsByTagName('input') as $input_element) {
+            $classes = explode(' ', $input_element->getAttribute('class'));
+            
+            if (in_array('ginput_product_price', $classes) || in_array('ginput_shipping_price', $classes)) {
+                $classes[] = 'gform-text-input-reset text text_italic text_line_1-4 c_color_' . color_id($theme, 3, true);
+                $input_element->setAttribute('class', implode(' ', $classes));
+            }
+            
+            if (in_array('ginput_total', $classes)) {
+                $classes[] = 'text text_lg text_bold text_line_1-4 c_color_' . color_id($theme, 3, true);
+                $input_element->setAttribute('class', implode(' ', $classes));
+            }
+        }
+        foreach ($dom->getElementsByTagName('div') as $div_element) {
+            $classes = explode(' ', $div_element->getAttribute('class'));
+            
+            if (in_array('ginput_container_total', $classes)) {
+                $classes[] = 'text text_lg text_bold text_line_1-4 c_color_' . color_id($theme, 3, true);
+                $div_element->setAttribute('class', implode(' ', $classes));
+            }
+        }
+        
+        // disable autocomplete by default
+        foreach ($dom->getElementsByTagName('input') as $input_element) {
+            $input_element->setAttribute('autocomplete', 'off');
+        }
+        foreach ($dom->getElementsByTagName('select') as $select_element) {
+            $select_element->setAttribute('autocomplete', 'off');
+        }
+        foreach ($dom->getElementsByTagName('textarea') as $textarea_element) {
+            $textarea_element->setAttribute('autocomplete', 'off');
+        }
+        
+        // add autocomplete attributes for specific field types
+        if ($field->type == 'name') {
+            // add correct autocomplete attribute to each field
+            foreach ($dom->getElementsByTagName('span') as $span_element) {
+                $classes = explode(' ', $span_element->getAttribute('class'));
+                
+                if (in_array('name_prefix', $classes)) {
+                    foreach ($span_element->getElementsByTagName('select') as $select_element) {
+                        $select_element->setAttribute('autocomplete', 'honorific-prefix');
+                    }
+                } elseif (in_array('name_first', $classes)) {
+                    foreach ($span_element->getElementsByTagName('input') as $input_element) {
+                        $input_element->setAttribute('autocomplete', 'given-name');
+                    }
+                } elseif (in_array('name_middle', $classes)) {
+                    foreach ($span_element->getElementsByTagName('input') as $input_element) {
+                        $input_element->setAttribute('autocomplete', 'additional-name');
+                    }
+                } elseif (in_array('name_last', $classes)) {
+                    foreach ($span_element->getElementsByTagName('input') as $input_element) {
+                        $input_element->setAttribute('autocomplete', 'family-name');
+                    }
+                } elseif (in_array('name_suffix', $classes)) {
+                    foreach ($span_element->getElementsByTagName('input') as $input_element) {
+                        $input_element->setAttribute('autocomplete', 'honorific-suffix');
+                    }
+                }
+            }
+        } elseif ($field->type == 'phone') {
+            foreach ($dom->getElementsByTagName('input') as $input_element) {
+                $input_element->setAttribute('autocomplete', 'tel');
+            }
+        } elseif ($field->type == 'address') {
+            // add correct autocomplete attribute to each field
+            foreach ($dom->getElementsByTagName('span') as $span_element) {
+                $classes = explode(' ', $span_element->getAttribute('class'));
+                
+                if (in_array('address_line_1', $classes)) {
+                    foreach ($span_element->getElementsByTagName('input') as $input_element) {
+                        $input_element->setAttribute('autocomplete', 'address-line1');
+                    }
+                } elseif (in_array('address_line_2', $classes)) {
+                    foreach ($span_element->getElementsByTagName('input') as $input_element) {
+                        $input_element->setAttribute('autocomplete', 'address-line2');
+                    }
+                } elseif (in_array('address_city', $classes)) {
+                    foreach ($span_element->getElementsByTagName('input') as $input_element) {
+                        $input_element->setAttribute('autocomplete', 'address-level2');
+                    }
+                } elseif (in_array('address_state', $classes)) {
+                    foreach ($span_element->getElementsByTagName('input') as $input_element) {
+                        $input_element->setAttribute('autocomplete', 'address-level1');
+                    }
+                    foreach ($span_element->getElementsByTagName('select') as $select_element) {
+                        $select_element->setAttribute('autocomplete', 'address-level1');
+                    }
+                } elseif (in_array('address_zip', $classes)) {
+                    foreach ($span_element->getElementsByTagName('input') as $input_element) {
+                        $input_element->setAttribute('autocomplete', 'postal-code');
+                    }
+                } elseif (in_array('address_country', $classes)) {
+                    foreach ($span_element->getElementsByTagName('select') as $select_element) {
+                        $select_element->setAttribute('autocomplete', 'country-name');
+                    }
+                }
+            }
+            
+            // disable autocomplete for copy values option checkbox
+            foreach ($dom->getElementsByTagName('div') as $div_element) {
+                $classes = explode(' ', $div_element->getAttribute('class'));
+                
+                if (in_array('copy_values_option_container', $classes)) {
+                    foreach ($div_element->getElementsByTagName('input') as $input_element) {
+                        $input_element->setAttribute('autocomplete', 'off');
+                    }
+                }
+            }
+        } elseif ($field->type == 'website') {
+            foreach ($dom->getElementsByTagName('input') as $input_element) {
+                $input_element->setAttribute('autocomplete', 'url');
+            }
+        } elseif ($field->type == 'email') {
+            foreach ($dom->getElementsByTagName('input') as $input_element) {
+                $input_element->setAttribute('autocomplete', 'email');
+            }
+        } elseif ($field->type == 'stripe_creditcard') {
+            foreach ($dom->getElementsByTagName('input') as $input_element) {
+                if ($input_element->getAttribute('type') == 'text' && $input_element->getAttribute('aria-hidden') != 'true') {
+                    $input_element->setAttribute('autocomplete', 'cc-name');
+                }
             }
         }
         
@@ -1300,12 +1415,23 @@ function kf_gform_validation_message($message, $form) {
     
     
     // add text/color classes
-    foreach ($dom->getElementsByTagName('div') as $div_element) {
-        $classes = explode(' ', $div_element->getAttribute('class'));
+    foreach ($dom->getElementsByTagName('h2') as $h2_element) {
+        $classes = explode(' ', $h2_element->getAttribute('class'));
         
-        if (in_array('validation_error', $classes)) {
+        if (in_array('gform_submission_error', $classes)) {
+            // replace h2 with p
+            $p_element = $dom->createElement('p');
+            foreach ($h2_element->childNodes as $child) {
+                $p_element->appendChild($child);
+            }
+            $p_element->textContent = $h2_element->textContent;
+            foreach ($h2_element->attributes as $attribute) {
+                $p_element->setAttribute($attribute->name, $attribute->value);
+            }
+            $h2_element->parentNode->replaceChild($p_element, $h2_element);
+            
             $classes[] = 'text text_italic text_line_1-4 c_bg_' . aux_color_id($theme, 1, true) . ' c_color_' . color_id($theme, 0, true);
-            $div_element->setAttribute('class', implode(' ', $classes));
+            $p_element->setAttribute('class', implode(' ', $classes));
         }
     }
     
@@ -1328,6 +1454,12 @@ function kf_gform_validation_message($message, $form) {
     return $message;
 }
 add_filter('gform_validation_message', 'kf_gform_validation_message', 10, 2);
+
+
+/**
+ * Gravity Forms - disable theme CSS
+ */
+add_filter('gform_disable_form_theme_css', '__return_true');
 
 
 /**
@@ -1430,16 +1562,16 @@ function kf_gform_savecontinue_link($link, $form) {
     $dom = new DOMDocument();
     $dom->loadHTML('<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>' . $link); // load HTML with proper encoding
     
-    $a_element = $dom->getElementsByTagName('a')->item(0); // get default button
+    $button_element = $dom->getElementsByTagName('button')->item(0); // get default button
     
-    // add classes to link
-    if ($theme == 'main-dark' || $theme == 'alt-dark') {
-        $classes = 'light';
-        $a_element->setAttribute('class', trim($a_element->getAttribute('class') . ' ' . $classes));
+    if ($button_element) {
+        // add classes to link
+        $classes = 'c_bg_' . color_id($theme, 3, true) . ' c_h_bg_' . color_id($theme, 4, true) . ' c_color_' . color_id($theme, 0, true) . ' c_h_color_' . color_id($theme, 0, true);
+        $button_element->setAttribute('class', trim($button_element->getAttribute('class') . ' ' . $classes));
+
+
+        $link = $dom->saveHtml($button_element);
     }
-    
-    
-    $link = $dom->saveHtml($a_element);
     
     // log errors and reset error handling
     foreach (libxml_get_errors() as $error) {
@@ -1494,54 +1626,64 @@ add_filter('gform_pre_confirmation_save', 'kf_gform_pre_confirmation_save', 10, 
 /**
  * Gravity Forms - customize back-end confirmation WYSIWYG editor
  */
-function kf_gform_confirmation_wp_editor_settings($settings, $editor_id) {
-    if ($editor_id == 'form_confirmation_message') {
-        $settings['quicktags'] = false;
+function ks_gform_confirmation_wp_editor_settings($settings, $editor_id) {
+    $gf_subview = GFSettings::get_subview();
+    
+    if ($editor_id == '_gform_setting_message' && $gf_subview == 'confirmation') {
+        $settings['quicktags'] = false; // disable "text" tab
     }
     
     return $settings;
 }
-add_filter('wp_editor_settings', 'kf_gform_confirmation_wp_editor_settings', 10, 2); // customize wp_editor settings
+add_filter('wp_editor_settings', 'ks_gform_confirmation_wp_editor_settings', 10, 2); // customize wp_editor settings
 
-function kf_gform_confirmation_acf_toolbar_name() {
+function ks_gform_confirmation_acf_toolbar_name() {
     return 'Standard'; // set which ACF toolbar to use for the confirmation WYSIWYG editor
 }
 
-function kf_gform_confirmation_mce_buttons($mce_buttons, $editor_id) {
-    if ($editor_id == 'form_confirmation_message') {
-        $mce_buttons = kf_tinymce_toolbar_row_from_acf(kf_gform_confirmation_acf_toolbar_name(), 1);
+function ks_gform_confirmation_mce_buttons($mce_buttons, $editor_id) {
+    $gf_subview = GFSettings::get_subview();
+    
+    if ($editor_id == '_gform_setting_message' && $gf_subview == 'confirmation') {
+        $mce_buttons = ks_tinymce_toolbar_row_from_acf(ks_gform_confirmation_acf_toolbar_name(), 1);
     }
     
     return $mce_buttons;
 }
-add_filter('mce_buttons', 'kf_gform_confirmation_mce_buttons', 10, 2); // customize tinyMCE buttons (row 1)
+add_filter('mce_buttons', 'ks_gform_confirmation_mce_buttons', 10, 2); // customize tinyMCE buttons (row 1)
 
-function kf_gform_confirmation_mce_buttons_2($mce_buttons, $editor_id) {
-    if ($editor_id == 'form_confirmation_message') {
-        $mce_buttons = kf_tinymce_toolbar_row_from_acf(kf_gform_confirmation_acf_toolbar_name(), 2);
+function ks_gform_confirmation_mce_buttons_2($mce_buttons, $editor_id) {
+    $gf_subview = GFSettings::get_subview();
+    
+    if ($editor_id == '_gform_setting_message' && $gf_subview == 'confirmation') {
+        $mce_buttons = ks_tinymce_toolbar_row_from_acf(ks_gform_confirmation_acf_toolbar_name(), 2);
     }
     
     return $mce_buttons;
 }
-add_filter('mce_buttons_2', 'kf_gform_confirmation_mce_buttons_2', 10, 2); // customize tinyMCE buttons (row 2)
+add_filter('mce_buttons_2', 'ks_gform_confirmation_mce_buttons_2', 10, 2); // customize tinyMCE buttons (row 2)
 
-function kf_gform_confirmation_mce_buttons_3($mce_buttons, $editor_id) {
-    if ($editor_id == 'form_confirmation_message') {
-        $mce_buttons = kf_tinymce_toolbar_row_from_acf(kf_gform_confirmation_acf_toolbar_name(), 3);
+function ks_gform_confirmation_mce_buttons_3($mce_buttons, $editor_id) {
+    $gf_subview = GFSettings::get_subview();
+    
+    if ($editor_id == '_gform_setting_message' && $gf_subview == 'confirmation') {
+        $mce_buttons = ks_tinymce_toolbar_row_from_acf(ks_gform_confirmation_acf_toolbar_name(), 3);
     }
     
     return $mce_buttons;
 }
-add_filter('mce_buttons_3', 'kf_gform_confirmation_mce_buttons_3', 10, 2); // customize tinyMCE buttons (row 3)
+add_filter('mce_buttons_3', 'ks_gform_confirmation_mce_buttons_3', 10, 2); // customize tinyMCE buttons (row 3)
 
-function kf_gform_confirmation_mce_buttons_4($mce_buttons, $editor_id) {
-    if ($editor_id == 'form_confirmation_message') {
-        $mce_buttons = kf_tinymce_toolbar_row_from_acf(kf_gform_confirmation_acf_toolbar_name(), 4);
+function ks_gform_confirmation_mce_buttons_4($mce_buttons, $editor_id) {
+    $gf_subview = GFSettings::get_subview();
+    
+    if ($editor_id == '_gform_setting_message' && $gf_subview == 'confirmation') {
+        $mce_buttons = ks_tinymce_toolbar_row_from_acf(ks_gform_confirmation_acf_toolbar_name(), 4);
     }
     
     return $mce_buttons;
 }
-add_filter('mce_buttons_4', 'kf_gform_confirmation_mce_buttons_4', 10, 2); // customize tinyMCE buttons (row 4)
+add_filter('mce_buttons_4', 'ks_gform_confirmation_mce_buttons_4', 10, 2); // customize tinyMCE buttons (row 4)
 
 
 /**
@@ -1579,11 +1721,13 @@ function kf_gform_pre_replace_merge_tags_save_continue($text, $form, $entry, $ur
                 <input type="hidden" class="gform_hidden" name="is_submit_<?php echo $form_id; ?>" value="1" />
                 <input type="hidden" class="gform_hidden" name="gform_submit" value="<?php echo $form_id; ?>" />
                 <?php endif; ?>
-                <label class="gfield_label text text_bold text_line_1-4<?php if (!is_null($resume_email) && !GFCommon::is_valid_email($resume_email)) { echo ' c_color_' . aux_color_id($theme, 1, true); } ?>">Email Address</label>
+                <label for="gform_resume_email" class="gform_resume_email_label gfield_label text text_bold text_line_1-4<?php if (!is_null($resume_email) && !GFCommon::is_valid_email($resume_email)) { echo ' c_color_' . aux_color_id($theme, 1, true); } ?>" aria-describedby="email-validation-error">Email Address</label>
                 <input type="<?php echo RGFormsModel::is_html5_enabled() ? 'email' : 'text'; ?>" name="gform_resume_email" value="<?php echo esc_attr($resume_email); ?>" class="c_bg_<?php color_id($theme, 1); ?> c_color_<?php color_id($theme, 5); ?> c_placeholder_<?php color_id($theme, 2); ?>" />
-                <?php if (!is_null($resume_email) && !GFCommon::is_valid_email($resume_email)) { ?><div class="validation_message text text_line_1-4 text_xs text_italic c_color_<?php aux_color_id($theme, 1); ?>">Please enter a valid email address.</div><?php } ?>
+                <?php if (!is_null($resume_email) && !GFCommon::is_valid_email($resume_email)) { ?><div class="gform_validation_message text text_line_1-4 text_xs text_italic c_color_<?php aux_color_id($theme, 1); ?>" id="email-validation-error" aria-live="assertive">Please enter a valid email address.</div><?php } ?>
                 <input type="hidden" name="gform_resume_token" value="{save_token}" />
                 <input type="hidden" name="gform_send_resume_link" value="<?php echo $form_id; ?>" />
+                <input type="hidden" class="gform_hidden" name="is_submit_<?php echo $form_id; ?>" value="1">
+                <input type="hidden" class="gform_hidden" name="gform_submit" value="<?php echo $form_id; ?>">
                 <button type="submit" name="gform_send_resume_link_button" id="gform_send_resume_link_button_<?php echo $form_id; ?>" class="button c_bg_<?php color_id($theme, 3); ?> c_h_bg_<?php color_id($theme, 4); ?> c_color_<?php color_id($theme, 0); ?> c_h_color_<?php color_id($theme, 0); ?>"<?php echo $ajax ? ' onclick="jQuery(\'#gform_' . $form_id . '\').trigger(\'submit\',[true]);"' : '' ?>>Send Link</button>
                 <?php if (rgar($form, 'requireLogin')) { echo wp_nonce_field('gform_send_resume_link', '_gform_send_resume_link_nonce', true, false); } ?>
             </form>
@@ -1642,24 +1786,6 @@ function kf_gform_field_standard_settings_custom_settings($index, $form_id) {
 }
 add_action('gform_field_standard_settings', 'kf_gform_field_standard_settings_custom_settings', 10, 2); // add markup for standard settings
 
-function kf_gform_field_appearance_settings_custom_settings($index, $form_id) {
-    // field width option
-    if ($index == 500) {
-        ?>
-        <li class="kfgf_width_setting field_setting">
-            <label for="field_kfgf_width" class="section_label">Field Width</label>
-            <select id="field_kfgf_width" onchange="SetFieldProperty('kfgfWidth', jQuery(this).val());">
-                <option value="full">Full</option>
-                <option value="two-thirds">Two Thirds</option>
-                <option value="half">Half</option>
-                <option value="one-third">One Third</option>
-            </select>
-        </li>
-        <?php
-    }
-}
-add_action('gform_field_appearance_settings', 'kf_gform_field_appearance_settings_custom_settings', 10, 2); // add markup for appearance settings
-
 function kf_gform_editor_js_custom_settings() {
     // checkbox/radio horizontal layout option
     ?>
@@ -1674,22 +1800,6 @@ function kf_gform_editor_js_custom_settings() {
         });
     </script>
     <?php
-    // field width option
-    ?>
-    <script type='text/javascript'>
-        // add setting to (almost) all field types
-        jQuery.each(fieldSettings, function(k, v) {
-            if (k != 'section' && k != 'html' && k != 'hidden' && k != 'captcha') {
-                fieldSettings[k] += ', .kfgf_width_setting'; 
-            }
-        });
-        
-        // initialize value on field load
-        jQuery(document).on('gform_load_field_settings', function(event, field, form) {
-            jQuery('#field_kfgf_width').val(!field.kfgfWidth ? 'full' : field.kfgfWidth);
-        });
-    </script>
-    <?php
 }
 add_action('gform_editor_js', 'kf_gform_editor_js_custom_settings'); // add js for settings
 
@@ -1700,10 +1810,6 @@ function kf_gform_field_css_class_custom_settings($classes, $field, $form) {
             $classes .= ' field_kfgf_layout_horizontal';
         }
     }
-    
-    // field width option
-    $field_width = $field->kfgfWidth ? $field->kfgfWidth : 'full';
-    $classes .= ' field_kfgf_width_' . $field_width;
     
     return $classes;
 }
@@ -1917,6 +2023,7 @@ function ks_acf_wysiwyg_field_height_script($field) {
         <script type="text/javascript">
             jQuery(function() {
                 jQuery('textarea[name="<?php echo $field['name']; ?>"]').css('height', '<?php echo $field['editor_height']; ?>px');
+                jQuery('iframe#' + jQuery('textarea[name="<?php echo $field['name']; ?>"]').attr('id') + '_ifr').css('height', '<?php echo $field['editor_height']; ?>px');
             });
         </script>
     <?php }
@@ -1956,14 +2063,14 @@ function ks_acf_wysiwyg_strip_tags($value, $post_id, $field) {
     if ($field['enable_strip_tags']) {
         if ($field['toolbar'] == 'basic') {
             $value = strip_tags($value, '<p><strong><em><span><a><br><blockquote><del><ul><ol><li>');
-        } elseif ($field['toolbar'] == 'minimal') {
-            $value = strip_tags($value, '<p><strong><em><a><br>');
-        } elseif ($field['toolbar'] == 'minimal_no_links') {
-            $value = strip_tags($value, '<p><strong><em><br>');
         } elseif ($field['toolbar'] == 'standard') {
             $value = strip_tags($value, '<p><h2><h3><h4><h5><strong><em><span><del><blockquote><ul><ol><li><a><hr><br>');
         } elseif ($field['toolbar'] == 'standard_no_headings') {
             $value = strip_tags($value, '<p><strong><em><span><del><blockquote><ul><ol><li><a><hr><br>');
+        } elseif ($field['toolbar'] == 'minimal') {
+            $value = strip_tags($value, '<p><strong><em><a><br>');
+        } elseif ($field['toolbar'] == 'minimal_no_links') {
+            $value = strip_tags($value, '<p><strong><em><br>');
         }
     }
     
@@ -1982,7 +2089,7 @@ function ks_acf_wysiwyg_strip_tags_setting($field) {
 }
 add_action('acf/render_field_settings/type=wysiwyg', 'ks_acf_wysiwyg_strip_tags_setting'); // add setting to enable/disable
 
-function kf_tinymce_toolbar_row_from_acf($acf_name, $row) {
+function ks_tinymce_toolbar_row_from_acf($acf_name, $row) {
     // allow pulling the ACF toolbars elsewhere
     if (class_exists('acf_field_wysiwyg')) {
         $acf_toolbars = (new acf_field_wysiwyg)->get_toolbars();

@@ -39,8 +39,8 @@ $testimonial_count = $section['testimonials'] ? count($section['testimonials']) 
                         <path class="c_fill_<?php color_id($theme, 2); ?>" d="M-36.295-199.47a14.275,14.275,0,0,1,4.27-10.217A14.227,14.227,0,0,1-21.35-214.11a13.155,13.155,0,0,1,10.065,4.727,17.289,17.289,0,0,1,4.27,12.048q0,13.42-8.235,26.535t-19.825,18.91l-5.49-8.845a48.083,48.083,0,0,0,12.2-10.827,24.761,24.761,0,0,0,4.88-13.268,13.655,13.655,0,0,1-9.15-4.88A14.573,14.573,0,0,1-36.295-199.47Zm44.835,0a14.275,14.275,0,0,1,4.27-10.217,13.876,13.876,0,0,1,10.37-4.423,13.155,13.155,0,0,1,10.065,4.727,17.289,17.289,0,0,1,4.27,12.048q0,13.42-8.235,26.535T9.76-151.89l-5.49-8.845a50.872,50.872,0,0,0,12.353-10.827,24.116,24.116,0,0,0,5.033-13.268,13.9,13.9,0,0,1-9.455-4.88A14.573,14.573,0,0,1,8.54-199.47Z" transform="translate(40.565 214.11)"/>
                     </svg>
                     <?php if ($testimonial['quote']) { ?><div class="testimonials__text text text_wrap text_compact"><?php echo $testimonial['quote']; ?></div><?php } ?>
-                    <?php if ($testimonial['name']) { ?><p class="testmonials__name text text_md text_bold"><?php echo $testimonial['name']; ?></p><?php } ?>
-                    <?php if ($testimonial['details']) { ?><p class="testmonials__details text text_md"><?php echo $testimonial['details']; ?></p><?php } ?>
+                    <?php if ($testimonial['name']) { ?><p class="testimonials__name text text_md text_bold text_line_1-4"><?php echo $testimonial['name']; ?></p><?php } ?>
+                    <?php if ($testimonial['details']) { ?><p class="testimonials__details text text_md text_line_1-4"><?php echo $testimonial['details']; ?></p><?php } ?>
                 </div>
                 <?php endforeach; ?>
             </div>

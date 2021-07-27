@@ -648,6 +648,8 @@ function initAjaxGridLoad() {
 function initGformEnhanceFileInput() {
     var rafSupported = (typeof window.requestAnimationFrame === 'function' && typeof window.cancelAnimationFrame === 'function');
     
+    var uniqueID = 0;
+    
     var fileInputs = $();
     var frameRequest = null;
     
@@ -686,11 +688,17 @@ function initGformEnhanceFileInput() {
             
             // add cancel event handler
             cancelEl.click(function() {
-                sourcePreview.find('.gform_delete').trigger('click');
+                sourcePreview.find('.gform_delete_file').trigger('click');
                 sourcePreview.find('a').trigger('click');
                 
                 customPreview.parents('.kfgf-file-previews').find('.kfgf-file-previews__item_error').not('.kfgf-file-previews__item_proto').remove();
             });
+            
+            // add IDs and aria attributes	
+            customPreview.find('.kfgf-file-previews__name').attr('id', 'kfgf-file-preview-name-' + uniqueID).attr('aria-describedby', 'kfgf-file-preview-status-' + uniqueID);	
+            customPreview.find('.kfgf-file-previews__status').attr('id', 'kfgf-file-preview-status-' + uniqueID).attr('aria-labelledby', 'kfgf-file-preview-name-' + uniqueID + ' kfgf-file-preview-status-' + uniqueID);	
+            customPreview.find('.kfgf-file-previews__cancel').attr('id', 'kfgf-file-preview-cancel-text-' + uniqueID).attr('aria-labelledby', 'kfgf-file-preview-cancel-text-' + uniqueID + ' kfgf-file-preview-name-' + uniqueID);	
+            uniqueID++;
             
             customPreview.removeClass('kfgf-file-previews__item_new');
         }
@@ -1022,11 +1030,14 @@ function initGformEnhanceMisc() {
         });
     }
     
-    
-    // bind pricing field formatting on initial form load (needed due to some sort of GF glitch)
-    if (typeof gformBindFormatPricingFields === 'function') {
-        gformBindFormatPricingFields();
-    }
+    // update datepicker options
+    gform.addFilter('gform_datepicker_options_pre_init', function(optionsObj, formId, fieldId) {
+        // reset day/month names to default
+        delete optionsObj['dayNamesMin'];
+        delete optionsObj['monthNamesShort'];
+
+        return optionsObj;
+    });
     
     telMaskFix();
     $(document).on('gform_post_render', telMaskFix);

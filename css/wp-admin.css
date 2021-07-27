@@ -25,18 +25,30 @@
 /*--------------------------------------------------------------
 # Gravity Forms - Field Options
 --------------------------------------------------------------*/
-.gfield #field_settings .enable_enhanced_ui_setting,
-.gfield #field_settings .other_choice_setting,
-.gfield #field_settings .disable_margins_setting,
-.gfield #field_settings #date_picker_container,
-.gfield #field_settings .multiple_files_setting label:not([for="field_max_files"]),
-.gfield #field_settings .multiple_files_setting #field_multiple_files,
-.gfield #field_settings .add_icon_url_setting,
-.gfield #field_settings .delete_icon_url_setting,
-.gfield #field_settings .columns_setting,
-.gfield .ginput_container:not(.ginput_container_textarea) ~ #field_settings .size_setting,
-#confirmation-editor #form_disable_autoformatting,
-#confirmation-editor label[for="form_disable_autoformatting"],
-#confirmation-editor #wp-form_confirmation_message-media-buttons {
+/* Form Settings */
+#tab_settings #gform_setting_labelPlacement,
+#tab_settings #gform_setting_validationSummary,
+#tab_settings #gform_setting_buttonType,
+#tab_settings #gform_setting_enableAnimation,
+#tab_settings #gform_setting_markupVersion,
+#tab_settings #gform_setting_requiredIndicator {
+    display: none !important;
+}
+/* Field Settings */
+#field_settings_container #general_tab .date_input_type_setting #date_picker_container,
+#field_settings_container #general_tab .multiple_files_setting #field_multiple_files,
+#field_settings_container #general_tab .multiple_files_setting label:not([for="field_max_files"]),
+#field_settings_container #general_tab .disable_margins_setting,
+#field_settings_container #general_tab .columns_setting,
+#field_settings_container #appearance_tab .enable_enhanced_ui_setting,
+#field_settings_container #appearance_tab .size_setting,
+#field_settings_container #appearance_tab .add_icon_url_setting,
+#field_settings_container #appearance_tab .delete_icon_url_setting,
+#field_settings_container #advanced_tab .autocomplete_setting {
+    display: none !important;
+}
+/* Confirmation Settings */
+#tab_confirmation #gform_setting_disableAutoformat,
+#tab_confirmation #wp-_gform_setting_message-media-buttons {
     display: none !important;
 }

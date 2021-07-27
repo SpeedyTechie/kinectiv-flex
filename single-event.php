@@ -91,7 +91,7 @@ if (!$time_string && !$f_description) $date_2_display = false;
                                             <path class="c_fill_<?php color_id($theme, 5); ?>" d="M8.5,0A8.5,8.5,0,1,0,17,8.5,8.5,8.5,0,0,0,8.5,0m0,14.875A6.375,6.375,0,1,1,14.875,8.5,6.382,6.382,0,0,1,8.5,14.875"/>
                                             <path class="c_fill_<?php color_id($theme, 5); ?>" d="M8.5,3.586a.66.66,0,00-.66.6l-.386,3.86-3.27.327a.664.664,0,000,1.322l5.1.533h.012a.4.4,0,00.4-.411l-.535-5.632a.66.66,0,00-.66-.6"/>
                                         </svg>
-                                        <?php if ($f_description): // only show date here if there's no description (otherwise it's redundant) ?>
+                                        <?php if ($f_description): // only show date here if there's a description (otherwise it's redundant) ?>
                                         <span class="event-intro__info-line">
                                             <time datetime="<?php echo $date_dt->format('Y-m-d'); if ($time_dt) { echo ' ' . $time_dt->format('H:i'); } ?>" class="event-intro__info-part"><?php echo $date_string; ?></time>
                                             <?php if ($date_end_string) { ?><time datetime="<?php echo $date_end_dt->format('Y-m-d'); ?>" class="event-intro__info-part"><?php echo $date_end_string; ?></time><?php } ?>

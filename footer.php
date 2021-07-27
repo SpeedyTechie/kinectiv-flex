@@ -5,7 +5,7 @@
 
 ?>
 
-	</div><!-- #content -->
+	</main><!-- #content -->
 
     <?php
     $f_nav = get_field('hf_footer_nav', 'option');
