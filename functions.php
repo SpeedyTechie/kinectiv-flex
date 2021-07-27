@@ -2354,6 +2354,20 @@ add_action('acf/validate_value/type=gf_select', 'ks_acf_multi_min_max_validation
 
 
 /**
+ * Add character counter for ACF text and textarea field types
+ */
+function ks_acf_character_limit_markup($field) {
+    $class_list = explode(' ', $field['wrapper']['class']);
+    
+    if (!in_array('no-char-count', $class_list) && $field['maxlength']) { ?>
+        <p class="ks-char-count"><span class="ks-char-count__current"><?php echo strlen(iconv('utf-8', 'utf-16le', str_replace(PHP_EOL, ' ', $field['value']))) / 2; ?></span>/<?php echo $field['maxlength']; ?> characters</p>
+    <?php }
+}
+add_action('acf/render_field/type=text', 'ks_acf_character_limit_markup'); // add counter to text fields
+add_action('acf/render_field/type=textarea', 'ks_acf_character_limit_markup'); // add counter to textarea fields
+
+
+/**
  * Add custom ACF field types
  */
 function ks_include_custom_acf_field_types() {
