@@ -6,6 +6,19 @@
 get_header();
 ?>
 
+<?php if (post_password_required()): ?>
+
+<?php
+$theme = 'main';
+?>
+<div class="section c_color_<?php color_id($theme, 5); ?>">
+    <div class="section__content">
+        <?php echo get_the_password_form(); ?>
+    </div>
+</div>
+
+<?php else: ?>
+
 <?php
 $f_description = get_field('event_content_description');
 $f_buttons = get_field('event_content_buttons');
@@ -142,6 +155,8 @@ if (!$time_string && !$f_description) $date_2_display = false;
 </div>
 
 <?php get_template_part('template-parts/content', 'sections'); ?>
+
+<?php endif; ?>
 
 <?php
 get_footer();

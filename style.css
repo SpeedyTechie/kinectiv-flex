@@ -5691,3 +5691,21 @@ input[type="radio"] + label::selection {
 .event-intro__buttons {
     margin-top: 35px;
 }
+
+/*--------------------------------------------------------------
+## Post Password Form
+--------------------------------------------------------------*/
+.post-password-form {
+    max-width: 750px;
+    margin: 0 auto;
+}
+.post-password-form__text {
+    margin-bottom: 25px;
+}
+.post-password-form__label {
+    display: inline-block;
+    margin-bottom: 8px;
+}
+.post-password-form__button {
+    margin-top: 12px;
+}

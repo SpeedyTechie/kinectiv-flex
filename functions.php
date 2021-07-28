@@ -1842,6 +1842,42 @@ add_filter('gform_field_css_class', 'kf_gform_field_css_class_custom_settings', 
 
 
 /**
+ * Customize post password form
+ */
+function kf_post_password_form($output, $post) {
+    $theme = 'main';
+    
+    $field_id = 'pwbox-' . (empty($post->ID) ? rand() : $post->ID);
+    
+    ob_start();
+    ?>
+    <form action="<?php echo esc_url(site_url('wp-login.php?action=postpass', 'login_post')); ?>" class="post-password-form" method="post">
+        <p class="post-password-form__text text">A password is required to view this content.</p>
+        <div class="post-password-form__field">
+            <label for="<?php echo $field_id; ?>" class="post-password-form__label text text_bold text_line_1-4">Password</label>
+            <input type="password" name="post_password" size="20" id="<?php echo $field_id; ?>" class="c_bg_<?php color_id($theme, 1); ?> c_color_<?php color_id($theme, 5); ?> c_placeholder_<?php color_id($theme, 2); ?>" />
+        </div>
+        <button type="submit" class="post-password-form__button button c_bg_<?php color_id($theme, 3); ?> c_h_bg_<?php color_id($theme, 4); ?> c_color_<?php color_id($theme, 0); ?> c_h_color_<?php color_id($theme, 0); ?>">Enter</button>
+    </form>
+    <?php
+    $output = ob_get_clean();
+    
+    return $output;
+}
+add_filter('the_password_form', 'kf_post_password_form', 10, 2);
+
+
+/**
+ * Remove private/protected prefix from post titles
+ */
+function kf_remove_private_protected_prefix() {
+    return '%s';
+}
+add_filter('private_title_format', 'kf_remove_private_protected_prefix');
+add_filter('protected_title_format', 'kf_remove_private_protected_prefix');
+
+
+/**
  * Disable comments
  */
 function ks_disable_comments_post_types_support() {
