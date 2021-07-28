@@ -64,8 +64,8 @@
         args.width = 400;
         args.palettes = [];
 
-        $.each(wpVars.colorList, function(id, hex) {
-            args.palettes.push(hex);
+        $.each(wpVars.colorSwatchList, function(i, colorID) {
+            args.palettes.push(wpVars.colorList[colorID]);
         });
 
         return args;

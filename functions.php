@@ -61,7 +61,8 @@ function ks_admin_scripts() {
     wp_localize_script('kf-admin-js', 'wpVars', array(
         'colorList' => kf_color_id_list(),
         'themeMaps' => kf_color_theme_maps(),
-        'auxThemeMaps' => kf_aux_color_theme_maps()
+        'auxThemeMaps' => kf_aux_color_theme_maps(),
+        'colorSwatchList' => kf_color_swatch_list()
     ));
 }
 add_action('admin_enqueue_scripts', 'ks_admin_scripts');
@@ -239,6 +240,27 @@ function kf_color_id_list() {
         'b5' => '#161a1e',
         'bx0' => '#f3b0a0', // aux - error light (alt)
         'bx1' => '#b42212' // aux - error dark (alt)
+    );
+}
+
+
+/**
+ * Get list of colors to include in color picker swatches
+ */
+function kf_color_swatch_list() {
+    return array(
+        'a0',
+        'a1',
+        'a2',
+        'a3',
+        'a4',
+        'a5',
+        'b0',
+        'b1',
+        'b2',
+        'b3',
+        'b4',
+        'b5'
     );
 }
 
