@@ -238,6 +238,22 @@
                             "prepend": "",
                             "append": "",
                             "maxlength": 50
+                        },
+                        {
+                            "key": "field_61017c272137b",
+                            "label": "Map Link",
+                            "name": "link",
+                            "type": "url",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": ""
                         }
                     ]
                 }
@@ -380,5 +396,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1602004221
+    "modified": 1627487526
 }

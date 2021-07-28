@@ -120,9 +120,11 @@ if (!$time_string && !$f_description) $date_2_display = false;
                                         <svg viewBox="0 0 17 17" class="event-intro__info-icon">
                                             <path class="c_fill_<?php color_id($theme, 5); ?>" d="M8.501,0a6.124,6.124,0,00-6.376,6.375C2.125,9.563,8.501,17,8.501,17s6.374-7.437,6.374-10.625A6.124,6.124,0,008.501,0m0,8.5a2.125,2.125,0,112.124-2.125A2.125,2.125,0,018.5,8.5"/>
                                         </svg>
-                                        <?php if ($f_location['name']) { ?><span class="event-intro__info-line"><?php echo $f_location['name']; ?></span><?php } ?>
-                                        <?php if ($f_location['address']['line-1']) { ?><span class="event-intro__info-line"><?php echo $f_location['address']['line-1']; ?></span><?php } ?>
-                                        <?php if ($f_location['address']['line-2']) { ?><span class="event-intro__info-line"><?php echo $f_location['address']['line-2']; ?></span><?php } ?>
+                                        <?php if ($f_location['address']['link']) { ?><a href="<?php echo esc_url($f_location['address']['link']); ?>" target="_blank" class="event-intro__info-link c_color_<?php echo color_id($theme, 5); ?> c_h_color_<?php echo color_id($theme, 4); ?>"><?php } ?>
+                                            <?php if ($f_location['name']) { ?><span class="event-intro__info-line"><?php echo $f_location['name']; ?></span><?php } ?>
+                                            <?php if ($f_location['address']['line-1']) { ?><span class="event-intro__info-line"><?php echo $f_location['address']['line-1']; ?></span><?php } ?>
+                                            <?php if ($f_location['address']['line-2']) { ?><span class="event-intro__info-line"><?php echo $f_location['address']['line-2']; ?></span><?php } ?>
+                                        <?php if ($f_location['address']['link']) { ?></a><?php } ?>
                                     </p>
                                 </div>
                                 <?php endif; ?>

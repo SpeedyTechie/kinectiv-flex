@@ -5682,6 +5682,9 @@ input[type="radio"] + label::selection {
     width: 1.2em;
     height: 1.2em;
 }
+.event-intro__info-link {
+    text-decoration: none;
+}
 .event-intro__info-line {
     display: block;
 }
