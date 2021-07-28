@@ -1,91 +1,3 @@
-/*jshint browser:true */
-/*!
-* FitVids 1.2
-*
-* Copyright 2013, Chris Coyier - http://css-tricks.com + Dave Rupert - http://daverupert.com
-* Credit to Thierry Koblentz - http://www.alistapart.com/articles/creating-intrinsic-ratios-for-video/
-* Released under the WTFPL license - http://sam.zoy.org/wtfpl/
-*
-*/
-
-;(function( $ ){
-
-  'use strict';
-
-  $.fn.fitVids = function( options ) {
-    var settings = {
-      customSelector: null,
-      ignore: null
-    };
-
-    if(!document.getElementById('fit-vids-style')) {
-      // appendStyles: https://github.com/toddmotto/fluidvids/blob/master/dist/fluidvids.js
-      var head = document.head || document.getElementsByTagName('head')[0];
-      var css = '.fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}';
-      var div = document.createElement("div");
-      div.innerHTML = '<p>x</p><style id="fit-vids-style">' + css + '</style>';
-      head.appendChild(div.childNodes[1]);
-    }
-
-    if ( options ) {
-      $.extend( settings, options );
-    }
-
-    return this.each(function(){
-      var selectors = [
-        'iframe[src*="player.vimeo.com"]',
-        'iframe[src*="youtube.com"]',
-        'iframe[src*="youtube-nocookie.com"]',
-        'iframe[src*="kickstarter.com"][src*="video.html"]',
-        'object',
-        'embed'
-      ];
-
-      if (settings.customSelector) {
-        selectors.push(settings.customSelector);
-      }
-
-      var ignoreList = '.fitvidsignore';
-
-      if(settings.ignore) {
-        ignoreList = ignoreList + ', ' + settings.ignore;
-      }
-
-      var $allVideos = $(this).find(selectors.join(','));
-      $allVideos = $allVideos.not('object object'); // SwfObj conflict patch
-      $allVideos = $allVideos.not(ignoreList); // Disable FitVids on this video.
-
-      $allVideos.each(function(){
-        var $this = $(this);
-        if($this.parents(ignoreList).length > 0) {
-          return; // Disable FitVids on this video.
-        }
-        if (this.tagName.toLowerCase() === 'embed' && $this.parent('object').length || $this.parent('.fluid-width-video-wrapper').length) { return; }
-        if ((!$this.css('height') && !$this.css('width')) && (isNaN($this.attr('height')) || isNaN($this.attr('width'))))
-        {
-          $this.attr('height', 9);
-          $this.attr('width', 16);
-        }
-        var height = ( this.tagName.toLowerCase() === 'object' || ($this.attr('height') && !isNaN(parseInt($this.attr('height'), 10))) ) ? parseInt($this.attr('height'), 10) : $this.height(),
-            width = !isNaN(parseInt($this.attr('width'), 10)) ? parseInt($this.attr('width'), 10) : $this.width(),
-            aspectRatio = height / width;
-        if(!$this.attr('name')){
-          var videoName = 'fitvid' + $.fn.fitVids._count;
-          $this.attr('name', videoName);
-          $.fn.fitVids._count++;
-        }
-        $this.wrap('<div class="fluid-width-video-wrapper"></div>').parent('.fluid-width-video-wrapper').css('padding-top', (aspectRatio * 100)+'%');
-        $this.removeAttr('height').removeAttr('width');
-      });
-    });
-  };
-  
-  // Internal counter for unique video names.
-  $.fn.fitVids._count = 0;
-  
-// Works with either jQuery or Zepto
-})( window.jQuery || window.Zepto );
-
 /*
 	jQuery flexImages v1.0.1
     Copyright (c) 2014 Simon Steinberger / Pixabay
@@ -151,6 +63,134 @@
         if (!noresize && max_w != container.width()) makeGrid(container, items, o, true);
     }
 }(jQuery));
+
+!function(t){"function"==typeof define&&define.amd?define(t):t()}((function(){"use strict";function t(e){return(t=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(e)}function e(t,n){return(e=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,n)}function n(t,o,i){return(n=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}()?Reflect.construct:function(t,n,o){var i=[null];i.push.apply(i,n);var r=new(Function.bind.apply(t,i));return o&&e(r,o.prototype),r}).apply(null,arguments)}function o(i){var r="function"==typeof Map?new Map:void 0;return(o=function(o){if(null===o||(i=o,-1===Function.toString.call(i).indexOf("[native code]")))return o;var i;if("function"!=typeof o)throw new TypeError("Super expression must either be null or a function");if(void 0!==r){if(r.has(o))return r.get(o);r.set(o,c)}function c(){return n(o,arguments,t(this).constructor)}return c.prototype=Object.create(o.prototype,{constructor:{value:c,enumerable:!1,writable:!0,configurable:!0}}),e(c,o)})(i)}function i(t,e,n){var o=document.createElement("link");o.rel=t,o.href=e,n&&(o.as=n),o.crossorigin=!0,document.head.appendChild(o)}!function(t,e){void 0===e&&(e={});var n=e.insertAt;if("undefined"!=typeof document){var o=document.head||document.getElementsByTagName("head")[0],i=document.createElement("style");i.type="text/css","top"===n&&o.firstChild?o.insertBefore(i,o.firstChild):o.appendChild(i),i.styleSheet?i.styleSheet.cssText=t:i.appendChild(document.createTextNode(t))}}('lite-vimeo{font-size:10px;background-color:#000;position:relative;display:block;contain:content;background-position:50%;background-size:cover;cursor:pointer}lite-vimeo:after{content:"";display:block;padding-bottom:56.25%}lite-vimeo>iframe{width:100%;height:100%;position:absolute;top:0;left:0}lite-vimeo>.ltv-playbtn{width:6.5em;height:4em;background:rgba(23,35,34,.75);z-index:1;opacity:.8;border-radius:.5em;transition:all .2s cubic-bezier(0,0,.2,1);outline:0;border:0;cursor:pointer}lite-vimeo:hover>.ltv-playbtn{background-color:#00adef;opacity:1}lite-vimeo>.ltv-playbtn:before{content:"";border-color:transparent transparent transparent #fff;border-style:solid;border-width:10px 0 10px 20px}lite-vimeo>.ltv-playbtn,lite-vimeo>.ltv-playbtn:before{position:absolute;top:50%;left:50%;transform:translate3d(-50%,-50%,0)}lite-vimeo.ltv-activated{cursor:unset}lite-vimeo.ltv-activated:before,lite-vimeo.ltv-activated>.ltv-playbtn{opacity:0;pointer-events:none}');var r=function(t){var e,n;function o(){return t.call(this)||this}n=t,(e=o).prototype=Object.create(n.prototype),e.prototype.constructor=e,e.__proto__=n;var r=o.prototype;return r.connectedCallback=function(){var t=this;this.videoId=encodeURIComponent(this.getAttribute("videoid"));var e=function(t){var e=t.width,n=t.height,o=e,i=n;return o%320!=0&&(o=100*Math.ceil(e/100),i=Math.round(o/e*n)),{width:o,height:i}}(this.getBoundingClientRect()),n=e.width,i=e.height,r=window.devicePixelRatio||1;n*=r,i*=r;var c,a="https://lite-vimeo-embed.now.sh/thumb/"+this.videoId;a+="."+((c=document.createElement("canvas")).getContext&&c.getContext("2d")&&0===c.toDataURL("image/webp").indexOf("data:image/webp")?"webp":"jpg"),a+="?mw="+n+"&mh="+i+"&q="+(r>1?70:85),this.style.backgroundImage='url("'+a+'")';var u=document.createElement("button");u.type="button",u.ariaLabel="Play Video",u.classList.add("ltv-playbtn"),this.appendChild(u),this.addEventListener("pointerover",o.t,{once:!0}),this.addEventListener("click",(function(){return t.o()}))},o.t=function(){o.preconnected||(i("preconnect","https://player.vimeo.com"),i("preconnect","https://i.vimeocdn.com"),i("preconnect","https://f.vimeocdn.com"),i("preconnect","https://fresnel.vimeocdn.com"),o.preconnected=!0)},r.o=function(){var t='\n<iframe width="640" height="360" frameborder="0"\n  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen\n  src="https://player.vimeo.com/video/'+this.videoId+'?autoplay=1"\n></iframe>';this.insertAdjacentHTML("beforeend",t),this.classList.add("ltv-activated")},o}(o(HTMLElement));customElements.define("lite-vimeo",r)}));
+
+/**
+ * A lightweight youtube embed. Still should feel the same to the user, just MUCH faster to initialize and paint.
+ *
+ * Thx to these as the inspiration
+ *   https://storage.googleapis.com/amp-vs-non-amp/youtube-lazy.html
+ *   https://autoplay-youtube-player.glitch.me/
+ *
+ * Once built it, I also found these:
+ *   https://github.com/ampproject/amphtml/blob/master/extensions/amp-youtube (👍👍)
+ *   https://github.com/Daugilas/lazyYT
+ *   https://github.com/vb/lazyframe
+ */
+class LiteYTEmbed extends HTMLElement {
+    connectedCallback() {
+        this.videoId = this.getAttribute('videoid');
+
+        let playBtnEl = this.querySelector('.lty-playbtn');
+        // A label for the button takes priority over a [playlabel] attribute on the custom-element
+        this.playLabel = (playBtnEl && playBtnEl.textContent.trim()) || this.getAttribute('playlabel') || 'Play Video';
+
+        /**
+         * Lo, the youtube placeholder image!  (aka the thumbnail, poster image, etc)
+         *
+         * See https://github.com/paulirish/lite-youtube-embed/blob/master/youtube-thumbnail-urls.md
+         *
+         * TODO: Do the sddefault->hqdefault fallback
+         *       - When doing this, apply referrerpolicy (https://github.com/ampproject/amphtml/pull/3940)
+         * TODO: Consider using webp if supported, falling back to jpg
+         */
+        if (!this.style.backgroundImage) {
+          this.posterUrl = `https://i.ytimg.com/vi/${this.videoId}/hqdefault.jpg`;
+          // Warm the connection for the poster image
+          LiteYTEmbed.addPrefetch('preload', this.posterUrl, 'image');
+
+          this.style.backgroundImage = `url("${this.posterUrl}")`;
+        }
+
+        // Set up play button, and its visually hidden label
+        if (!playBtnEl) {
+            playBtnEl = document.createElement('button');
+            playBtnEl.type = 'button';
+            playBtnEl.classList.add('lty-playbtn');
+            this.append(playBtnEl);
+        }
+        if (!playBtnEl.textContent) {
+            const playBtnLabelEl = document.createElement('span');
+            playBtnLabelEl.className = 'lyt-visually-hidden';
+            playBtnLabelEl.textContent = this.playLabel;
+            playBtnEl.append(playBtnLabelEl);
+        }
+
+        // On hover (or tap), warm up the TCP connections we're (likely) about to use.
+        this.addEventListener('pointerover', LiteYTEmbed.warmConnections, {once: true});
+
+        // Once the user clicks, add the real iframe and drop our play button
+        // TODO: In the future we could be like amp-youtube and silently swap in the iframe during idle time
+        //   We'd want to only do this for in-viewport or near-viewport ones: https://github.com/ampproject/amphtml/pull/5003
+        this.addEventListener('click', e => this.addIframe());
+    }
+
+    // // TODO: Support the the user changing the [videoid] attribute
+    // attributeChangedCallback() {
+    // }
+
+    /**
+     * Add a <link rel={preload | preconnect} ...> to the head
+     */
+    static addPrefetch(kind, url, as) {
+        const linkEl = document.createElement('link');
+        linkEl.rel = kind;
+        linkEl.href = url;
+        if (as) {
+            linkEl.as = as;
+        }
+        document.head.append(linkEl);
+    }
+
+    /**
+     * Begin pre-connecting to warm up the iframe load
+     * Since the embed's network requests load within its iframe,
+     *   preload/prefetch'ing them outside the iframe will only cause double-downloads.
+     * So, the best we can do is warm up a few connections to origins that are in the critical path.
+     *
+     * Maybe `<link rel=preload as=document>` would work, but it's unsupported: http://crbug.com/593267
+     * But TBH, I don't think it'll happen soon with Site Isolation and split caches adding serious complexity.
+     */
+    static warmConnections() {
+        if (LiteYTEmbed.preconnected) return;
+
+        // The iframe document and most of its subresources come right off youtube.com
+        LiteYTEmbed.addPrefetch('preconnect', 'https://www.youtube-nocookie.com');
+        // The botguard script is fetched off from google.com
+        LiteYTEmbed.addPrefetch('preconnect', 'https://www.google.com');
+
+        // Not certain if these ad related domains are in the critical path. Could verify with domain-specific throttling.
+        LiteYTEmbed.addPrefetch('preconnect', 'https://googleads.g.doubleclick.net');
+        LiteYTEmbed.addPrefetch('preconnect', 'https://static.doubleclick.net');
+
+        LiteYTEmbed.preconnected = true;
+    }
+
+    addIframe() {
+        const params = new URLSearchParams(this.getAttribute('params') || []);
+        params.append('autoplay', '1');
+
+        const iframeEl = document.createElement('iframe');
+        iframeEl.width = 560;
+        iframeEl.height = 315;
+        // No encoding necessary as [title] is safe. https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#:~:text=Safe%20HTML%20Attributes%20include
+        iframeEl.title = this.playLabel;
+        iframeEl.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+        iframeEl.allowFullscreen = true;
+        // AFAIK, the encoding here isn't necessary for XSS, but we'll do it only because this is a URL
+        // https://stackoverflow.com/q/64959723/89484
+        iframeEl.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(this.videoId)}?${params.toString()}`;
+        this.append(iframeEl);
+
+        this.classList.add('lyt-activated');
+
+        // Set focus for a11y
+        this.querySelector('iframe').focus();
+    }
+}
+// Register custom element
+customElements.define('lite-youtube', LiteYTEmbed);
 
 /*
      _ _      _       _
@@ -3418,14 +3458,6 @@ function initDialogBoxes() {
     $('[data-gallery-box]').click(function() {
         createGalleryBox($(this).attr('data-gallery-box'), parseInt($(this).attr('data-start')), $(this).attr('data-box-theme'));
     });
-}
-
-
-
-/* FitVids */
-
-function initFitVids() {
-    $('.site-content').fitVids();
 }
 
 

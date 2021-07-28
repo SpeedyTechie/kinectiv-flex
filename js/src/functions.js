@@ -263,14 +263,6 @@ function initDialogBoxes() {
 
 
 
-/* FitVids */
-
-function initFitVids() {
-    $('.site-content').fitVids();
-}
-
-
-
 /* Last Item in Flex Row */
 
 function initLastItemFlexRow() {

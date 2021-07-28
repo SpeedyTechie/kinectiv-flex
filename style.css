@@ -5712,3 +5712,13 @@ input[type="radio"] + label::selection {
 .post-password-form__button {
     margin-top: 12px;
 }
+
+/*--------------------------------------------------------------
+# Video Embed Facades
+--------------------------------------------------------------*/
+.site lite-youtube {
+    max-width: none;
+}
+.site lite-youtube::before {
+    display: none;
+}
