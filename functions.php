@@ -849,10 +849,6 @@ if (function_exists('acf_add_options_page')) {
 	));
     
     acf_add_options_sub_page(array(
-        'page_title' => 'General Info',
-        'parent_slug' 	=> $options_page['menu_slug']
-    ));
-    acf_add_options_sub_page(array(
         'page_title' => 'Header & Footer',
         'parent_slug' 	=> $options_page['menu_slug']
     ));
@@ -2013,7 +2009,7 @@ function ks_admin_menu_order($menu_order) {
     // list of items keyed by the item they should be located after
     $relocate_after = array(
         'separator1' => array('edit.php?post_type=page'),
-        'separator2' => array('acf-options-general-info', 'separator-last')
+        'separator2' => array('acf-options-header-footer', 'separator-last')
     );
     
     // create a list of all menu items that will be relocated
