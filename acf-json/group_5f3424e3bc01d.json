@@ -1,6 +1,6 @@
 {
     "key": "group_5f3424e3bc01d",
-    "title": "[Section] Embedded Video",
+    "title": "[Section] Embedded Media",
     "fields": [
         {
             "key": "field_5f3424e3c0b74",
@@ -23,10 +23,10 @@
         },
         {
             "key": "field_5f342619f9e37",
-            "label": "Video URL",
+            "label": "Media URL",
             "name": "embed",
             "type": "oembed",
-            "instructions": "Enter the URL of the video you would like to embed. YouTube or Vimeo videos are preferred, but <a href=\"https:\/\/wordpress.org\/support\/article\/embeds\/#okay-so-what-sites-can-i-embed-from\" target=\"_blank\">many sources are supported<\/a>.",
+            "instructions": "Enter the URL of the media you would like to embed. YouTube or Vimeo videos are preferred, but <a href=\"https:\/\/wordpress.org\/support\/article\/embeds\/#okay-so-what-sites-can-i-embed-from\" target=\"_blank\">many sources are supported<\/a>.",
             "required": 1,
             "conditional_logic": 0,
             "wrapper": {
@@ -286,7 +286,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 0,
+    "active": false,
     "description": "",
-    "modified": 1597418001
+    "modified": 1627579846
 }

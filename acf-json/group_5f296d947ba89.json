@@ -236,7 +236,7 @@
                 "layout_5f34268e05eaf": {
                     "key": "layout_5f34268e05eaf",
                     "name": "embed",
-                    "label": "Embedded Video",
+                    "label": "Embedded Media",
                     "display": "block",
                     "sub_fields": [
                         {
@@ -597,5 +597,5 @@
     "hide_on_screen": "",
     "active": false,
     "description": "",
-    "modified": 1601659125
+    "modified": 1627579813
 }
