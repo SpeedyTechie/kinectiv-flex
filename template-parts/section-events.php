@@ -1,13 +1,19 @@
 <?php
-// get passthrough data
-$passthrough = acf_get_store('passthrough_section');
-$pt_sections = $passthrough->get('sections');
+$default_args = array(
+    'sections' => array(
+        'current_index' => 0,
+        'current' => array(),
+        'prev' => null,
+        'next' => null
+    )
+);
+$args = array_merge($default_args, $args);
 
 
-$i_section = $pt_sections['current_index'];
-$section = $pt_sections['current'];
-$section_prev = $pt_sections['prev'];
-$section_next = $pt_sections['next'];
+$i_section = $args['sections']['current_index'];
+$section = $args['sections']['current'];
+$section_prev = $args['sections']['prev'];
+$section_next = $args['sections']['next'];
 
 $f_none_text = get_field('config_events_none-text', 'option');
 
@@ -47,19 +53,15 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
                     $post = get_post($p_event);
                     setup_postdata($p_event);
                     
-                    acf_register_store('passthrough_preview-event', array(
+                    $tile_args = array(
                         'theme' => $theme_inverse,
                         'tile_options' => $section['options']['layout_tile-options']
-                    ));
+                    );
                     ?>
                     <div class="tile-grid__item tile-grid__item_3">
-                        <?php get_template_part('template-parts/preview', 'event'); ?>
+                        <?php get_template_part('template-parts/preview', 'event', $tile_args); ?>
                     </div>
-                    <?php
-                    acf_register_store('passthrough_preview-event', array());
-
-                    wp_reset_postdata();
-                    ?>
+                    <?php wp_reset_postdata(); ?>
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -86,19 +88,15 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
                     $post = get_post($p_event);
                     setup_postdata($p_event);
                     
-                    acf_register_store('passthrough_preview-event', array(
+                    $tile_args = array(
                         'theme' => $theme_inverse,
                         'tile_options' => $section['options']['layout_tile-options']
-                    ));
+                    );
                     ?>
                     <div class="tile-grid__item tile-grid__item_3">
-                        <?php get_template_part('template-parts/preview', 'event'); ?>
+                        <?php get_template_part('template-parts/preview', 'event', $tile_args); ?>
                     </div>
-                    <?php
-                    acf_register_store('passthrough_preview-event', array());
-
-                    wp_reset_postdata();
-                    ?>
+                    <?php wp_reset_postdata(); ?>
                     <?php endforeach; ?>
                     <?php else: ?>
                     <div class="tile-grid__item tile-grid__item_full">
@@ -111,12 +109,12 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
             <?php
             $grid_query = kf_custom_query('event');
             
-            $passthrough_data = array(
+            $tile_args = array(
                 'theme' => $theme_inverse,
                 'tile_options' => $section['options']['layout_tile-options']
             );
             ?>
-            <div class="tile-grid__wrap" data-type="event" data-passthrough="<?php echo esc_attr(json_encode($passthrough_data, JSON_UNESCAPED_SLASHES)); ?>">
+            <div class="tile-grid__wrap" data-type="event" data-passthrough="<?php echo esc_attr(json_encode($tile_args, JSON_UNESCAPED_SLASHES)); ?>">
                 <div class="tile-grid__grid tile-grid__grid_<?php echo $section['options']['layout_align-tiles']; ?>">
                     <?php if ($grid_query->posts): ?>
                     <?php foreach ($grid_query->posts as $p_post): ?>
@@ -124,17 +122,11 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
                     global $post;
                     $post = get_post($p_post);
                     setup_postdata($p_post);
-                    
-                    acf_register_store('passthrough_preview-event', $passthrough_data);
                     ?>
                     <div class="tile-grid__item tile-grid__item_3">
-                        <?php get_template_part('template-parts/preview', 'event'); ?>
+                        <?php get_template_part('template-parts/preview', 'event', $tile_args); ?>
                     </div>
-                    <?php
-                    acf_register_store('passthrough_preview-event', array());
-
-                    wp_reset_postdata();
-                    ?>
+                    <?php wp_reset_postdata(); ?>
                     <?php endforeach; ?>
                     <?php endif; ?>
                     <div class="tile-grid__item tile-grid__item_none tile-grid__item_full<?php if ($grid_query->posts) { echo ' tile-grid__item_hidden'; } ?>">
@@ -155,12 +147,12 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
             <?php
             $grid_query = kf_custom_query('event', false, 1, 'past');
             
-            $passthrough_data = array(
+            $tile_args = array(
                 'theme' => $theme_inverse,
                 'tile_options' => $section['options']['layout_tile-options']
             );
             ?>
-            <div class="tile-grid__wrap" data-type="event" data-special="past" data-passthrough="<?php echo esc_attr(json_encode($passthrough_data, JSON_UNESCAPED_SLASHES)); ?>">
+            <div class="tile-grid__wrap" data-type="event" data-special="past" data-passthrough="<?php echo esc_attr(json_encode($tile_args, JSON_UNESCAPED_SLASHES)); ?>">
                 <div class="tile-grid__grid tile-grid__grid_<?php echo $section['options']['layout_align-tiles']; ?>">
                     <?php if ($grid_query->posts): ?>
                     <?php foreach ($grid_query->posts as $p_post): ?>
@@ -168,17 +160,11 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
                     global $post;
                     $post = get_post($p_post);
                     setup_postdata($p_post);
-                    
-                    acf_register_store('passthrough_preview-event', $passthrough_data);
                     ?>
                     <div class="tile-grid__item tile-grid__item_3">
-                        <?php get_template_part('template-parts/preview', 'event'); ?>
+                        <?php get_template_part('template-parts/preview', 'event', $tile_args); ?>
                     </div>
-                    <?php
-                    acf_register_store('passthrough_preview-event', array());
-
-                    wp_reset_postdata();
-                    ?>
+                    <?php wp_reset_postdata(); ?>
                     <?php endforeach; ?>
                     <?php endif; ?>
                     <div class="tile-grid__item tile-grid__item_none tile-grid__item_full<?php if ($grid_query->posts) { echo ' tile-grid__item_hidden'; } ?>">

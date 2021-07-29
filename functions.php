@@ -655,15 +655,11 @@ function kf_ajax_grid_load() {
             global $post;
             $post = get_post($p_post);
             setup_postdata($p_post);
-            
-            if ($passthrough_data) acf_register_store('passthrough_preview-' . $type, $passthrough_data);
             ?>
             <div class="tile-grid__item tile-grid__item_3">
-                <?php get_template_part('template-parts/preview', $type); ?>
+                <?php get_template_part('template-parts/preview', $type, $passthrough_data); ?>
             </div>
             <?php
-            if ($passthrough_data) acf_register_store('passthrough_preview-' . $type, array());
-            
             wp_reset_postdata();
         }
     }

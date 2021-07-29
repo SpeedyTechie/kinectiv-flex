@@ -156,7 +156,15 @@ if (!$time_string && !$f_description) $date_2_display = false;
     </div>
 </div>
 
-<?php get_template_part('template-parts/content', 'sections'); ?>
+<?php
+$f_sections = get_field('event_content_sections');
+
+$content_args = array(
+    'sections' => $f_sections
+);
+
+get_template_part('template-parts/content', 'sections', $content_args);
+?>
 
 <?php endif; ?>
 

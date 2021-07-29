@@ -1100,7 +1100,6 @@ function initGoogleMaps() {
 /* General */
 
 $(function() {
-    initFitVids();
     initMasonryGrid();
     initImageSlider();
     initTestimonialSlider();

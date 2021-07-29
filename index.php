@@ -6,7 +6,7 @@
 get_header();
 ?>
 
-<?php if (post_password_required()): ?>
+<?php if (!is_404() && post_password_required()): ?>
 
 <?php
 $theme = 'main';
@@ -19,7 +19,18 @@ $theme = 'main';
 
 <?php else: ?>
 
-<?php get_template_part('template-parts/content', 'sections'); ?>
+<?php
+$f_sections = get_field('page_content_sections');
+if (is_404()) {
+    $f_sections = get_field('404_content_sections', 'option'); // get sections for 404 page
+}
+
+$content_args = array(
+    'sections' => $f_sections
+);
+
+get_template_part('template-parts/content', 'sections', $content_args);
+?>
 
 <?php endif; ?>
 

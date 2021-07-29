@@ -1,7 +1,9 @@
 <?php
-$passthrough = acf_get_store('passthrough_preview-event');
-$pt_theme = $passthrough->get('theme');
-$pt_tile_options = $passthrough->get('tile_options');
+$default_args = array(
+    'theme' => 'main',
+    'tile_options' => array()
+);
+$args = array_merge($default_args, $args);
 
 
 $f_image = get_field('event_preview_image');
@@ -9,10 +11,10 @@ $f_image = get_field('event_preview_image');
 $f_date = get_field('event_details_date');
 $f_location = get_field('event_details_location');
 
-$theme = ($pt_tile_options['layout_color'] == 'custom') ? $pt_tile_options['color_theme'] : $pt_theme;
-$pt_tile_options['color_theme'] = $theme; // set theme for tile options (needed to generate bg styles)
+$theme = ($args['tile_options']['layout_color'] == 'custom') ? $args['tile_options']['color_theme'] : $args['theme'];
+$args['tile_options']['color_theme'] = $theme; // set theme for tile options (needed to generate bg styles)
 
-$tile_bg_styles = kf_section_bg_styles($pt_tile_options, 1);
+$tile_bg_styles = kf_section_bg_styles($args['tile_options'], 1);
 $tile_style = $tile_bg_styles['style'];
 $tile_classes = $tile_bg_styles['classes'];
 

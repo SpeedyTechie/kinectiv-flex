@@ -1,13 +1,19 @@
 <?php
-// get passthrough data
-$passthrough = acf_get_store('passthrough_section');
-$pt_sections = $passthrough->get('sections');
+$default_args = array(
+    'sections' => array(
+        'current_index' => 0,
+        'current' => array(),
+        'prev' => null,
+        'next' => null
+    )
+);
+$args = array_merge($default_args, $args);
 
 
-$i_section = $pt_sections['current_index'];
-$section = $pt_sections['current'];
-$section_prev = $pt_sections['prev'];
-$section_next = $pt_sections['next'];
+$i_section = $args['sections']['current_index'];
+$section = $args['sections']['current'];
+$section_prev = $args['sections']['prev'];
+$section_next = $args['sections']['next'];
 
 $theme = $section['options']['color_theme'];
 $tile_theme = ($section['options']['layout_tile-options']['layout_color'] == 'custom') ? $section['options']['layout_tile-options']['color_theme'] : $theme;
