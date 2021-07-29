@@ -540,6 +540,9 @@ select {
 select[multiple] {
     background-image: none;
 }
+select:focus {
+    outline: 1px solid currentColor;
+}
 input[type="search"]::-ms-clear {
     display: none;
     width : 0;
@@ -588,6 +591,10 @@ input[type="radio"] + label::before {
 }
 input[type="radio"] + label::before {
     border-radius: 50%;
+}
+input[type="checkbox"]:focus + label::before,
+input[type="radio"]:focus + label::before {
+    color: currentColor;
 }
 input[type="checkbox"] + label::after,
 input[type="radio"] + label::after {
