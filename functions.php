@@ -882,6 +882,21 @@ add_action('acf/save_post', 'ks_save_options_page');
 
 
 /**
+ * ACF skip validation of specified fields
+ */
+function kf_acf_skip_validation($valid, $value, $field, $input_name) {
+    $skip_validation_names = $_POST['_kf_acf_skip_validation'];
+    
+    if ($skip_validation_names && in_array($input_name, $skip_validation_names)) {
+        $valid = true;
+    }
+    
+    return $valid;
+}
+add_filter('acf/validate_value', 'kf_acf_skip_validation', 10, 4);
+
+
+/**
  * Remove unnecessary panels/controls from WP Customizer
  */
 function ks_customize_register($wp_customize) {

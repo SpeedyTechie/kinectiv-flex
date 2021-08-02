@@ -91,7 +91,75 @@
             });
         }
     }
-
     acf.addAction('new_field/type=button_group', addThemeSelectorSwatches);
+    
+    
+    
+    /* Prevent values of disabled fields from moving between repeater and flexible content rows */
+    
+    function storeInitialRowOrder(field) {
+        var fieldRows = (field.type == 'repeater') ? field.$rows() : field.$layouts();
+        var initialRowOrder = [];
+        
+        fieldRows.each(function() {
+            initialRowOrder.push($(this).attr('data-id'));
+        });
+        
+        field.set('initialRowOrder', initialRowOrder);
+    }
+    acf.addAction('prepare_field/type=repeater', storeInitialRowOrder);
+    acf.addAction('prepare_field/type=flexible_content', storeInitialRowOrder);
+    
+    $('#post').on('submit', function(e) {
+        var form = $(this);
+        var repeaterFields = acf.getFields({
+            type: 'repeater'
+        });
+        var fcFields = acf.getFields({
+            type: 'flexible_content'
+        });
+        var allFields = repeaterFields.concat(fcFields);
+        var skipValidationNames = [];
+        
+        $.each(allFields, function(i, field) {
+            if (field.has('initialRowOrder')) {
+                var fieldRows = (field.type == 'repeater') ? field.$rows() : field.$layouts();
+                var initialRowOrder = field.get('initialRowOrder');
+                var newRowOrder = [];
+                
+                fieldRows.each(function() {
+                    newRowOrder.push($(this).attr('data-id'));
+                });
+                
+                // compare the old/new row order to determine if it has changed
+                $.each(newRowOrder, function (rowIndex, rowID) {
+                    if ((rowIndex < initialRowOrder.length && initialRowOrder[rowIndex] != rowID) || (rowIndex >= initialRowOrder.length && $.inArray(rowID, initialRowOrder) > -1)) {
+                        var subFields = acf.getFields({
+                            parent: fieldRows.filter('[data-id=' + rowID + ']')
+                        });
+                        
+                        // manually enable any disabled fields within moved rows to allow data to be saved in the proper row
+                        $.each(subFields, function (j, subField) {
+                            if (subField.$el.prop('disabled')) {
+                                subField.$input().prop('disabled', false).prop('required', false);
+                                
+                                skipValidationNames.push(subField.getInputName()); // add this field to the list to skip validation
+                            }
+                        });
+                    }
+                });
+            }
+        });
+        
+        if (skipValidationNames.length > 0) {
+            // remove inputs from past failed submissions
+            form.find('[name^="_kf_acf_skip_validation"]').remove();
+            
+            // add hidden inputs to pass the skip validation list to PHP
+            $.each(skipValidationNames, function (i, name) {
+                $('<input type="hidden" name="_kf_acf_skip_validation[' + i + ']" />').attr('value', name).appendTo(form);
+            });
+        }
+    });
 
 })(jQuery);
