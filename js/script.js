@@ -3243,7 +3243,6 @@ function initEnhanceMouseFocus() {
 
 function initDialogBoxes() {
     var throttledUpdateDialogBoxPosition = kinectivThrottle(updateDialogBoxPosition, 100);
-    var body = $('body');
     var boxWrap = $('<div class="dialog-box" />');
     var boxBg = $('<div class="dialog-box__bg" />').appendTo(boxWrap);
     var boxContent = $('<div class="dialog-box__content" />').appendTo(boxWrap);
@@ -3394,7 +3393,7 @@ function initDialogBoxes() {
                 // add previous button
                 prevButton.addClass('c_bg_' + wpVars.themeMaps[theme][5]).addClass('c_h_bg_' + wpVars.themeMaps[theme][4]);
                 prevButton.append('<span class="screen-reader-text">Previous Slide</span>');
-                prevButton.append('<svg viewBox="0 0 17.45 27.04" class="testimonials__nav-arrow testimonials__nav-arrow_reverse"><polygon class="c_fill_' + wpVars.themeMaps[theme][0] + '" points="3.94 0 0 3.94 9.58 13.52 0 23.1 3.94 27.04 17.45 13.52 3.94 0"/></svg>');
+                prevButton.append('<svg viewBox="0 0 17.45 27.04" class="box-slider__nav-arrow box-slider__nav-arrow_reverse"><polygon class="c_fill_' + wpVars.themeMaps[theme][0] + '" points="3.94 0 0 3.94 9.58 13.52 0 23.1 3.94 27.04 17.45 13.52 3.94 0"/></svg>');
                 prevButton.click(function() {
                     slider.slick('slickPrev');
                 });
@@ -3403,7 +3402,7 @@ function initDialogBoxes() {
                 // add next button
                 nextButton.addClass('c_bg_' + wpVars.themeMaps[theme][5]).addClass('c_h_bg_' + wpVars.themeMaps[theme][4]);
                 nextButton.append('<span class="screen-reader-text">Next Slide</span>');
-                nextButton.append('<svg viewBox="0 0 17.45 27.04" class="testimonials__nav-arrow"><polygon class="c_fill_' + wpVars.themeMaps[theme][0] + '" points="3.94 0 0 3.94 9.58 13.52 0 23.1 3.94 27.04 17.45 13.52 3.94 0"/></svg>');
+                nextButton.append('<svg viewBox="0 0 17.45 27.04" class="box-slider__nav-arrow"><polygon class="c_fill_' + wpVars.themeMaps[theme][0] + '" points="3.94 0 0 3.94 9.58 13.52 0 23.1 3.94 27.04 17.45 13.52 3.94 0"/></svg>');
                 nextButton.click(function() {
                     slider.slick('slickNext');
                 });

@@ -4148,6 +4148,49 @@ input[type="radio"] + label::selection {
     transition: 0.4s, visibility 0s; /* visibility 0s to fix firefox glitch on box open */
 }
 
+@media (max-width: 1250px) {
+    .dialog-box__content {
+        padding: 0 75px;
+    }
+}
+@media (max-width: 1100px) {
+    .dialog-box__content {
+        padding: 0 65px;
+    }
+}
+@media (max-width: 1000px) {
+    .dialog-box__content {
+        padding: 0 50px;
+    }
+}
+@media (max-width: 850px) {
+    .dialog-box__content {
+        padding: 0 40px;
+    }
+}
+@media (max-width: 550px) {
+    .dialog-box__content {
+        padding: 0 35px;
+    }
+    .dialog-box__close-x {
+        width: 12px;
+        height: 12px;
+    }
+}
+@media (max-width: 450px) {
+    .dialog-box__content {
+        padding: 0 25px;
+    }
+}
+@media (max-width: 400px) {
+    .dialog-box__content {
+        padding: 0 15px;
+    }
+    .dialog-box__close {
+        transform: translate(35%, -35%);
+    }
+}
+
 /*--------------------------------------------------------------
 ## Dialog Box Slider
 --------------------------------------------------------------*/
@@ -4193,6 +4236,21 @@ input[type="radio"] + label::selection {
 .box-slider__nav-arrow_reverse {
     transform: scaleX(-1);
     margin: 0 3px 0 2px;
+}
+
+@media (max-width: 550px) {
+    .box-slider__nav-arrow {
+        width: 7px;
+        height: 12px;
+    }
+}
+@media (max-width: 400px) {
+    .box-slider__nav_prev {
+        transform: translate(-35%, -50%);
+    }
+    .box-slider__nav_next {
+        transform: translate(35%, -50%);
+    }
 }
 
 /*--------------------------------------------------------------
