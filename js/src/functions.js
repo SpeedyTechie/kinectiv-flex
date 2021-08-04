@@ -441,9 +441,51 @@ function initImageSlider() {
                     }
                 },
                 {
-                    breakpoint: 1450,
+                    breakpoint: 1400,
                     settings: {
                         centerPadding: '80px'
+                    }
+                },
+                {
+                    breakpoint: 1100,
+                    settings: {
+                        centerPadding: '70px'
+                    }
+                },
+                {
+                    breakpoint: 1000,
+                    settings: {
+                        centerPadding: '64px'
+                    }
+                },
+                {
+                    breakpoint: 850,
+                    settings: {
+                        centerPadding: '53px'
+                    }
+                },
+                {
+                    breakpoint: 750,
+                    settings: {
+                        centerPadding: '38px'
+                    }
+                },
+                {
+                    breakpoint: 650,
+                    settings: {
+                        centerPadding: '28px'
+                    }
+                },
+                {
+                    breakpoint: 550,
+                    settings: {
+                        centerPadding: '22px'
+                    }
+                },
+                {
+                    breakpoint: 450,
+                    settings: {
+                        centerPadding: '17px'
                     }
                 }
             ]

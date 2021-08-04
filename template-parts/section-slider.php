@@ -47,7 +47,7 @@ $bg_image_styles = kf_advanced_bg_image_styles($section['options']['layout_advan
         <?php if ($slide_count > 1): ?>
         <button type="button" class="image-slider__nav image-slider__nav_prev<?php if ($border_location) { echo ' image-slider__nav_border_' . $border_location; } ?>">
             <span class="screen-reader-text">Previous Slide</span>
-            <div class="image-slider__nav-box c_bg_<?php color_id($theme, 5); ?> c_h_bg_<?php color_id($theme, 4); ?>">
+            <div class="image-slider__nav-box image-slider__nav-box_prev c_bg_<?php color_id($theme, 5); ?> c_h_bg_<?php color_id($theme, 4); ?>">
                 <svg viewBox="0 0 17.45 27.04" class="image-slider__nav-arrow image-slider__nav-arrow_reverse">
                     <polygon class="c_fill_<?php color_id($theme, 0); ?>" points="3.94 0 0 3.94 9.58 13.52 0 23.1 3.94 27.04 17.45 13.52 3.94 0"/>
                 </svg>
@@ -85,7 +85,7 @@ $bg_image_styles = kf_advanced_bg_image_styles($section['options']['layout_advan
         <?php if ($slide_count > 1): ?>
         <button type="button" class="image-slider__nav image-slider__nav_next<?php if ($border_location) { echo ' image-slider__nav_border_' . $border_location; } ?>">
             <span class="screen-reader-text">Next Slide</span>
-            <div class="image-slider__nav-box c_bg_<?php color_id($theme, 5); ?> c_h_bg_<?php color_id($theme, 4); ?>">
+            <div class="image-slider__nav-box image-slider__nav-box_next c_bg_<?php color_id($theme, 5); ?> c_h_bg_<?php color_id($theme, 4); ?>">
                 <svg viewBox="0 0 17.45 27.04" class="image-slider__nav-arrow">
                     <polygon class="c_fill_<?php color_id($theme, 0); ?>" points="3.94 0 0 3.94 9.58 13.52 0 23.1 3.94 27.04 17.45 13.52 3.94 0"/>
                 </svg>
