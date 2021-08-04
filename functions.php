@@ -160,7 +160,6 @@ function color_id($theme, $color_num, $return = false) {
 /**
  * Get auxiliary color ID
  */
-
 function aux_color_id($theme, $color_num, $return = false) {
     // list of auxiliary color IDs in order for each theme
     $aux_theme_maps = kf_aux_color_theme_maps();
