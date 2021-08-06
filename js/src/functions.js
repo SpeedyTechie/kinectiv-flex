@@ -1064,13 +1064,15 @@ function initGformEnhanceMisc() {
     }
     
     // update datepicker options
-    gform.addFilter('gform_datepicker_options_pre_init', function(optionsObj, formId, fieldId) {
-        // reset day/month names to default
-        delete optionsObj['dayNamesMin'];
-        delete optionsObj['monthNamesShort'];
+    if (typeof gform === 'object') {
+        gform.addFilter('gform_datepicker_options_pre_init', function(optionsObj, formId, fieldId) {
+            // reset day/month names to default
+            delete optionsObj['dayNamesMin'];
+            delete optionsObj['monthNamesShort'];
 
-        return optionsObj;
-    });
+            return optionsObj;
+        });
+    }
     
     telMaskFix();
     $(document).on('gform_post_render', telMaskFix);
