@@ -521,6 +521,29 @@
                     "return_format": "value"
                 },
                 {
+                    "key": "field_610d50fe600c7",
+                    "label": "Alignment (Call to Action)",
+                    "name": "layout_align-cta",
+                    "type": "button_group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "left": "<span class=\"dashicons dashicons-editor-alignleft\"><\/span> Left",
+                        "center": "<span class=\"dashicons dashicons-editor-aligncenter\"><\/span> Center",
+                        "right": "<span class=\"dashicons dashicons-editor-alignright\"><\/span> Right"
+                    },
+                    "allow_null": 0,
+                    "default_value": "right",
+                    "layout": "horizontal",
+                    "return_format": "value"
+                },
+                {
                     "key": "field_5f46a389926f2",
                     "label": "Tiles per Row",
                     "name": "layout_per-row",
@@ -1120,5 +1143,5 @@
     "hide_on_screen": "",
     "active": false,
     "description": "",
-    "modified": 1599070120
+    "modified": 1628262721
 }
