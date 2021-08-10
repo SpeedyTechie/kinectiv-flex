@@ -678,6 +678,12 @@ input[type="radio"] + label::selection {
     display: flex;
     grid-gap: 0;
 }
+.basic-form_center .gform_fields {
+    justify-content: center;
+}
+.basic-form_right .gform_fields {
+    justify-content: flex-end;
+}
 .gfield {
     flex: 0 0 auto;
     width: 100%;
@@ -830,6 +836,10 @@ input[type="radio"] + label::selection {
 .gfield .ginput_complex > .gf_clear_complex {
     display: none;
 }
+.gfield .gform-text-input-reset,
+.gfield input.gform-text-input-reset {
+    text-align: inherit;
+}
 .gform_wrapper.gravity-theme .gform_fields .gfield input.large,
 .gform_wrapper.gravity-theme .gform_fields .gfield input.medium,
 .gform_wrapper.gravity-theme .gform_fields .gfield input.small,
@@ -858,6 +868,14 @@ input[type="radio"] + label::selection {
     display: flex;
     flex-wrap: wrap;
     margin: -5px -15px;
+}
+.basic-form_center .gfield.field_kfgf_layout_horizontal .gfield_checkbox,
+.basic-form_center .gfield.field_kfgf_layout_horizontal .gfield_radio {
+    justify-content: center;
+}
+.basic-form_right .gfield.field_kfgf_layout_horizontal .gfield_checkbox,
+.basic-form_right .gfield.field_kfgf_layout_horizontal .gfield_radio {
+    justify-content: flex-end;
 }
 .gfield .gfield_checkbox .gchoice,
 .gfield .gfield_radio .gchoice {
@@ -912,6 +930,9 @@ input[type="radio"] + label::selection {
 .gfield .ginput_container_fileupload [id^="gform_preview_"],
 .gfield .ginput_container_fileupload ~ [id^="gform_preview_"] {
     display: none;
+}
+.gfield .ginput_recaptcha > div {
+    display: inline-block;
 }
 .gform_wrapper.gravity-theme .gfield .gfield_list .gfield_list_group {
     margin-bottom: 8px;
@@ -1145,6 +1166,12 @@ input[type="radio"] + label::selection {
     flex-wrap: wrap;
     justify-content: flex-start;
     margin: -6px -8px;
+}
+.basic-form_center .kfgf-file-previews {
+    justify-content: center;
+}
+.basic-form_right .kfgf-file-previews {
+    justify-content: flex-end;
 }
 .kfgf-file-previews__proto {
     display: none;
