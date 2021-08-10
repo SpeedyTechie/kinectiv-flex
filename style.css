@@ -6672,6 +6672,45 @@ input[type="radio"] + label::selection {
     height: 1.2em;
 }
 
+@media (max-width: 850px) {
+    .event-tile:hover,
+    .event-tile:focus,
+    .event-tile:active {
+        transform: translateY(-4px);
+    }
+    .event-tile__main {
+        padding: 25px 30px;
+    }
+    .event-tile__main_image {
+        padding-top: 68%;
+    }
+}
+@media (max-width: 550px) {
+    .event-tile:hover,
+    .event-tile:focus,
+    .event-tile:active {
+        transform: translateY(-3px);
+    }
+    .event-tile__title {
+        margin-bottom: 10px;
+    }
+    .event-tile__info {
+        margin: -3px -8px;
+    }
+    .event-tile__info-item {
+        padding: 3px 8px;
+    }
+}
+@media (max-width: 350px) {
+    .event-tile__main {
+        padding-right: 25px;
+        padding-left: 25px;
+    }
+    .event-tile__main_image {
+        padding-top: 68%;
+    }
+}
+
 /*--------------------------------------------------------------
 ## Basic Form
 --------------------------------------------------------------*/
