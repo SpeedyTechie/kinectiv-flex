@@ -16,7 +16,6 @@ $section_prev = $args['sections']['prev'];
 $section_next = $args['sections']['next'];
 
 $theme = $section['options']['color_theme'];
-$theme_inverse = kf_color_theme_inverses()[$theme];
 
 // build style attribute and class list
 $bg_styles = kf_section_bg_styles($section['options']);
@@ -58,18 +57,18 @@ $bg_image_styles = kf_advanced_bg_image_styles($section['options']['layout_advan
         <div class="image-slider__slider<?php if ($slide_count > 1) { echo ' image-slider__slider_slick'; } ?>">
             <?php foreach ($section['slides'] as $i_slide => $slide): ?>
             <div class="image-slider__item">
-                <div class="image-slider__slide image-slider__slide_<?php echo $section['options']['layout_align']; ?> image-slider__slide_<?php echo $section['options']['layout_height']; ?><?php if ($i_slide == 0) { echo ' image-slider__slide_active'; } ?> c_color_<?php color_id($theme_inverse, 5); ?>">
+                <div class="image-slider__slide image-slider__slide_<?php echo $section['options']['layout_align']; ?> image-slider__slide_<?php echo $section['options']['layout_height']; ?><?php if ($i_slide == 0) { echo ' image-slider__slide_active'; } ?> c_color_<?php color_id($theme, 5); ?> c_bg_<?php color_id($theme, 1); ?>">
                     <div class="image-slider__image<?php echo $bg_image_styles['classes']; ?>" role="img" aria-label="<?php echo esc_attr($slide['image']['alt']); ?>" style="background-image: url('<?php echo $slide['image']['url']; ?>');<?php echo $bg_image_styles['style']; ?>"></div>
                     <?php if ($section['options']['layout_content'] && ($slide['title'] || $slide['text'] || $slide['buttons'])): ?>
                     <div class="image-slider__content">
                         <?php if ($slide['title']) { ?><h2 class="image-slider__title title"><?php echo $slide['title']; ?></h2><?php } ?>
-                        <?php if ($slide['text']) { ?><div class="image-slider__text image-slider__text_<?php echo $section['options']['layout_align']; ?> text text_wrap text_compact"><?php echo kf_wysiwyg_color_classes($slide['text'], $theme_inverse); ?></div><?php } ?>
+                        <?php if ($slide['text']) { ?><div class="image-slider__text image-slider__text_<?php echo $section['options']['layout_align']; ?> text text_wrap text_compact"><?php echo kf_wysiwyg_color_classes($slide['text'], $theme); ?></div><?php } ?>
                         <?php if ($slide['buttons']): ?>
                         <div class="image-slider__buttons">
                             <div class="button-group button-group_<?php echo $section['options']['layout_align']; ?>">
                                 <?php foreach ($slide['buttons'] as $button): ?>
                                 <div class="button-group__item">
-                                    <a href="<?php echo esc_url($button['link']['url']); ?>" target="<?php echo $button['link']['target']; ?>" class="button c_bg_<?php color_id($theme_inverse, 3); ?> c_h_bg_<?php color_id($theme_inverse, 4); ?> c_color_<?php color_id($theme_inverse, 0); ?> c_h_color_<?php color_id($theme_inverse, 0); ?>"><?php echo $button['link']['title']; ?></a>
+                                    <a href="<?php echo esc_url($button['link']['url']); ?>" target="<?php echo $button['link']['target']; ?>" class="button c_bg_<?php color_id($theme, 3); ?> c_h_bg_<?php color_id($theme, 4); ?> c_color_<?php color_id($theme, 0); ?> c_h_color_<?php color_id($theme, 0); ?>"><?php echo $button['link']['title']; ?></a>
                                 </div>
                                 <?php endforeach; ?>
                             </div>
