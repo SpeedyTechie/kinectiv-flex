@@ -25,6 +25,3 @@ A flexible WordPress theme for Kinectiv websites (based on [kinectiv-start](http
 * Update the default text color in the `Typography` section in `style.css`.
 * Update the default link styles in the `Links` section in `style.css`.
 * Update the date picker styles in the `Date Picker` section in `style.css`.
-
-#### Misc
-* Find all occurrences of `GOOGLE_API_KEY` in `functions.php` and replace them with a valid Google API key. Must be able to access the following APIs: Maps JavaScript API, Places API, Geocoding API

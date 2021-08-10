@@ -117,6 +117,41 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
+        },
+        {
+            "key": "field_6112b0cfd4c01",
+            "label": "API Keys",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_6112b20dd4c02",
+            "label": "Google Cloud Platform API Key",
+            "name": "config_apis_google",
+            "type": "text",
+            "instructions": "Must have access to the following APIs: Maps JavaScript API, Places API, Geocoding API",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         }
     ],
     "location": [
@@ -136,5 +171,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1599246500
+    "modified": 1628615243
 }
