@@ -5881,6 +5881,10 @@ input[type="radio"] + label::selection {
 .tile-grid__title {
     margin-bottom: 35px;
 }
+.tile-grid__title_wide {
+    margin-left: -65px;
+    margin-right: -65px;
+}
 .tile-grid__title:last-child {
     margin-bottom: 0;
 }
@@ -5957,6 +5961,11 @@ input[type="radio"] + label::selection {
 }
 
 @media (max-width: 1300px) {
+    .tile-grid__title_wide {
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
     .tile-grid__wrap_wide {
         max-width: 800px;
         margin: 0 auto;
@@ -5975,6 +5984,11 @@ input[type="radio"] + label::selection {
     }
 }
 @media (max-width: 1200px) {
+    .tile-grid__title {
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
     .tile-grid__wrap {
         max-width: 800px;
         margin: 0 auto;
@@ -6031,6 +6045,9 @@ input[type="radio"] + label::selection {
     }
 }
 @media (max-width: 650px) {
+    .tile-grid__title {
+        max-width: 350px;
+    }
     .tile-grid__wrap {
         max-width: 350px;
     }

@@ -31,7 +31,7 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
 <div class="section c_color_<?php color_id($theme, 5); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
     <div class="section__content">
         <div class="tile-grid">
-            <?php if ($section['title']) { ?><h2 class="tile-grid__title title title_<?php echo $section['options']['layout_align-title']; ?>"><?php echo $section['title']; ?></h2><?php } ?>
+            <?php if ($section['title']) { ?><h2 class="tile-grid__title<?php if ($section['options']['layout_per-row'] == 4) { echo ' tile-grid__title_wide'; } ?> title title_<?php echo $section['options']['layout_align-title']; ?>"><?php echo $section['title']; ?></h2><?php } ?>
             <?php if ($section['tiles']): ?>
             <?php
             $tile_style = '';
