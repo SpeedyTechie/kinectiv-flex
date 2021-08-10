@@ -6569,6 +6569,36 @@ input[type="radio"] + label::selection {
     margin-top: 10px;
 }
 
+@media (max-width: 850px) {
+    .post-tile:hover,
+    .post-tile:focus,
+    .post-tile:active {
+        transform: translateY(-4px);
+    }
+    .post-tile__main {
+        padding: 25px 30px;
+    }
+}
+@media (max-width: 550px) {
+    .post-tile:hover,
+    .post-tile:focus,
+    .post-tile:active {
+        transform: translateY(-3px);
+    }
+    .post-tile__title {
+        margin-bottom: 5px;
+    }
+    .post-tile__text {
+        margin-top: 8px;
+    }
+}
+@media (max-width: 350px) {
+    .post-tile__main {
+        padding-right: 25px;
+        padding-left: 25px;
+    }
+}
+
 /*--------------------------------------------------------------
 ## Event Tile
 --------------------------------------------------------------*/
