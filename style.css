@@ -7558,6 +7558,31 @@ input[type="radio"] + label::selection {
     margin-top: 12px;
 }
 
+@media (max-width: 850px) {
+    .post-password-form__label {
+        margin-bottom: 5px;
+    }
+    .post-password-form__button {
+        margin-top: 10px;
+    }
+}
+@media (max-width: 550px) {
+    .post-password-form__text {
+        margin-bottom: 20px;
+    }
+    .post-password-form__label {
+        margin-bottom: 3px;
+    }
+    .post-password-form__button {
+        margin-top: 8px;
+    }
+}
+@media (max-width: 400px) {
+    .post-password-form__text {
+        margin-bottom: 15px;
+    }
+}
+
 /*--------------------------------------------------------------
 # Video Embed Facades
 --------------------------------------------------------------*/
