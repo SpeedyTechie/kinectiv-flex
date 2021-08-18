@@ -7597,6 +7597,98 @@ input[type="radio"] + label::selection {
     margin-top: 35px;
 }
 
+@media (max-width: 1250px) {
+    .event-intro__content {
+        padding: 45px 50px;
+    }
+}
+@media (max-width: 1100px) {
+    .event-intro {
+        display: block;
+    }
+    .event-intro__item {
+        width: auto;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .event-intro__content {
+        padding: 50px;
+    }
+}
+@media (max-width: 1000px) {
+    .event-intro__content {
+        padding: 45px;
+    }
+    .event-intro__info {
+        margin-top: 30px;
+    }
+    .event-intro__buttons {
+        margin-top: 30px;
+    }
+}
+@media (max-width: 850px) {
+    .event-intro__content {
+        padding: 40px;
+    }
+    .event-intro__text {
+        margin-top: 20px;
+    }
+    .event-intro__info {
+        margin-top: 25px;
+    }
+    .event-intro__buttons {
+        margin-top: 25px;
+    }
+}
+@media (max-width: 550px) {
+    .event-intro__content {
+        padding: 40px 30px;
+    }
+    .event-intro__text {
+        margin-top: 15px;
+    }
+    .event-intro__info {
+        margin-top: 20px;
+    }
+    .event-intro__info-cols {
+        margin: -5px -12px;
+    }
+    .event-intro__info-item {
+        padding: 5px 12px;
+    }
+    .event-intro__buttons {
+        margin-top: 20px;
+    }
+}
+@media (max-width: 450px) {
+    .event-intro__content {
+        padding: 35px 25px;
+    }
+    .event-intro__date {
+        margin-top: 5px;
+    }
+    .event-intro__text {
+        margin-top: 10px;
+    }
+    .event-intro__info {
+        margin-top: 15px;
+    }
+    .event-intro__info-cols {
+        margin: -5px -10px;
+    }
+    .event-intro__info-item {
+        padding: 5px 10px;
+    }
+    .event-intro__buttons {
+        margin-top: 15px;
+    }
+}
+@media (max-width: 400px) {
+    .event-intro__content {
+        padding: 25px;
+    }
+}
+
 /*--------------------------------------------------------------
 ## Post Password Form
 --------------------------------------------------------------*/
