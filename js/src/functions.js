@@ -1140,6 +1140,112 @@ function initGoogleMaps() {
 
 
 
+/* Mobile Menu */
+
+function initMobileMenu() {
+    var body = $('body');
+
+    var siteHeader = $('.site-header');
+    var siteContent = $('.site-content');
+    var siteFooter = $('.site-footer');
+
+    var openButton = $('.hamburger-button');
+    var menu = $('.mobile-menu');
+    var menuMain = menu.find('.mobile-menu__main');
+    var closeButton = menu.find('.mobile-menu__close');
+    var menuFocusableContent = menu.find('input, select, textarea, button, object, a[href], iframe, [tabindex="0"]').not('[tabindex="-1"]');
+
+    var isOpen = false;
+
+    var openAnimationTimeout;
+
+
+    function toggleMenu(open) {
+        open = (typeof open === 'boolean') ? open : !isOpen; // default to opposite of current state if no state is specified
+        
+        if (open == isOpen) return; // exit if the menu is already in the requested state
+
+        clearTimeout(openAnimationTimeout); // clear timeout
+
+        // show/hide menu
+        if (open) {
+            body.addClass('no-scroll'); // disable scrolling
+            menuMain.scrollTop(0); // ensure that menu is scrolled to top before opening
+
+            menu.addClass('mobile-menu_open'); // add class
+
+            // update aria-expanded
+            openButton.attr('aria-expanded', true);
+            closeButton.attr('aria-expanded', true);
+
+            // allow screen readers and keyboard navigation to access content
+            menu.removeAttr('aria-hidden');
+            menuFocusableContent.attr('tabindex', '0');
+
+            // switch focus from open button to close button
+            if (openButton.is(document.activeElement)) {
+                closeButton.focus();
+            }
+
+            // wait until animation is complete
+            openAnimationTimeout = setTimeout(function() {
+                body.addClass('no-scroll-fixed'); // add additional class to disable scrolling (for iOS devices, just the no-scroll class doesn't cut it)
+                
+                // prevent screen readers and keyboard navigation from accessing page content while menu is open
+                siteHeader.addClass('site-header_hidden');
+                siteContent.addClass('site-content_hidden');
+                siteFooter.addClass('site-footer_hidden');
+            }, 410);
+        } else {
+            // allow screen readers and keyboard navigation to access page content
+            siteHeader.removeClass('site-header_hidden');
+            siteContent.removeClass('site-content_hidden');
+            siteFooter.removeClass('site-footer_hidden');
+
+            // re-enable scrolling
+            body.removeClass('no-scroll');
+            body.removeClass('no-scroll-fixed');
+
+            menu.removeClass('mobile-menu_open'); // remove class
+
+            // update aria-expanded
+            openButton.attr('aria-expanded', false);
+            closeButton.attr('aria-expanded', false);
+
+            // switch focus from close button to open button
+            if (closeButton.is(document.activeElement)) {
+                openButton.focus();
+            }
+
+            // prevent screen readers and keyboard navigation from accessing content during close animation
+            menu.attr('aria-hidden', true);
+            menuFocusableContent.attr('tabindex', '-1');
+        }
+
+         isOpen = open; // update stored state
+
+         $(window).trigger('resize'); // trigger window resize (since scroll bar may be removed/added)
+    }
+
+
+    // open/close menu on button click
+    openButton.click(function() {
+        toggleMenu();
+    });
+    closeButton.click(function() {
+        toggleMenu();
+    });
+
+    // close mobile menu if esc key is pressed
+    $(document).keydown(function(e) {
+        if (e.which === 27 && isOpen) {
+            toggleMenu(false);
+        }
+    });
+}
+
+
+
 /* General */
 
 $(function() {
@@ -1153,6 +1259,7 @@ $(function() {
     initGformEnhanceStripe();
     initGformEnhanceSubmit();
     initGformEnhanceMisc();
+    initMobileMenu();
     initDialogBoxes();
     initAjaxGridLoad();
 });

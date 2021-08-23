@@ -23,9 +23,6 @@ $padding_styles = kf_section_padding_styles($section['options'], $section_prev['
 $section_style = $bg_styles['style'] . $padding_styles['style'];
 $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
 
-// conditional variables
-$c_info = $section['info']['addresses'] || $section['info']['hours'] || $section['info']['phones'] || $section['info']['emails'] || $section['info']['social']['title'] || $social_links;
-
 // build array of social links
 $social_links = array();
 if ($section['info']['social']['links']['facebook']) {
@@ -58,6 +55,9 @@ if ($section['info']['social']['links']['linkedin']) {
         'url' => $section['info']['social']['links']['linkedin']
     );
 }
+
+// conditional variables
+$c_info = $section['info']['addresses'] || $section['info']['hours'] || $section['info']['phones'] || $section['info']['emails'] || $section['info']['social']['title'] || $social_links;
 ?>
 
 <div class="section c_color_<?php color_id($theme, 5); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
