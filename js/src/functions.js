@@ -44,6 +44,11 @@ function initEnhanceMouseFocus() {
 
 function initDialogBoxes() {
     var throttledUpdateDialogBoxPosition = kinectivThrottle(updateDialogBoxPosition, 100);
+
+    var siteHeader = $('.site-header');
+    var siteContent = $('.site-content');
+    var siteFooter = $('.site-footer');
+
     var boxWrap = $('<div class="dialog-box" />');
     var boxBg = $('<div class="dialog-box__bg" />').appendTo(boxWrap);
     var boxContent = $('<div class="dialog-box__content" />').appendTo(boxWrap);
@@ -78,6 +83,10 @@ function initDialogBoxes() {
         boxWrap.data('lastFocus', $(document.activeElement));
         box.focus();
         $(window).scrollTop(scrollTop);
+
+        siteHeader.attr('aria-hidden', true);
+        siteContent.attr('aria-hidden', true);
+        siteFooter.attr('aria-hidden', true);
     }
     
     function openGalleryBox(content, contentAppended) {
@@ -98,10 +107,18 @@ function initDialogBoxes() {
         boxWrap.data('lastFocus', $(document.activeElement));
         box.focus();
         $(window).scrollTop(scrollTop);
+
+        siteHeader.attr('aria-hidden', true);
+        siteContent.attr('aria-hidden', true);
+        siteFooter.attr('aria-hidden', true);
     }
     
     function closeDialogBox() {
         var scrollTop = $(window).scrollTop();
+
+        siteHeader.removeAttr('aria-hidden');
+        siteContent.removeAttr('aria-hidden');
+        siteFooter.removeAttr('aria-hidden');
         
         boxWrap.removeClass('dialog-box_active');
         

@@ -1002,6 +1002,9 @@ input[type="radio"] + label::selection {
 .gfield .gfield_radio input[type="text"][disabled] {
     display: none;
 }
+.gfield .gform_fileupload_multifile {
+    overflow: hidden;
+}
 .gfield .gform_drop_area {
     background-color: transparent;
     display: flex;
@@ -1029,6 +1032,9 @@ input[type="radio"] + label::selection {
 .gfield .ginput_container_fileupload [id^="gform_preview_"],
 .gfield .ginput_container_fileupload ~ [id^="gform_preview_"] {
     display: none;
+}
+.gfield .ginput_recaptcha {
+    overflow: hidden;
 }
 .gfield .ginput_recaptcha > div {
     display: inline-block;
