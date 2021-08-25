@@ -97,10 +97,21 @@ class LiteYTEmbed extends HTMLElement {
          */
         if (!this.style.backgroundImage) {
           this.posterUrl = `https://i.ytimg.com/vi/${this.videoId}/hqdefault.jpg`;
+          this.posterUrlMax = `https://i.ytimg.com/vi/${this.videoId}/maxresdefault.jpg`;
           // Warm the connection for the poster image
           LiteYTEmbed.addPrefetch('preload', this.posterUrl, 'image');
 
           this.style.backgroundImage = `url("${this.posterUrl}")`;
+
+          // update the thumbnail image if the max res image exists
+          var embedEl = this;
+          var image = document.createElement('img');
+          image.onload = function() {
+              if (image.naturalHeight > 360){
+                embedEl.style.backgroundImage = `url("${embedEl.posterUrlMax}")`;
+              }
+          }
+          image.src = this.posterUrlMax;
         }
 
         // Set up play button, and its visually hidden label
