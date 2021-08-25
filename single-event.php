@@ -23,7 +23,7 @@ $theme = 'main';
 $f_description = get_field('event_content_description');
 $f_buttons = get_field('event_content_buttons');
 $f_image = get_field('event_content_image');
-$f_content = get_field('event_content_sections');
+$f_sections = get_field('event_content_sections');
 
 $f_date = get_field('event_details_date');
 $f_location = get_field('event_details_location');
@@ -66,13 +66,13 @@ $bg_color_2 = 1;
 
 // determine if intro bottom padding should be removed
 $no_bottom = false;
-if ($f_content) {
+if ($f_sections) {
     // check if bg color of intro and first content section match
-    if (kf_get_bg_color($f_content[0]['options']) == kf_hex_3_to_6(kf_color_id_list()[color_id($theme, $bg_color, true)])) {
-        $first_padding = ($f_content[0]['options']['padding_vertical'] == 'separate') ? $f_content[0]['options']['padding_top'] : $f_content[0]['options']['padding_vertical']; // get top padding of first content section
+    if (kf_get_bg_color($f_sections[0]['options']) == kf_hex_3_to_6(kf_color_id_list()[color_id($theme, $bg_color, true)])) {
+        $first_padding = ($f_sections[0]['options']['padding_vertical'] == 'separate') ? $f_sections[0]['options']['padding_top'] : $f_sections[0]['options']['padding_vertical']; // get top padding of first content section
         
         // check if there is first section padding and padding collapse is enabled
-        if ($first_padding != 'none' && $f_content[0]['options']['padding_collapse-top']) {
+        if ($first_padding != 'none' && $f_sections[0]['options']['padding_collapse-top']) {
             $no_bottom = true; // remove bottom padding
         }
     }

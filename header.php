@@ -12,6 +12,131 @@
 	<link rel="profile" href="http://gmpg.org/xfn/11">
 
 	<?php wp_head(); ?>
+
+    <?php
+    $f_image_default = get_field('config_sharing_image', 'option');
+    $f_sharing_twitter = get_field('config_sharing_twitter', 'option');
+    
+    $f_image = get_field('sharing_custom_image');
+    $f_description = get_field('sharing_custom_description');
+    
+    // get sharing image
+    $meta_image = null;
+    if ($f_image) {
+        $meta_image = $f_image;
+    } else {
+        if (is_page()) {
+            if (get_page_template_slug() == '') {
+                $mf_content_sections = get_field('page_content_sections');
+
+                $meta_image = kf_flex_sharing_image($mf_content_sections);
+            }
+        } elseif (is_singular('post')) {
+            $mf_content_image = get_field('post_content_image');
+            $mf_content_sections = get_field('post_content_sections');
+
+            if ($mf_content_image) {
+                $meta_image = $mf_content_image;
+            } else {
+                $meta_image = kf_flex_sharing_image($mf_content_sections);
+            }
+        } elseif (is_singular('event')) {
+            $mf_content_image = get_field('event_content_image');
+            $mf_content_sections = get_field('event_content_sections');
+
+            if ($mf_content_image) {
+                $meta_image = $mf_content_image;
+            } else {
+                $meta_image = kf_flex_sharing_image($mf_content_sections);
+            }
+        } elseif (is_404()) {
+            $mf_content_sections = get_field('404_content_sections', 'option');
+
+            $meta_image = kf_flex_sharing_image($mf_content_sections);
+        }
+        
+        if (!$meta_image) {
+            $meta_image = $f_image_default;
+        }
+    }
+    
+    // get sharing description
+    $meta_description = '';
+    if ($f_description) {
+        $meta_description = $f_description;
+    } else {
+        if (is_page()) {
+            if (get_page_template_slug() == '') {
+                $mf_content_sections = get_field('page_content_sections');
+
+                $meta_description = kf_flex_sharing_desc($mf_content_sections);
+            }
+        } elseif (is_singular('post')) {
+            $mf_preview_description = get_field('post_preview_description');
+            $mf_content_sections = get_field('post_content_sections');
+
+            if ($mf_preview_description) {
+                $meta_description = $mf_preview_description;
+            } else {
+                $meta_description = kf_flex_sharing_desc($mf_content_sections);
+            }
+        } elseif (is_singular('event')) {
+            $mf_content_description = get_field('event_content_description');
+            $mf_content_sections = get_field('event_content_sections');
+
+            if ($mf_content_description) {
+                $meta_description = $mf_content_description;
+            } else {
+                $meta_description = kf_flex_sharing_desc($mf_content_sections);
+            }
+        } elseif (is_404()) {
+            $mf_content_sections = get_field('404_content_sections', 'option');
+
+            $meta_description = kf_flex_sharing_desc($mf_content_sections);
+        }
+    }
+    $meta_description = trim(strip_tags($meta_description));
+    if (mb_strlen($meta_description) > 500) {
+        $meta_description = mb_substr($meta_description, 0, 500) . '...';
+    }
+
+    // clear meta image/description if password protected
+    if (!is_404() && post_password_required()) {
+        $meta_image = $f_image_default;
+        $meta_description = 'A password is required to view this content.';
+    }
+    
+    $canonical_url = get_permalink();
+    if (is_404()) {
+        $canonical_url = '';
+    }
+    ?>
+    
+    <?php if ($meta_description) { ?><meta name="description" content="<?php echo esc_attr($meta_description); ?>" /><?php } ?>
+    
+    <meta property="og:title" content="<?php echo esc_attr(wp_get_document_title()); ?>" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="<?php echo $canonical_url; ?>" />
+    <?php if ($meta_image): ?>
+    <meta property="og:image" content="<?php echo $meta_image['url']; ?>" />
+    <meta property="og:image:alt" content="<?php echo esc_attr($meta_image['alt']); ?>" />
+    <meta property="og:image:type" content="<?php echo $meta_image['mime_type']; ?>" />
+    <meta property="og:image:width" content="<?php echo $meta_image['width']; ?>" />
+    <meta property="og:image:height" content="<?php echo $meta_image['height']; ?>" />
+    <?php endif; ?>
+    <meta property="og:description" content="<?php echo esc_attr($meta_description); ?>" />
+    <meta property="og:site_name" content="<?php esc_attr(bloginfo('name')); ?>" />
+    
+    <?php if ($f_sharing_twitter): ?>
+    <meta name="twitter:card" content="<?php if ($meta_image) { echo 'summary_large_image'; } else { echo 'summary'; } ?>" />
+    <meta name="twitter:site" content="@<?php echo esc_attr($f_sharing_twitter); ?>" />
+    <meta name="twitter:title" content="<?php echo esc_attr(wp_get_document_title()); ?>" />
+    <meta name="twitter:description" content="<?php echo esc_attr($meta_description); ?>" />
+    <?php if ($meta_image): ?>
+    <meta name="twitter:image" content="<?php echo $meta_image['url']; ?>" />
+    <meta name="twitter:image:alt" content="<?php echo esc_attr($meta_image['alt']); ?>" />
+    <?php endif; ?>
+    <?php endif; ?>
     
     <script> </script><!-- to fix Chrome bug https://bugs.chromium.org/p/chromium/issues/detail?id=332189 -->
 </head>

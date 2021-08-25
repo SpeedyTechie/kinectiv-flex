@@ -841,6 +841,131 @@ add_action('pre_get_posts', 'kf_event_custom_column_sorting');
 
 
 /**
+ * Get sharing image/description from flex content
+ */
+function kf_flex_sharing_image($content) {
+    $meta_image = null;
+    
+    if (is_array($content)) {
+        foreach ($content as $section) {
+            if ($section['acf_fc_layout'] == 'header') {
+                if ($section['options']['bg_type'] == 'image') {
+                    $meta_image = $section['options']['bg_image'];
+
+                    break;
+                }
+            } elseif ($section['acf_fc_layout'] == 'image') {
+                $meta_image = $section['image'];
+
+                break;
+            } elseif ($section['acf_fc_layout'] == 'slider') {
+                foreach ($section['slides'] as $slide) {
+                    $meta_image = $slide['image'];
+
+                    break 2;
+                }
+            } elseif ($section['acf_fc_layout'] == 'gallery_masonry') {
+                foreach ($section['images'] as $image) {
+                    if (kf_is_sharing_image($image['image'])) {
+                        $meta_image = $image['image'];
+
+                        break 2;
+                    }
+                }
+            } elseif ($section['acf_fc_layout'] == 'gallery_rows') {
+                foreach ($section['rows'] as $row) {
+                    foreach ($row['images'] as $image) {
+                        if (kf_is_sharing_image($image['image'])) {
+                            $meta_image = $image['image'];
+    
+                            break 3;
+                        }
+                    }
+                }
+            } elseif ($section['acf_fc_layout'] == 'blocks') {
+                $meta_image = $section['image'];
+
+                break;
+            }
+        }
+    }
+    
+    return $meta_image;
+}
+function kf_flex_sharing_desc($content) {
+    $meta_description = '';
+    
+    if (is_array($content)) {
+        foreach ($content as $section) {
+            if ($section['acf_fc_layout'] == 'header') {
+                if ($section['text']) {
+                    $meta_description = $section['text'];
+
+                    break;
+                } elseif ($section['text-blocks']) {
+                    foreach ($section['text-blocks'] as $block) {
+                        if ($block['text']) {
+                            $meta_description = $block['text'];
+
+                            break 2;
+                        }
+                    }
+                }
+            } elseif ($section['acf_fc_layout'] == 'text' || $section['acf_fc_layout'] == 'blocks' || $section['acf_fc_layout'] == 'cta' || $section['acf_fc_layout'] == 'logos' || $section['acf_fc_layout'] == 'form' || $section['acf_fc_layout'] == 'contact') {
+                if ($section['text']) {
+                    $meta_description = $section['text'];
+
+                    break;
+                }
+            } elseif ($section['acf_fc_layout'] == 'columns') {
+                if ($section['blocks']) {
+                    foreach ($section['blocks'] as $block) {
+                        if ($block['text']) {
+                            $meta_description = $block['text'];
+
+                            break 2;
+                        }
+                    }
+                }
+            } elseif ($section['acf_fc_layout'] == 'slider') {
+                if ($section['slides'] && $section['options']['layout_content']) {
+                    foreach ($section['slides'] as $slide) {
+                        if ($slide['text']) {
+                            $meta_description = $slide['text'];
+
+                            break 2;
+                        }
+                    }
+                }
+            } elseif ($section['acf_fc_layout'] == 'embed') {
+                if ($section['caption']) {
+                    $meta_description = $section['caption'];
+
+                    break;
+                }
+            }
+        }
+    }
+    
+    return $meta_description;
+}
+
+
+/**
+ * Check if an image is suitable for use as a sharing image
+ */
+function kf_is_sharing_image($image) {
+    if (is_array($image)) {
+        if ($image['width'] >= 600 && $image['width'] >= $image['height']) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+
+/**
  * Add ACF options page
  */
 if (function_exists('acf_add_options_page')) {

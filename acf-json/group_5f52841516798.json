@@ -119,6 +119,65 @@
             "maxlength": ""
         },
         {
+            "key": "field_612505ee2b284",
+            "label": "Social Sharing",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_6125060a2b285",
+            "label": "Default Image",
+            "name": "config_sharing_image",
+            "type": "image",
+            "instructions": "Standard Resolution: 1200x650",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
+            "key": "field_612506252b286",
+            "label": "Twitter Handle",
+            "name": "config_sharing_twitter",
+            "type": "text",
+            "instructions": "For social sharing optimizations to function on Twitter, a handle is required.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "@",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_6112b0cfd4c01",
             "label": "API Keys",
             "name": "",
@@ -171,5 +230,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1628615243
+    "modified": 1629816374
 }
