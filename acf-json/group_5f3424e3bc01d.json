@@ -155,6 +155,29 @@
                     "return_format": "value"
                 },
                 {
+                    "key": "field_61268ac259e0b",
+                    "label": "Size",
+                    "name": "layout_size",
+                    "type": "button_group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "sm": "Small",
+                        "md": "Medium",
+                        "lg": "Large"
+                    },
+                    "allow_null": 0,
+                    "default_value": "lg",
+                    "layout": "horizontal",
+                    "return_format": "value"
+                },
+                {
                     "key": "field_5f3424e3e5fbf",
                     "label": "Color",
                     "name": "",
@@ -288,5 +311,5 @@
     "hide_on_screen": "",
     "active": false,
     "description": "",
-    "modified": 1627579846
+    "modified": 1629916061
 }

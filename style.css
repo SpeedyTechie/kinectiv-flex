@@ -5280,6 +5280,14 @@ body.no-scroll-fixed {
 .title-caption {
     text-align: center;
 }
+.title-caption_w_md {
+    max-width: 900px;
+    margin: 0 auto;
+}
+.title-caption_w_sm {
+    max-width: 750px;
+    margin: 0 auto;
+}
 .title-caption__title {
     margin-bottom: 20px;
 }
