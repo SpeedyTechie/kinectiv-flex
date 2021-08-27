@@ -40,6 +40,14 @@ function initEnhanceMouseFocus() {
 
 
 
+/* FitVids */
+
+function initFitVids() {
+    $('.site-content').fitVids();
+}
+
+
+
 /* Dialog Boxes */
 
 function initDialogBoxes() {
@@ -1267,6 +1275,7 @@ function initMobileMenu() {
 
 $(function() {
     initMasonryGrid();
+    initFitVids();
     initImageSlider();
     initTestimonialSlider();
     initLastItemFlexRow();
