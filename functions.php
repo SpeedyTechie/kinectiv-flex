@@ -471,53 +471,6 @@ function kf_advanced_bg_image_styles($options) {
 
 
 /**
- * Replace video embeds with facades
- */
-function kf_video_oembed_result($data, $url, $args) {
-    if (is_admin()) return $data; // don't do anything if this isn't the front-end
-    
-    $oembed = _wp_oembed_get_object();
-    $provider = $oembed->get_provider($url);
-    
-    // replace YouTube embed with facade
-    if ($provider == 'https://www.youtube.com/oembed') {
-        $url_parsed = parse_url($url);
-        
-        // get video ID
-        $video_id = null;
-        if ($url_parsed['host'] == 'youtu.be') {
-            $video_id = str_replace('/', '', $url_parsed['path']);
-        } elseif ($url_parsed['path'] == '/watch') {
-            parse_str($url_parsed['query'], $query_args);
-            if (array_key_exists('v', $query_args)) {
-                $video_id = $query_args['v'];
-            }
-        }
-        
-        if ($video_id) {
-            // replace HTML
-            $data = '<lite-youtube videoid="' . $video_id . '"></lite-youtube>';
-        }
-    }
-    
-    // replace Vimeo embed with facade
-    if (substr($provider, 0, 28) == 'https://vimeo.com/api/oembed') {
-        $video_details = json_decode(file_get_contents('https://vimeo.com/api/oembed.json?url=' . urlencode($url)), true);
-        
-        if (is_array($video_details) && array_key_exists('video_id', $video_details)) {
-            $video_id = $video_details['video_id'];
-            
-            // replace HTML
-            $data = '<lite-vimeo videoid="' . $video_id . '"></lite-vimeo>';
-        }
-    }
-    
-    return $data;
-}
-add_filter('oembed_result', 'kf_video_oembed_result', 10, 3);
-
-
-/**
  * Get page ancestors
  */
 function kf_get_ancestors($post_id) {
