@@ -45,7 +45,7 @@
                     "label": "Image",
                     "name": "image",
                     "type": "image",
-                    "instructions": "Standard Resolution: 400x500 (full image), 400 wide (standard\/default)",
+                    "instructions": "Standard Resolution: 600x600 (2 per row full image), 600 wide (2 per row standard), 400x500 (3-4 per row full image), 400 wide (3-4 per row standard \/ default)",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -557,11 +557,12 @@
                         "id": ""
                     },
                     "choices": {
+                        "2": "Two Tiles",
                         "3": "Three Tiles",
                         "4": "Four Tiles"
                     },
                     "allow_null": 0,
-                    "default_value": "",
+                    "default_value": 3,
                     "layout": "horizontal",
                     "return_format": "value"
                 },
@@ -1143,5 +1144,5 @@
     "hide_on_screen": "",
     "active": false,
     "description": "",
-    "modified": 1628262721
+    "modified": 1630506446
 }

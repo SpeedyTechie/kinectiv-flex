@@ -31,7 +31,7 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
 <div class="section c_color_<?php color_id($theme, 5); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
     <div class="section__content">
         <div class="tile-grid">
-            <?php if ($section['title']) { ?><h2 class="tile-grid__title<?php if ($section['options']['layout_per-row'] == 4) { echo ' tile-grid__title_wide'; } ?> title title_<?php echo $section['options']['layout_align-title']; ?>"><?php echo $section['title']; ?></h2><?php } ?>
+            <?php if ($section['title']) { ?><h2 class="tile-grid__title<?php if ($section['options']['layout_per-row'] == 4) { echo ' tile-grid__title_wide'; } elseif ($section['options']['layout_per-row'] == 2) { echo ' tile-grid__title_no-max-w'; } ?> title title_<?php echo $section['options']['layout_align-title']; ?>"><?php echo $section['title']; ?></h2><?php } ?>
             <?php if ($section['tiles']): ?>
             <?php
             $tile_style = '';
@@ -50,7 +50,7 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
             $popup_style = $popup_bg_styles['style'];
             $popup_classes = $popup_bg_styles['classes'];
             ?>
-            <div class="tile-grid__wrap<?php if ($section['options']['layout_per-row'] == 4) { echo ' tile-grid__wrap_wide'; } ?>">
+            <div class="tile-grid__wrap<?php if ($section['options']['layout_per-row'] == 4) { echo ' tile-grid__wrap_wide'; } elseif ($section['options']['layout_per-row'] == 2) { echo ' tile-grid__wrap_no-max-w'; } ?>">
                 <div class="tile-grid__grid tile-grid__grid_<?php echo $section['options']['layout_align-tiles']; ?>">
                     <?php foreach ($section['tiles'] as $i_tile => $tile): ?>
                     <?php
@@ -156,7 +156,7 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
             </div>
             <?php endif; ?>
             <?php if ($section['cta']['text'] || $section['cta']['link']): ?>
-            <p class="tile-grid__cta<?php if ($section['options']['layout_per-row'] == 4) { echo ' tile-grid__cta_wide'; } ?> tile-grid__cta_<?php echo $section['options']['layout_align-cta']; ?> text text_xs">
+            <p class="tile-grid__cta<?php if ($section['options']['layout_per-row'] == 4) { echo ' tile-grid__cta_wide'; } elseif ($section['options']['layout_per-row'] == 2) { echo ' tile-grid__cta_no-max-w'; } ?> tile-grid__cta_<?php echo $section['options']['layout_align-cta']; ?> text text_xs">
                 <?php echo $section['cta']['text']; ?>
                 <?php if ($section['cta']['link']): ?>
                 <a href="<?php echo esc_url($section['cta']['link']['url']); ?>" target="<?php echo $section['cta']['link']['target']; ?>" class="arrow-link c_color_<?php color_id($theme, 5); ?> c_h_color_<?php color_id($theme, 4); ?>">
