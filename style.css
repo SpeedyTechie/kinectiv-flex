@@ -3474,6 +3474,20 @@ input[type="radio"] + label::selection {
 }
 
 /*--------------------------------------------------------------
+## Sub-Header 1
+--------------------------------------------------------------*/
+.sub-header-1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    margin: -6px -12px;
+}
+.sub-header-1__item {
+    padding: 6px 12px;
+}
+
+/*--------------------------------------------------------------
 ## Hamburger Button
 --------------------------------------------------------------*/
 .hamburger-button {
@@ -4189,6 +4203,9 @@ body.no-scroll-fixed {
 }
 .social_center {
     justify-content: center;
+}
+.social_right {
+    justify-content: flex-end;
 }
 .social__item {
     flex: 0 0 auto;
