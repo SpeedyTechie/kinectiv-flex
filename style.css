@@ -3109,6 +3109,35 @@ input[type="radio"] + label::selection {
     align-items: flex-end;
     margin-right: 2em;
 }
+.text_wrap ul ul,
+.text_wrap.text_left ul ul,
+.text_wrap ul ol,
+.text_wrap.text_left ul ol,
+.text_wrap ol ol,
+.text_wrap.text_left ol ol,
+.text_wrap ol ul,
+.text_wrap.text_left ol ul {
+    margin: 0;
+}
+.text_wrap ul ul,
+.text_wrap ol ul {
+    list-style: circle;
+}
+.text_wrap ul ul ul,
+.text_wrap ol ul ul,
+.text_wrap ol ol ul,
+.text_wrap ul ol ul {
+    list-style: square;
+}
+.text_wrap ul li,
+.text_wrap ol li {
+    max-width: 100%;
+    margin-bottom: 0.3em;
+}
+.text_wrap ul li:last-child,
+.text_wrap ol li:last-child {
+    margin-bottom: 0;
+}
 .text_wrap hr {
     margin: 1.5em 0;
 }
@@ -3124,15 +3153,6 @@ input[type="radio"] + label::selection {
 .text_wrap ul:last-child,
 .text_wrap ol:last-child,
 .text_wrap hr:last-child {
-    margin-bottom: 0;
-}
-.text_wrap ul li,
-.text_wrap ol li {
-    max-width: 100%;
-    margin-bottom: 0.3em;
-}
-.text_wrap ul li:last-child,
-.text_wrap ol li:last-child {
     margin-bottom: 0;
 }
 
