@@ -1,6 +1,6 @@
 (function($) {
 
-    /* Disable the wpview TinyMCE plugin for ACF WYSIWYG fields (unless the enabled in settings) */
+    /* Disable the wpview TinyMCE plugin for ACF WYSIWYG fields (unless enabled in settings) */
 
     acf.addFilter('wysiwyg_tinymce_settings', function(mceInit, id, field){
         if (field.$el.hasClass('ks-disable-autoembed')) {
@@ -11,6 +11,33 @@
                 plugins.splice(wpviewIndex, 1);
             }
             mceInit['plugins'] = plugins.join(',');
+        }
+
+        return mceInit;		
+    });
+
+
+
+    /* Update TinyMCE settings for ACF WYSIWYG fields based on selected toolbar */
+
+    acf.addFilter('wysiwyg_tinymce_settings', function(mceInit, id, field){
+        if (field.data.toolbar in wpVars.wysiwygConfigs) {
+            var config = wpVars.wysiwygConfigs[field.data.toolbar];
+
+            // update block_formats setting
+            if ('formats' in config) {
+                mceInit['block_formats'] = config['formats'];
+            }
+
+            // update valid_elements setting
+            if ('elements' in config) {
+                mceInit['valid_elements'] = config['elements'];
+            }
+
+            // update valid_styles setting
+            if ('styles' in config) {
+                mceInit['valid_styles'] = config['styles'];
+            }
         }
 
         return mceInit;		
