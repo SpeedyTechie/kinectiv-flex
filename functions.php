@@ -2206,7 +2206,6 @@ add_filter('acf/prepare_field/type=wysiwyg', 'ks_acf_wysiwyg_field_height_script
 /**
  * Custom WYSIWYG configurations
  */
-// TODO: media/image handling
 function ks_wysiwyg_configs() {
     $configs = array();
 
