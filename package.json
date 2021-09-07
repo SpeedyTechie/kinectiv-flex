@@ -1,7 +1,7 @@
 {
     "name": "kinectiv-flex",
-    "version": "0.0.0",
-    "description": "A WordPress starter theme for Kinectiv websites",
+    "version": "1.0.0",
+    "description": "A flexible WordPress theme for Kinectiv websites (based on kinectiv-start)",
     "main": "gulpfile.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
