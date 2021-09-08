@@ -43,7 +43,7 @@ function kinectiv_flex_scripts() {
     
     wp_deregister_script('wp-embed');
     wp_deregister_script('jquery');
-    wp_enqueue_script('jquery', 'https://code.jquery.com/jquery-3.5.1.min.js', array(), null, true);
+    wp_enqueue_script('jquery', get_template_directory_uri() . '/js/jquery-3.6.0.min.js', array(), null, true);
 	wp_enqueue_script('kinectiv-flex-script', get_template_directory_uri() . '/js/script.min.js', array('jquery'), '1.0.0', true);
     wp_enqueue_script('google-maps', 'https://maps.googleapis.com/maps/api/js?key=' . $f_google_api_key . '&callback=initGoogleMaps', array('kinectiv-flex-script'), null, true);
     
