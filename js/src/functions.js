@@ -616,6 +616,7 @@ function initTestimonialSlider() {
 
 
 /* AJAX Grid Load */
+
 function initAjaxGridLoad() {
     function ajaxLoad(type, special, page, passthrough) {
         var request = $.ajax(wpVars.ajaxURL, {

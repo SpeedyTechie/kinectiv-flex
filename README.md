@@ -29,4 +29,4 @@ A flexible WordPress theme for Kinectiv websites (based on [kinectiv-start](http
 * If necessary, update the color classes assigned to WYSIWYG content in the `kf_wysiwyg_color_classes()` function in `functions.php`.
 
 #### Padding
-* If necessary, update the padding size variations in the `Padding` section in `style.css`.
+* If necessary, update the padding size variations in the `Section` section in `style.css`.

@@ -535,6 +535,7 @@ function kf_custom_query($type, $single_page = false, $page_num = 1, $special = 
         // base arguments
         $query_args = array(
             'post_type' => $type,
+            'post_status' => 'publish',
             'posts_per_page' => $single_page ? $single_page : $per_page[$type],
             'paged' => $page_num
         );
