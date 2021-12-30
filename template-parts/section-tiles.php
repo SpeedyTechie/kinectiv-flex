@@ -140,7 +140,7 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
                                         <div class="button-group button-group_<?php echo $tile['options']['layout_popup-options']['layout_align']; ?>">
                                             <?php foreach ($tile['popup']['buttons'] as $button): ?>
                                             <div class="button-group__item">
-                                                <a href="<?php echo esc_url($button['link']['url']); ?>" target="<?php echo $button['link']['target']; ?>" class="button c_bg_<?php color_id($popup_theme, 3); ?> c_h_bg_<?php color_id($popup_theme, 4); ?> c_color_<?php color_id($popup_theme, 0); ?> c_h_color_<?php color_id($theme, 0); ?>"><?php echo $button['link']['title']; ?></a>
+                                                <a href="<?php echo esc_url($button['link']['url']); ?>" target="<?php echo $button['link']['target']; ?>" class="button <?php component_colors($popup_theme, 'button'); ?>"><?php echo $button['link']['title']; ?></a>
                                             </div>
                                             <?php endforeach; ?>
                                         </div>
@@ -159,7 +159,7 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
             <p class="tile-grid__cta<?php if ($section['options']['layout_per-row'] == 4) { echo ' tile-grid__cta_wide'; } elseif ($section['options']['layout_per-row'] == 2) { echo ' tile-grid__cta_no-max-w'; } ?> tile-grid__cta_<?php echo $section['options']['layout_align-cta']; ?> text text_xs">
                 <?php echo $section['cta']['text']; ?>
                 <?php if ($section['cta']['link']): ?>
-                <a href="<?php echo esc_url($section['cta']['link']['url']); ?>" target="<?php echo $section['cta']['link']['target']; ?>" class="arrow-link c_color_<?php color_id($theme, 5); ?> c_h_color_<?php color_id($theme, 4); ?>">
+                <a href="<?php echo esc_url($section['cta']['link']['url']); ?>" target="<?php echo $section['cta']['link']['target']; ?>" class="arrow-link <?php component_colors($theme, 'arrow-link'); ?>">
                     <span class="arrow-link__text"><?php echo $section['cta']['link']['title']; ?></span>
                     <svg viewBox="0 0 17.45 27.04" class="arrow-link__arrow">
                         <polygon points="3.94 0 0 3.94 9.58 13.52 0 23.1 3.94 27.04 17.45 13.52 3.94 0"/>
@@ -173,7 +173,7 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
                 <div class="button-group button-group_<?php echo $section['options']['layout_align-title']; ?>">
                     <?php foreach ($section['buttons'] as $button): ?>
                     <div class="button-group__item">
-                        <a href="<?php echo esc_url($button['link']['url']); ?>" target="<?php echo $button['link']['target']; ?>" class="button c_bg_<?php color_id($theme, 3); ?> c_h_bg_<?php color_id($theme, 4); ?> c_color_<?php color_id($theme, 0); ?> c_h_color_<?php color_id($theme, 0); ?>"><?php echo $button['link']['title']; ?></a>
+                        <a href="<?php echo esc_url($button['link']['url']); ?>" target="<?php echo $button['link']['target']; ?>" class="button <?php component_colors($theme, 'button'); ?>"><?php echo $button['link']['title']; ?></a>
                     </div>
                     <?php endforeach; ?>
                 </div>

@@ -136,7 +136,7 @@ if (!$time_string && !$f_description) $date_2_display = false;
                             <div class="button-group button-group_left">
                                 <?php foreach ($f_buttons as $button): ?>
                                 <div class="button-group__item">
-                                    <a href="<?php echo esc_url($button['link']['url']); ?>" target="<?php echo $button['link']['target']; ?>" class="button c_bg_<?php color_id($theme, 3); ?> c_h_bg_<?php color_id($theme, 4); ?> c_color_<?php color_id($theme, 0); ?> c_h_color_<?php color_id($theme, 0); ?>"><?php echo $button['link']['title']; ?></a>
+                                    <a href="<?php echo esc_url($button['link']['url']); ?>" target="<?php echo $button['link']['target']; ?>" class="button <?php component_colors($theme, 'button'); ?>"><?php echo $button['link']['title']; ?></a>
                                 </div>
                                 <?php endforeach; ?>
                             </div>

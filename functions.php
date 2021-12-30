@@ -183,6 +183,31 @@ function aux_color_id($theme, $color_num, $return = false) {
 
 
 /**
+ * Get list of color classes for common components
+ */
+function component_colors($theme, $component, $return = false) {
+    // list of components and their associated color classes
+    $component_classes = array(
+        'button' =>  'c_bg_' . color_id($theme, 3, true) . ' c_h_bg_' . color_id($theme, 4, true) . ' c_color_' . color_id($theme, 0, true) . ' c_h_color_' . color_id($theme, 0, true),
+        'arrow-link' => 'c_color_' . color_id($theme, 5, true) . ' c_h_color_' . color_id($theme, 4, true)
+    );
+
+    if (isset($component_classes[$component])) {
+        // return class list
+        if ($return) {
+            return $component_classes[$component];
+        } else {
+            echo $component_classes[$component];
+        }
+    }
+
+    if ($return) {
+        return ''; // if the provided component doesn't exist, return an empty string
+    }
+}
+
+
+/**
  * Get color theme maps
  */
 function kf_color_theme_maps() {
@@ -209,7 +234,7 @@ function kf_aux_color_theme_maps() {
 
 
 /**
- * Get name of inverse theme
+ * Get list of theme inverses
  */
 function kf_color_theme_inverses() {
     return array(
@@ -1149,7 +1174,7 @@ function kf_gform_field_content($field_content, $field) {
                 $classes = explode(' ', $button_element->getAttribute('class'));
                 
                 if (in_array('gform_button_select_files', $classes)) {
-                    $classes[] = 'c_bg_' . color_id($theme, 3, true) . ' c_h_bg_' . color_id($theme, 4, true) . ' c_color_' . color_id($theme, 0, true) . ' c_h_color_' . color_id($theme, 0, true);
+                    $classes[] = component_colors($theme, 'button', true);
                     $button_element->setAttribute('class', implode(' ', $classes));
                 }
             }
@@ -1390,7 +1415,7 @@ function kf_gform_field_content($field_content, $field) {
                     $label_element->setAttribute('class', trim($label_element->getAttribute('class') . ' ' . $label_classes));
                 }
                 foreach ($div_element->getElementsByTagName('button') as $button_element) {
-                    $button_classes = 'button c_bg_' . color_id($theme, 3, true) . ' c_h_bg_' . color_id($theme, 4, true) . ' c_color_' . color_id($theme, 0, true) . ' c_h_color_' . color_id($theme, 0, true);
+                    $button_classes = 'button ' . component_colors($theme, 'button', true);
                     $button_element->setAttribute('class', trim($button_element->getAttribute('class') . ' ' . $button_classes));
                 }
             } elseif (in_array('gfield_radio', $div_classes)) {
@@ -1705,7 +1730,7 @@ function kf_gform_submit_button($button, $form) {
     }
     
     // add classes to new button
-    $classes = 'c_bg_' . color_id($theme, 3, true) . ' c_h_bg_' . color_id($theme, 4, true) . ' c_color_' . color_id($theme, 0, true) . ' c_h_color_' . color_id($theme, 0, true);
+    $classes = component_colors($theme, 'button', true);
     $button_element->setAttribute('class', trim($button_element->getAttribute('class') . ' ' . $classes));
     
     $input_element->parentNode->replaceChild($button_element, $input_element); // replace existing button with new button
@@ -1748,7 +1773,7 @@ function kf_gform_savecontinue_link($link, $form) {
     
     if ($button_element) {
         // add classes to link
-        $classes = 'c_bg_' . color_id($theme, 3, true) . ' c_h_bg_' . color_id($theme, 4, true) . ' c_color_' . color_id($theme, 0, true) . ' c_h_color_' . color_id($theme, 0, true);
+        $classes = component_colors($theme, 'button', true);
         $button_element->setAttribute('class', trim($button_element->getAttribute('class') . ' ' . $classes));
 
 
@@ -1873,7 +1898,7 @@ function kf_gform_pre_replace_merge_tags_save_continue($text, $form, $entry, $ur
                 <input type="hidden" name="gform_send_resume_link" value="<?php echo $form_id; ?>" />
                 <input type="hidden" class="gform_hidden" name="is_submit_<?php echo $form_id; ?>" value="1">
                 <input type="hidden" class="gform_hidden" name="gform_submit" value="<?php echo $form_id; ?>">
-                <button type="submit" name="gform_send_resume_link_button" id="gform_send_resume_link_button_<?php echo $form_id; ?>" class="button c_bg_<?php color_id($theme, 3); ?> c_h_bg_<?php color_id($theme, 4); ?> c_color_<?php color_id($theme, 0); ?> c_h_color_<?php color_id($theme, 0); ?>"<?php echo $ajax ? ' onclick="jQuery(\'#gform_' . $form_id . '\').trigger(\'submit\',[true]);"' : '' ?>>Send Link</button>
+                <button type="submit" name="gform_send_resume_link_button" id="gform_send_resume_link_button_<?php echo $form_id; ?>" class="button <?php component_colors($theme, 'button'); ?>"<?php echo $ajax ? ' onclick="jQuery(\'#gform_' . $form_id . '\').trigger(\'submit\',[true]);"' : '' ?>>Send Link</button>
                 <?php if (rgar($form, 'requireLogin')) { echo wp_nonce_field('gform_send_resume_link', '_gform_send_resume_link_nonce', true, false); } ?>
             </form>
             <script>if (typeof enhanceMouseFocusUpdate === 'function') { enhanceMouseFocusUpdate(); }</script>
@@ -1977,7 +2002,7 @@ function kf_post_password_form($output, $post) {
             <label for="<?php echo $field_id; ?>" class="post-password-form__label text text_bold text_line_1-4">Password</label>
             <input type="password" name="post_password" size="20" id="<?php echo $field_id; ?>" class="c_bg_<?php color_id($theme, 1); ?> c_color_<?php color_id($theme, 5); ?> c_placeholder_<?php color_id($theme, 2); ?>" />
         </div>
-        <button type="submit" class="post-password-form__button button c_bg_<?php color_id($theme, 3); ?> c_h_bg_<?php color_id($theme, 4); ?> c_color_<?php color_id($theme, 0); ?> c_h_color_<?php color_id($theme, 0); ?>">Enter</button>
+        <button type="submit" class="post-password-form__button button <?php component_colors($theme, 'button'); ?>">Enter</button>
     </form>
     <?php
     $output = ob_get_clean();
