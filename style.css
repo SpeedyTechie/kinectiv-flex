@@ -3060,6 +3060,12 @@ input[type="radio"] + label::selection {
 .text_wrap h6 {
     margin: 1.2em 0 0;
 }
+.text_wrap h3,
+.text_wrap h4,
+.text_wrap h5,
+.text_wrap h6 {
+    clear: none;
+}
 .text_wrap h1:first-child,
 .text_wrap h2:first-child,
 .text_wrap h3:first-child,
