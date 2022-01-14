@@ -18,10 +18,9 @@
             "default_value": "",
             "tabs": "visual",
             "toolbar": "standard",
-            "media_upload": 0,
+            "media_upload": 1,
             "delay": 0,
             "editor_height": 400,
-            "enable_strip_tags": 1,
             "enable_autoembed": 0
         },
         {
@@ -264,7 +263,8 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 0,
+    "active": false,
     "description": "",
-    "modified": 1597418057
+    "show_in_rest": 0,
+    "modified": 1642187559
 }

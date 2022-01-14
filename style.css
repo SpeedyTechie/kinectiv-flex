@@ -3045,6 +3045,11 @@ input[type="radio"] + label::selection {
 .text_right {
     text-align: right;
 }
+.text_wrap::after {
+    content: '';
+    display: block;
+    clear: both;
+}
 .text_wrap h1,
 .text_wrap h2,
 .text_wrap h3 {
@@ -3154,6 +3159,30 @@ input[type="radio"] + label::selection {
 .text_wrap ol:last-child,
 .text_wrap hr:last-child {
     margin-bottom: 0;
+}
+.text_wrap figure {
+    max-width: 100%;
+	margin: 0;
+}
+.text_wrap .alignleft {
+	float: left;
+	margin: 0 1.5em 1em 0;
+}
+.text_wrap .alignright {
+	float: right;
+    margin: 0 0 1em 1.5em;
+}
+.text_wrap .aligncenter {
+	display: block;
+	margin: 0 auto 1em;
+	clear: both;
+}
+.text_wrap .wp-caption img {
+    display: block;
+}
+.text_wrap .wp-caption-text {
+	margin-top: 0.5em;
+    
 }
 
 @media (max-width: 1000px) {
