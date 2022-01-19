@@ -3569,15 +3569,6 @@ input[type="radio"] + label::selection {
 /*--------------------------------------------------------------
 ## Mobile Menu
 --------------------------------------------------------------*/
-body.no-scroll {
-    height: 100%;
-    overflow: hidden;
-}
-body.no-scroll-fixed {
-    position: fixed;
-    width: 100%;
-}
-
 .mobile-menu {
     visibility: hidden;
     opacity: 0;
@@ -3630,6 +3621,15 @@ body.no-scroll-fixed {
 }
 
 @media (max-width: 850px) {
+    body.no-scroll {
+        height: 100%;
+        overflow: hidden;
+    }
+    body.no-scroll-fixed {
+        position: fixed;
+        width: 100%;
+    }
+    
     .mobile-menu {
         display: flex;
     }
