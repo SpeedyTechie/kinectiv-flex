@@ -1159,13 +1159,13 @@ function kf_gform_field_content($field_content, $field) {
                 }
             }
         } elseif ($field->type == 'address') {
-            // add color classes (for ::before and ::after) to copy values checkbox label
-            foreach ($dom->getElementsByTagName('label') as $label_element) {
-                $classes = explode(' ', $label_element->getAttribute('class'));
+            // add color classes to copy values checkbox
+            foreach ($dom->getElementsByTagName('input') as $input_element) {
+                $classes = explode(' ', $input_element->getAttribute('class'));
                 
-                if (in_array('copy_values_option_label', $classes)) {
-                    $classes[] = 'c_bfr_color_' . color_id($theme, 3, true) . ' c_aft_color_' . color_id($theme, 5, true);
-                    $label_element->setAttribute('class', implode(' ', $classes));
+                if (in_array('copy_values_activated', $classes)) {
+                    $classes[] = 'c_color_' . color_id($theme, 3, true) . ' c_aft_color_' . color_id($theme, 5, true);
+                    $input_element->setAttribute('class', implode(' ', $classes));
                 }
             }
         } elseif ($field->type == 'fileupload' || ($field->type == 'post_custom_field' && $field->inputType == 'fileupload')) {
@@ -1282,13 +1282,11 @@ function kf_gform_field_content($field_content, $field) {
                 }
             }
         } elseif ($field->type == 'consent') {
-            // add color classes to checkbox label (for ::before and ::after)
-            foreach ($dom->getElementsByTagName('label') as $label_element) {
-                $classes = explode(' ', $label_element->getAttribute('class'));
-                
-                if (in_array('gfield_consent_label', $classes)) {
-                    $classes[] = 'c_bfr_color_' . color_id($theme, 3, true) . ' c_aft_color_' . color_id($theme, 5, true);
-                    $label_element->setAttribute('class', implode(' ', $classes));
+            // add color classes to checkbox
+            foreach ($dom->getElementsByTagName('input') as $input_element) {
+                if ($input_element->getAttribute('type') == 'checkbox') {
+                    $classes = 'c_color_' . color_id($theme, 3, true) . ' c_aft_color_' . color_id($theme, 5, true);
+                    $input_element->setAttribute('class', trim($input_element->getAttribute('class') . ' ' . $classes));
                 }
             }
         } elseif ($field->type == 'stripe_creditcard') {
@@ -1407,23 +1405,23 @@ function kf_gform_field_content($field_content, $field) {
             }
         }
         
-        // add color classes to checkbox and radio button labels (for ::before and ::after), add classes to checkbox select all button
+        // add color classes to checkboxes and radio buttons, add classes to checkbox select all button
         foreach ($dom->getElementsByTagName('div') as $div_element) {
             $div_classes = explode(' ', $div_element->getAttribute('class'));
 
             if (in_array('gfield_checkbox', $div_classes)) {
-                foreach ($div_element->getElementsByTagName('label') as $label_element) {
-                    $label_classes = 'c_bfr_color_' . color_id($theme, 3, true) . ' c_aft_color_' . color_id($theme, 5, true);
-                    $label_element->setAttribute('class', trim($label_element->getAttribute('class') . ' ' . $label_classes));
+                foreach ($div_element->getElementsByTagName('input') as $input_element) {
+                    $input_classes = 'c_color_' . color_id($theme, 3, true) . ' c_aft_color_' . color_id($theme, 5, true);
+                    $input_element->setAttribute('class', trim($input_element->getAttribute('class') . ' ' . $input_classes));
                 }
                 foreach ($div_element->getElementsByTagName('button') as $button_element) {
                     $button_classes = 'button ' . component_colors($theme, 'button', true);
                     $button_element->setAttribute('class', trim($button_element->getAttribute('class') . ' ' . $button_classes));
                 }
             } elseif (in_array('gfield_radio', $div_classes)) {
-                foreach ($div_element->getElementsByTagName('label') as $label_element) {
-                    $label_classes = 'c_bfr_color_' . color_id($theme, 3, true) . ' c_aft_color_' . color_id($theme, 5, true);
-                    $label_element->setAttribute('class', trim($label_element->getAttribute('class') . ' ' . $label_classes));
+                foreach ($div_element->getElementsByTagName('input') as $input_element) {
+                    $input_classes = 'c_color_' . color_id($theme, 3, true) . ' c_aft_color_' . color_id($theme, 5, true);
+                    $input_element->setAttribute('class', trim($input_element->getAttribute('class') . ' ' . $input_classes));
                 }
             }
         }
