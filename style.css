@@ -1375,6 +1375,10 @@ input[type="radio"]:checked::after {
         transform: scale(0.8);
         transform-origin: left top;
     }
+    .gfield .ginput_recaptcha[data-badge="bottomleft"] > div,
+    .gfield .ginput_recaptcha[data-badge="bottomright"] > div {
+        transform: none;
+    }
 }
 @media (max-width: 350px) {
     .gfield .ginput_complex > .name_prefix,
