@@ -1,6 +1,6 @@
 {
     "name": "kinectiv-flex",
-    "version": "1.1.5",
+    "version": "1.1.6",
     "description": "A flexible WordPress theme for Kinectiv websites (based on kinectiv-start)",
     "main": "gulpfile.js",
     "scripts": {
