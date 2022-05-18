@@ -532,25 +532,6 @@
             "layout": "block",
             "sub_fields": [
                 {
-                    "key": "field_5f22b906c00a8",
-                    "label": "Phone Number",
-                    "name": "phone",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "maxlength": 19
-                },
-                {
                     "key": "field_5f22b802fb865",
                     "label": "Address",
                     "name": "address",
@@ -620,6 +601,43 @@
                             "placeholder": ""
                         }
                     ]
+                },
+                {
+                    "key": "field_5f22b906c00a8",
+                    "label": "Phone Number",
+                    "name": "phone",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": 19
+                },
+                {
+                    "key": "field_6285273dc1ffd",
+                    "label": "Email Address",
+                    "name": "email",
+                    "type": "email",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": ""
                 }
             ]
         },
@@ -830,5 +848,6 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1630338111
+    "show_in_rest": 0,
+    "modified": 1652893620
 }

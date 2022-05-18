@@ -480,6 +480,11 @@
                                         <a href="<?php echo esc_url('tel:' . $f_footer_contact['phone']); ?>" class="sub-footer-2__link c_color_<?php color_id($theme_menu, 3); ?> c_h_color_<?php color_id($theme_menu, 5); ?>"><?php echo $f_footer_contact['phone']; ?></a>
                                     </div>
                                     <?php endif; ?>
+                                    <?php if ($f_footer_contact['email']): ?>
+                                    <div class="sub-footer-2__item">
+                                        <a href="<?php echo esc_url('mailto:' . $f_footer_contact['email']); ?>" class="sub-footer-2__link c_color_<?php color_id($theme_menu, 3); ?> c_h_color_<?php color_id($theme_menu, 5); ?>"><?php echo $f_footer_contact['email']; ?></a>
+                                    </div>
+                                    <?php endif; ?>
                                     <?php if ($f_footer_contact['address']['line-1'] || $f_footer_contact['address']['line-2']): ?>
                                     <div class="sub-footer-2__item">
                                         <?php if ($f_footer_contact['address']['link']): ?>

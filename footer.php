@@ -87,6 +87,11 @@
                             <a href="<?php echo esc_url('tel:' . $f_contact['phone']); ?>" class="footer-1__link c_color_<?php color_id($theme, 3); ?> c_h_color_<?php color_id($theme, 5); ?>"><?php echo $f_contact['phone']; ?></a>
                         </div>
                         <?php endif; ?>
+                        <?php if ($f_contact['email']): ?>
+                        <div class="footer-1__section">
+                            <a href="<?php echo esc_url('mailto:' . $f_contact['email']); ?>" class="footer-1__link c_color_<?php color_id($theme, 3); ?> c_h_color_<?php color_id($theme, 5); ?>"><?php echo $f_contact['email']; ?></a>
+                        </div>
+                        <?php endif; ?>
                         <?php if ($social_links): ?>
                         <div class="footer-1__section footer-1__section_social">
                             <div class="social">
@@ -241,6 +246,11 @@
                     <?php if ($f_contact['phone']): ?>
                     <div class="sub-footer-2__item">
                         <a href="<?php echo esc_url('tel:' . $f_contact['phone']); ?>" class="sub-footer-2__link c_color_<?php color_id($theme, 3); ?> c_h_color_<?php color_id($theme, 5); ?>"><?php echo $f_contact['phone']; ?></a>
+                    </div>
+                    <?php endif; ?>
+                    <?php if ($f_contact['email']): ?>
+                    <div class="sub-footer-2__item">
+                        <a href="<?php echo esc_url('mailto:' . $f_contact['email']); ?>" class="sub-footer-2__link c_color_<?php color_id($theme, 3); ?> c_h_color_<?php color_id($theme, 5); ?>"><?php echo $f_contact['email']; ?></a>
                     </div>
                     <?php endif; ?>
                     <?php if ($f_contact['address']['line-1'] || $f_contact['address']['line-2']): ?>
