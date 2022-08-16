@@ -23,6 +23,9 @@ $padding_styles = kf_section_padding_styles($section['options'], $section_prev['
 $section_style = $bg_styles['style'] . $padding_styles['style'];
 $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
 
+// get class list for button colors
+$button_color_classes = kf_button_color_classes($theme, $section['options']['color_buttons']);
+
 // get location of border (added when there's no padding)
 $border_location = null;
 if ($section['options']['padding_vertical'] == 'none') {
@@ -68,7 +71,7 @@ $bg_image_styles = kf_advanced_bg_image_styles($section['options']['layout_advan
                             <div class="button-group button-group_<?php echo $section['options']['layout_align']; ?>">
                                 <?php foreach ($slide['buttons'] as $button): ?>
                                 <div class="button-group__item">
-                                    <a href="<?php echo esc_url($button['link']['url']); ?>" target="<?php echo $button['link']['target']; ?>" class="button <?php component_colors($theme, 'button'); ?>"><?php echo $button['link']['title']; ?></a>
+                                    <a href="<?php echo esc_url($button['link']['url']); ?>" target="<?php echo $button['link']['target']; ?>" class="button <?php echo $button_color_classes; ?>"><?php echo $button['link']['title']; ?></a>
                                 </div>
                                 <?php endforeach; ?>
                             </div>

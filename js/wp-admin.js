@@ -124,6 +124,34 @@
         }
     }
     acf.addAction('new_field/type=button_group', addThemeSelectorSwatches);
+
+
+
+    /* Add color swatches to button color variation selector */
+    function addButtonColorSelectorSwatches(field) {
+        if (field.$el.hasClass('kf-button-color-selector') && field.$el.find('.kf-selector-swatches').length == 0) {
+            var optionLabels = field.$el.find('.acf-input .acf-button-group > label');
+
+            optionLabels.each(function() {
+                var input = $(this).find('input');
+
+                if (input.attr('value') == 'default') return;
+
+                var swatchesDefault = $('<span class="kf-selector-swatches" />');
+                var swatchesHover = $('<span class="kf-selector-swatches" />');
+
+                $('<span class="kf-selector-swatches__item" />').css('background-color', wpVars.buttonColorVariations[input.attr('value')]['default']['bg']).appendTo(swatchesDefault);
+                $('<span class="kf-selector-swatches__item" />').css('background-color', wpVars.buttonColorVariations[input.attr('value')]['default']['text']).appendTo(swatchesDefault);
+
+                $('<span class="kf-selector-swatches__item" />').css('background-color', wpVars.buttonColorVariations[input.attr('value')]['hover']['bg']).appendTo(swatchesHover);
+                $('<span class="kf-selector-swatches__item" />').css('background-color', wpVars.buttonColorVariations[input.attr('value')]['hover']['text']).appendTo(swatchesHover);
+
+                input.after(swatchesDefault);
+                swatchesDefault.after(swatchesHover);
+            });
+        }
+    }
+    acf.addAction('new_field/type=button_group', addButtonColorSelectorSwatches);
     
     
     

@@ -70,7 +70,7 @@ $c_info = $section['info']['addresses'] || $section['info']['hours'] || $section
                 <?php if ($section['form']['title'] || $section['form']['form']): ?>
                 <div class="contact-info__col contact-info__col_form">
                     <?php if ($section['form']['title']) { ?><h2 class="contact-info__subtitle title title_sm title_<?php echo $section['options']['layout_align-column']; ?>"><?php echo $section['form']['title']; ?></h2><?php } ?>
-                    <?php if ($section['form']['form']) { ?><div class="contact-info__form"><?php kf_show_gform($section['form']['form'], $theme); ?></div><?php } ?>
+                    <?php if ($section['form']['form']) { ?><div class="contact-info__form"><?php kf_show_gform($section['form']['form'], $theme, $section['options']['color_buttons']); ?></div><?php } ?>
                 </div>
                 <?php endif; ?>
                 <?php if ($section['info']['title'] || $section['info']['markers'] || $c_info): ?>

@@ -24,6 +24,9 @@ $padding_styles = kf_section_padding_styles($section['options'], $section_prev['
 $section_style = $bg_styles['style'] . $padding_styles['style'];
 $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
 
+// get class list for button colors
+$button_color_classes = kf_button_color_classes($theme, $section['options']['color_buttons']);
+
 $blocks = ($section['options']['layout_image-position'] == 'left') ? array('image', 'text') : array('text', 'image'); // set order of blocks
 ?>
 
@@ -48,7 +51,7 @@ $blocks = ($section['options']['layout_image-position'] == 'left') ? array('imag
                             <div class="button-group button-group_<?php echo $section['options']['layout_align']; ?>">
                                 <?php foreach ($section['buttons'] as $button): ?>
                                 <div class="button-group__item">
-                                    <a href="<?php echo esc_url($button['link']['url']); ?>" target="<?php echo $button['link']['target']; ?>" class="button <?php component_colors($theme, 'button'); ?>"><?php echo $button['link']['title']; ?></a>
+                                    <a href="<?php echo esc_url($button['link']['url']); ?>" target="<?php echo $button['link']['target']; ?>" class="button <?php echo $button_color_classes; ?>"><?php echo $button['link']['title']; ?></a>
                                 </div>
                                 <?php endforeach; ?>
                             </div>

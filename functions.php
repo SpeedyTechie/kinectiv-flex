@@ -65,7 +65,8 @@ function ks_admin_scripts() {
         'colorList' => kf_color_id_list(),
         'themeMaps' => kf_color_theme_maps(),
         'auxThemeMaps' => kf_aux_color_theme_maps(),
-        'colorSwatchList' => kf_color_swatch_list()
+        'colorSwatchList' => kf_color_swatch_list(),
+        'buttonColorVariations' => kf_button_color_variation_list()
     ));
 }
 add_action('admin_enqueue_scripts', 'ks_admin_scripts');
@@ -968,6 +969,10 @@ if (function_exists('acf_add_options_page')) {
         'page_title' => 'Site Configuration',
         'parent_slug' 	=> $options_page['menu_slug']
     ));
+    acf_add_options_sub_page(array(
+        'page_title' => 'Appearance',
+        'parent_slug' 	=> $options_page['menu_slug']
+    ));
 }
 
 
@@ -990,7 +995,7 @@ add_action('acf/save_post', 'ks_save_options_page');
 
 
 /**
- * ACF skip validation of specified fields
+ * ACF - skip validation of specified fields
  */
 function kf_acf_skip_validation($valid, $value, $field, $input_name) {
     $skip_validation_names = $_POST['_kf_acf_skip_validation'];
@@ -1002,6 +1007,104 @@ function kf_acf_skip_validation($valid, $value, $field, $input_name) {
     return $valid;
 }
 add_filter('acf/validate_value', 'kf_acf_skip_validation', 10, 4);
+
+
+/**
+ * Custom button color variations
+ */
+function kf_button_color_classes($theme, $button_variation) {
+    $variation_list = kf_button_color_variation_list();
+
+    if (array_key_exists($button_variation, $variation_list)) {
+        return 'custom-color-' . $button_variation;
+    } else {
+        return component_colors($theme, 'button', true);
+    }
+}
+
+function kf_get_button_color_variation_unique_key($name) {
+    return sanitize_html_class(sanitize_title($name . '-' . hash('crc32', $name))); // generate unique key for color variation
+}
+
+function kf_button_color_variation_list() {
+    $f_variations = get_field('appearance_buttons_variations', 'option');
+
+    $list = array();
+    if ($f_variations) {
+        foreach ($f_variations as $variation) {
+            $unique_key = kf_get_button_color_variation_unique_key($variation['name']);
+    
+            $list[$unique_key] = array(
+                'default' => array(
+                    'bg' => $variation['default']['bg'],
+                    'text' => $variation['default']['text']
+                ),
+                'hover' => array(
+                    'bg' => $variation['hover']['bg'],
+                    'text' => $variation['hover']['text']
+                )
+            );
+        }
+    }
+    
+    return $list;
+}
+
+function kf_load_custom_button_variations($field) {
+    $f_variations = get_field('appearance_buttons_variations', 'option');
+
+    if ($f_variations) {
+        // add variations to options field
+        foreach ($f_variations as $variation) {
+            $choice_key = kf_get_button_color_variation_unique_key($variation['name']);
+            $field['choices'][$choice_key] = esc_html($variation['name']);
+        }
+    }
+
+    return $field;
+}
+add_filter('acf/load_field/key=field_62fa6590f7171', 'kf_load_custom_button_variations'); // add variations to color options field
+
+function kf_validate_button_color_variation_names($valid, $value, $field, $input) {
+    if ($valid) {
+        if ($value) {
+            $variation_names = array();
+
+            foreach ($value as $variation) {
+                $unique_key = kf_get_button_color_variation_unique_key($variation['field_62f6a67d01b04']);
+
+                if (in_array($unique_key, $variation_names)) {
+                    $valid = 'Each variation must have a unique name.';
+
+                    break;
+                } else {
+                    $variation_names[] = $unique_key;
+                }
+            }
+        }
+    }
+    
+    return $valid;
+}
+add_filter('acf/validate_value/key=field_62f6a55c01b03', 'kf_validate_button_color_variation_names', 10, 4); // validate variation names to ensure no duplicates
+
+function kf_add_button_color_variation_css() {
+    $f_variations = get_field('appearance_buttons_variations', 'option');
+
+    if ($f_variations) {
+        // generate CSS
+        $style = '';
+        foreach ($f_variations as $variation) {
+            $class_name = '.custom-color-' . kf_get_button_color_variation_unique_key($variation['name']);
+
+            $style .= $class_name . ',' . $class_name . ':visited{background-color:' . $variation['default']['bg'] . ';color:' . $variation['default']['text'] . ';}';
+            $style .= $class_name . ':hover,' . $class_name . ':focus,' . $class_name . ':active' . '{background-color:' . $variation['hover']['bg'] . ';color:' . $variation['hover']['text'] . ';}';
+        }
+
+        wp_add_inline_style('kinectiv-flex-style', $style);
+    }
+}
+add_action('wp_enqueue_scripts', 'kf_add_button_color_variation_css');
 
 
 /**
@@ -1033,10 +1136,11 @@ add_action('admin_head', 'ks_favicon');
 /**
  * Show Gravity Form
  */
-function kf_show_gform($form_id, $theme) {
+function kf_show_gform($form_id, $theme, $button_variation = 'default') {
     // temporarily store the theme as a field value in order to pass it to the form
     $field_values = array(
-        '_kf_temp_color_theme' => $theme
+        '_kf_temp_color_theme' => $theme,
+        '_kf_temp_button_variation' => $button_variation
     );
     ?>
     <div class="gravity-form-wrap">
@@ -1077,10 +1181,17 @@ add_filter('gform_add_field_buttons', 'kf_filter_gform_add_field_buttons');
  * Gravity Forms - store theme in ACF store for access while modifying form markup
  */
 function kf_get_theme_gform_form_args($form_args) {
+    $passthrough = array();
+
     if (isset($form_args['field_values']['_kf_temp_color_theme'])) {
-        acf_register_store('passthrough_form', array(
-            'theme' => $form_args['field_values']['_kf_temp_color_theme']
-        ));
+        $passthrough['theme'] = $form_args['field_values']['_kf_temp_color_theme'];
+    }
+    if (isset($form_args['field_values']['_kf_temp_button_variation'])) {
+        $passthrough['button_variation'] = $form_args['field_values']['_kf_temp_button_variation'];
+    }
+
+    if ($passthrough) {
+        acf_register_store('passthrough_form', $passthrough);
     }
     
     return $form_args;
@@ -1119,11 +1230,18 @@ function kf_gform_field_content($field_content, $field) {
     if (!is_admin()) {
         $passthrough = acf_get_store('passthrough_form');
         $pt_theme = null;
+        $pt_button_variation = null;
         if ($passthrough) {
             $pt_theme = $passthrough->get('theme');
+            $pt_button_variation = $passthrough->get('button_variation');
         }
         
         $theme = isset($pt_theme) ? $pt_theme : 'main';
+        $button_variation = isset($pt_button_variation) ? $pt_button_variation : 'default';
+
+        // get class list for button colors
+        $button_color_classes = kf_button_color_classes($theme, $button_variation);
+
         
         // enable user error handling (to prevent warnings caused by HTML5 and SVG tags)
         libxml_clear_errors();
@@ -1176,7 +1294,7 @@ function kf_gform_field_content($field_content, $field) {
                 $classes = explode(' ', $button_element->getAttribute('class'));
                 
                 if (in_array('gform_button_select_files', $classes)) {
-                    $classes[] = component_colors($theme, 'button', true);
+                    $classes[] = $button_color_classes;
                     $button_element->setAttribute('class', implode(' ', $classes));
                 }
             }
@@ -1415,7 +1533,7 @@ function kf_gform_field_content($field_content, $field) {
                     $input_element->setAttribute('class', trim($input_element->getAttribute('class') . ' ' . $input_classes));
                 }
                 foreach ($div_element->getElementsByTagName('button') as $button_element) {
-                    $button_classes = 'button ' . component_colors($theme, 'button', true);
+                    $button_classes = 'button ' . $button_color_classes;
                     $button_element->setAttribute('class', trim($button_element->getAttribute('class') . ' ' . $button_classes));
                 }
             } elseif (in_array('gfield_radio', $div_classes)) {
@@ -1705,12 +1823,18 @@ add_filter('gform_stripe_elements_style', 'kf_gform_set_stripe_styles', 10, 2);
 function kf_gform_submit_button($button, $form) {
     $passthrough = acf_get_store('passthrough_form');
     $pt_theme = null;
+    $pt_button_variation = null;
     if ($passthrough) {
         $pt_theme = $passthrough->get('theme');
+        $pt_button_variation = $passthrough->get('button_variation');
     }
 
     $theme = isset($pt_theme) ? $pt_theme : 'main';
-    
+    $button_variation = isset($pt_button_variation) ? $pt_button_variation : 'default';
+
+    // get class list for button colors
+    $button_color_classes = kf_button_color_classes($theme, $button_variation);
+
     
     // enable user error handling (to prevent warnings caused by HTML5 and SVG tags)
     libxml_clear_errors();
@@ -1730,7 +1854,7 @@ function kf_gform_submit_button($button, $form) {
     }
     
     // add classes to new button
-    $classes = component_colors($theme, 'button', true);
+    $classes = $button_color_classes;
     $button_element->setAttribute('class', trim($button_element->getAttribute('class') . ' ' . $classes));
     
     $input_element->parentNode->replaceChild($button_element, $input_element); // replace existing button with new button
@@ -1755,11 +1879,17 @@ add_filter('gform_submit_button', 'kf_gform_submit_button', 10, 2);
 function kf_gform_savecontinue_link($link, $form) {
     $passthrough = acf_get_store('passthrough_form');
     $pt_theme = null;
+    $pt_button_variation = null;
     if ($passthrough) {
         $pt_theme = $passthrough->get('theme');
+        $pt_button_variation = $passthrough->get('button_variation');
     }
 
     $theme = isset($pt_theme) ? $pt_theme : 'main';
+    $button_variation = isset($pt_button_variation) ? $pt_button_variation : 'default';
+
+    // get class list for button colors
+    $button_color_classes = kf_button_color_classes($theme, $button_variation);
     
     
     // enable user error handling (to prevent warnings caused by HTML5 and SVG tags)
@@ -1773,7 +1903,7 @@ function kf_gform_savecontinue_link($link, $form) {
     
     if ($button_element) {
         // add classes to link
-        $classes = component_colors($theme, 'button', true);
+        $classes = $button_color_classes;
         $button_element->setAttribute('class', trim($button_element->getAttribute('class') . ' ' . $classes));
 
 
@@ -1875,6 +2005,10 @@ function kf_gform_pre_replace_merge_tags_save_continue($text, $form, $entry, $ur
         parse_str(GFForms::post('gform_field_values'), $field_values);
         
         $theme = isset($field_values['_kf_temp_color_theme']) ? $field_values['_kf_temp_color_theme'] : 'main';
+        $button_variation = isset($field_values['_kf_temp_button_variation']) ? $field_values['_kf_temp_button_variation'] : 'default';
+
+        // get class list for button colors
+        $button_color_classes = kf_button_color_classes($theme, $button_variation);
         
         
         $form_id = intval($form['id']);
@@ -1887,7 +2021,7 @@ function kf_gform_pre_replace_merge_tags_save_continue($text, $form, $entry, $ur
             <form action="<?php echo $action; ?>" method="POST" id="gform_<?php echo $form_id; ?>"<?php echo $ajax ? ' target="gform_ajax_frame_' . $form_id . '"' : ''; ?>>
                 <?php if ($ajax): ?>
                 <input type="hidden" name="gform_ajax" value="<?php echo esc_attr('form_id=' . $form_id . '&amp;title=1&amp;description=1&amp;tabindex=1'); ?>" />
-                <input type="hidden" name="gform_field_values" value="<?php echo esc_attr('_kf_temp_color_theme=' . $theme); ?>" />
+                <input type="hidden" name="gform_field_values" value="<?php echo esc_attr('_kf_temp_color_theme=' . $theme . '&_kf_temp_button_varation=' . $button_variation); ?>" />
                 <input type="hidden" class="gform_hidden" name="is_submit_<?php echo $form_id; ?>" value="1" />
                 <input type="hidden" class="gform_hidden" name="gform_submit" value="<?php echo $form_id; ?>" />
                 <?php endif; ?>
@@ -1898,7 +2032,7 @@ function kf_gform_pre_replace_merge_tags_save_continue($text, $form, $entry, $ur
                 <input type="hidden" name="gform_send_resume_link" value="<?php echo $form_id; ?>" />
                 <input type="hidden" class="gform_hidden" name="is_submit_<?php echo $form_id; ?>" value="1">
                 <input type="hidden" class="gform_hidden" name="gform_submit" value="<?php echo $form_id; ?>">
-                <button type="submit" name="gform_send_resume_link_button" id="gform_send_resume_link_button_<?php echo $form_id; ?>" class="button <?php component_colors($theme, 'button'); ?>"<?php echo $ajax ? ' onclick="jQuery(\'#gform_' . $form_id . '\').trigger(\'submit\',[true]);"' : '' ?>>Send Link</button>
+                <button type="submit" name="gform_send_resume_link_button" id="gform_send_resume_link_button_<?php echo $form_id; ?>" class="button <?php echo $button_color_classes; ?>"<?php echo $ajax ? ' onclick="jQuery(\'#gform_' . $form_id . '\').trigger(\'submit\',[true]);"' : '' ?>>Send Link</button>
                 <?php if (rgar($form, 'requireLogin')) { echo wp_nonce_field('gform_send_resume_link', '_gform_send_resume_link_nonce', true, false); } ?>
             </form>
             <script>if (typeof enhanceMouseFocusUpdate === 'function') { enhanceMouseFocusUpdate(); }</script>

@@ -25,6 +25,29 @@
             "default_value": "",
             "layout": "horizontal",
             "return_format": "value"
+        },
+        {
+            "key": "field_62fa6590f7171",
+            "label": "Buttons",
+            "name": "buttons",
+            "type": "button_group",
+            "instructions": "Add custom button color variations under <em>Site Options &gt; <a href=\"\/wp-admin\/admin.php?page=acf-options-appearance\">Appearance<\/a><\/em> in the <em>Buttons<\/em> tab.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "kf-button-color-selector",
+                "id": ""
+            },
+            "choices": {
+                "default": "Default",
+                "test-variation-67534b32": "Test Variation",
+                "very-orange-ad9775d0": "Very Orange"
+            },
+            "allow_null": 0,
+            "default_value": "",
+            "layout": "horizontal",
+            "return_format": "value"
         }
     ],
     "location": [
@@ -42,7 +65,8 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 0,
+    "active": false,
     "description": "",
-    "modified": 1596567194
+    "show_in_rest": 0,
+    "modified": 1660589279
 }
