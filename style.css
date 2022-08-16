@@ -3668,6 +3668,7 @@ input[type="radio"]:checked::after {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     margin: -6px -22px;
     font-size: 20px;
     line-height: 1.4;
@@ -3690,6 +3691,7 @@ input[type="radio"]:checked::after {
     font-size: 14px;
 }
 .site-nav_full {
+    align-items: flex-start;
     margin: -25px -15px;
 }
 .site-nav__item {
