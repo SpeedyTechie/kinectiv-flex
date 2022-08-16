@@ -182,7 +182,7 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
                 </div>
             </div>
             <?php endif; ?>
-            <?php if ($section['type'] != 'all'): ?>
+            <?php if ($section['type'] != 'all-future' && $section['type'] != 'all-past'): ?>
             <?php if ($section['cta']['text'] || $section['cta']['link']): ?>
             <p class="tile-grid__cta<?php if ($section['options']['layout_per-row'] == 4) { echo ' tile-grid__cta_wide'; } ?> tile-grid__cta_<?php echo $section['options']['layout_align-cta']; ?> text text_xs">
                 <?php echo $section['cta']['text']; ?>
