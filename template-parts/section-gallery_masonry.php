@@ -16,6 +16,7 @@ $section_prev = $args['sections']['prev'];
 $section_next = $args['sections']['next'];
 
 $theme = $section['options']['color_theme'];
+$popup_theme = 'main';
 
 // build style attribute and class list
 $bg_styles = kf_section_bg_styles($section['options']);
@@ -37,7 +38,7 @@ $image_index = 0;
                         <div class="image-masonry__block">
                             <img src="<?php echo $image['image']['url']; ?>" alt="<?php echo esc_attr($image['image']['alt']); ?>" width="<?php echo $image['image']['width']; ?>" height="<?php echo $image['image']['height']; ?>" class="image-masonry__image" />
                             <?php if ($section['options']['layout_popups']): ?>
-                            <button type="button" class="image-masonry__button" data-gallery-box="<?php echo $i_section; ?>" data-start="<?php echo $image_index++; ?>">
+                            <button type="button" class="image-masonry__button" data-gallery-box="<?php echo $i_section; ?>" data-box-theme="<?php echo $popup_theme; ?>" data-start="<?php echo $image_index++; ?>">
                                 <span class="screen-reader-text">View Larger</span>
                             </button>
                             <span class="image-masonry__dialog-image" data-gallery-box-image="<?php echo $image['popup-image']['url']; ?>" data-alt="<?php echo esc_attr($image['popup-image']['alt']); ?>"></span>

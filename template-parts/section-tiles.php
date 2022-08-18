@@ -123,7 +123,7 @@ $popup_button_color_classes = kf_button_color_classes($popup_theme, $section['op
                         <?php endif; ?>
                         <?php if ($tile['action'] == 'popup'): ?>
                         <div class="tile-grid__box">
-                            <div class="info-box c_color_<?php color_id($popup_theme, 5); ?> info-box_<?php echo $section['options']['layout_popup-options']['layout_align']; ?><?php echo $popup_classes; ?>" data-dialog-box-content="<?php echo 'section-' . $i_section . '_tile-' . $i_tile; ?>"<?php if ($popup_style) { echo ' style="' . trim($popup_style) . '"'; } ?>>
+                            <div class="info-box c_color_<?php color_id($popup_theme, 5); ?> info-box_<?php echo $section['options']['layout_popup-options']['layout_align']; ?><?php echo $popup_classes; ?>" data-dialog-box-content="<?php echo 'section-' . $i_section . '_tile-' . $i_tile; ?>" data-dialog-theme="<?php echo $popup_theme; ?>"<?php if ($popup_style) { echo ' style="' . trim($popup_style) . '"'; } ?>>
                                 <?php if ($tile['popup']['image']): ?>
                                 <div class="info-box__col info-box__col_<?php echo $section['options']['layout_popup-options']['layout_image-size']; ?>-image">
                                     <?php if ($section['options']['layout_popup-options']['layout_image-size'] == 'boxed'): ?>
