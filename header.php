@@ -155,6 +155,8 @@
     $f_footer_social = get_field('hf_footer_social', 'option');
     $f_footer_details = get_field('hf_footer_details', 'option');
 
+    $f_enable_search = get_field('config_search_enable', 'option');
+
     $social_links = array();
     if ($f_social['facebook']) {
         $social_links['facebook'] = array(
@@ -219,21 +221,22 @@
         );
     }
 
-    $c_mobile_menu = $f_nav['links'] || $f_nav['button'] || $f_nav_2['links'];
+    $c_mobile_menu = $f_nav['links'] || $f_nav['button'] || $f_nav_2['links'] || ($f_enable_search && $f_nav_2['search']);
     
     $theme = 'main-dark';
     $menu_theme = 'main';
+    $search_theme = 'main';
 
     // get class list for button colors
     $button_color_classes = kf_button_color_classes($theme, $f_options['color_buttons']);
     $menu_button_color_classes = kf_button_color_classes($menu_theme, $f_options['color_buttons']);
     ?>
 	<header class="site-header c_bg_<?php color_id($theme, 1); ?> c_color_<?php color_id($theme, 5); ?>">
-        <?php if ($f_options['layout_nav-location'] == 'top' && ($f_nav_2['links'] || $social_links)): ?>
+        <?php if ($f_options['layout_nav-location'] == 'top' && ($f_nav_2['links'] || ($f_enable_search && $f_nav_2['search']) || $social_links)): ?>
         <div class="site-header__secondary c_bg_<?php color_id($theme, 0); ?>">
             <div class="site-header__content">
                 <div class="sub-header-1">
-                    <?php if ($f_nav_2['links']): ?>
+                    <?php if ($f_nav_2['links'] || ($f_enable_search && $f_nav_2['search'])): ?>
                     <div class="sub-header-1__item">
                         <nav class="site-nav site-nav_right site-nav_xs site-nav_lines c_color_<?php color_id($theme, 3); ?>">
                             <?php foreach ($f_nav_2['links'] as $item): ?>
@@ -241,6 +244,16 @@
                                 <a href="<?php echo esc_url($item['link']['url']); ?>" target="<?php echo $item['link']['target']; ?>" class="site-nav__link c_color_<?php color_id($theme, 3); ?> c_h_color_<?php color_id($theme, 5); ?>"><?php echo $item['link']['title']; ?></a>
                             </div>
                             <?php endforeach; ?>
+                            <?php if ($f_enable_search && $f_nav_2['search']): ?>
+                            <div class="site-nav__item site-nav__item_xs site-nav__item_line">
+                                <button type="button" class="site-nav__search c_color_<?php color_id($theme, 3); ?> c_h_color_<?php color_id($theme, 5); ?> c_h-parent" data-dialog-box="header-search">
+                                    <svg viewBox="0 0 19.27 19.28" class="site-nav__search-icon">
+                                        <path class="site-nav__search-icon-fill c_fill_<?php color_id($theme, 3); ?> c_h-child_fill_<?php color_id($theme, 5); ?>" d="M.53,18.75a1.8,1.8,0,0,0,2.54,0h0L7.32,14.5A7.83,7.83,0,1,0,4.77,12L.53,16.2a1.79,1.79,0,0,0,0,2.54ZM6.61,7.85a4.81,4.81,0,1,1,4.81,4.81h0A4.82,4.82,0,0,1,6.61,7.85Z"/>
+                                    </svg>
+                                    <span class="site-nav__search-text">Search</span>
+                                </button>
+                            </div>
+                            <?php endif; ?>
                         </nav>
                     </div>
                     <?php endif; ?>
@@ -323,6 +336,13 @@
                     <?php if ($f_breadcrumbs): ?>
                     <?php
                     $ancestors = kf_get_ancestors(get_the_ID());
+
+                    $page_title = get_the_title();
+                    if (is_404()) {
+                        $page_title = 'Page not found';
+                    } elseif (is_search()) {
+                        $page_title = 'Search Results';
+                    }
                     ?>
                     <div class="header-1__breadcrumbs">
                         <div class="breadcrumbs">
@@ -332,7 +352,7 @@
                             </div>
                             <?php endforeach; ?>
                             <div class="breadcrumbs__item breadcrumbs__item_title">
-                                <span class="breadcrumbs__title"><?php echo is_404() ? 'Page not found' : get_the_title(); ?></span>
+                                <span class="breadcrumbs__title"><?php echo $page_title; ?></span>
                             </div>
                         </div>
                     </div>
@@ -340,7 +360,7 @@
                 </div>
             </div>
         </div>
-        <?php if ($f_options['layout_nav-location'] == 'bottom' && ($f_nav_2['links'] || $social_links)): ?>
+        <?php if ($f_options['layout_nav-location'] == 'bottom' && ($f_nav_2['links'] || ($f_enable_search && $f_nav_2['search']) || $social_links)): ?>
         <div class="site-header__secondary c_bg_<?php color_id($theme, 0); ?>">
             <div class="site-header__content">
                 <div class="sub-header-1">
@@ -352,6 +372,16 @@
                                 <a href="<?php echo esc_url($item['link']['url']); ?>" target="<?php echo $item['link']['target']; ?>" class="site-nav__link c_color_<?php color_id($theme, 3); ?> c_h_color_<?php color_id($theme, 5); ?>"><?php echo $item['link']['title']; ?></a>
                             </div>
                             <?php endforeach; ?>
+                            <?php if ($f_enable_search && $f_nav_2['search']): ?>
+                            <div class="site-nav__item site-nav__item_xs site-nav__item_line">
+                                <button type="button" class="site-nav__search c_color_<?php color_id($theme, 3); ?> c_h_color_<?php color_id($theme, 5); ?> c_h-parent" data-dialog-box="header-search">
+                                    <svg viewBox="0 0 19.27 19.28" class="site-nav__search-icon">
+                                        <path class="site-nav__search-icon-fill c_fill_<?php color_id($theme, 3); ?> c_h-child_fill_<?php color_id($theme, 5); ?>" d="M.53,18.75a1.8,1.8,0,0,0,2.54,0h0L7.32,14.5A7.83,7.83,0,1,0,4.77,12L.53,16.2a1.79,1.79,0,0,0,0,2.54ZM6.61,7.85a4.81,4.81,0,1,1,4.81,4.81h0A4.82,4.82,0,0,1,6.61,7.85Z"/>
+                                    </svg>
+                                    <span class="site-nav__search-text">Search</span>
+                                </button>
+                            </div>
+                            <?php endif; ?>
                         </nav>
                     </div>
                     <?php endif; ?>
@@ -392,6 +422,19 @@
                     </div>
                     <?php endif; ?>
                 </div>
+            </div>
+        </div>
+        <?php endif; ?>
+        <?php if ($f_enable_search && $f_nav_2['search']): ?>
+        <?php
+        $search_bar_args = array(
+            'theme' => $search_theme,
+            'variation' => 'popup'
+        );
+        ?>
+        <div class="site-header__search-dialog">
+            <div data-dialog-box-content="header-search" data-dialog-theme="<?php echo $search_theme; ?>" data-dialog-variation="search">
+                <?php get_template_part('template-parts/component', 'search', $search_bar_args); ?>
             </div>
         </div>
         <?php endif; ?>
@@ -446,6 +489,19 @@
                                     </div>
                                     <?php endforeach; ?>
                                 </nav>
+                            </div>
+                            <?php endif; ?>
+                            <?php if ($f_enable_search && $f_nav_2['search']): ?>
+                            <?php
+                            $search_bar_args = array(
+                                'theme' => $menu_theme,
+                                'width' => 'xs',
+                                'alignment' => 'center',
+                                'variation' => 'small'
+                            );
+                            ?>
+                            <div class="footer-2__section">
+                                <?php get_template_part('template-parts/component', 'search', $search_bar_args); ?>
                             </div>
                             <?php endif; ?>
                             <?php if ($footer_social_links): ?>

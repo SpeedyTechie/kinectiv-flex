@@ -128,6 +128,7 @@
 
 
     /* Add color swatches to button color variation selector */
+
     function addButtonColorSelectorSwatches(field) {
         if (field.$el.hasClass('kf-button-color-selector') && field.$el.find('.kf-selector-swatches').length == 0) {
             var optionLabels = field.$el.find('.acf-input .acf-button-group > label');
@@ -152,6 +153,22 @@
         }
     }
     acf.addAction('new_field/type=button_group', addButtonColorSelectorSwatches);
+
+
+
+    /* Hide search section from the flex layout selector if search is not enabled */
+
+    function hideSearchFlexSection(field) {
+        if (field.$el.hasClass('kf-hide-search')) {
+            var tmplPopup = field.$el.find('.tmpl-popup:last');
+            var popupProtoEl = $(tmplPopup.html());
+
+            popupProtoEl.find('[data-layout="search"]').parent().remove();
+
+            tmplPopup.html(popupProtoEl.outerHTML());
+        }
+    }
+    acf.addAction('new_field/key=field_5f296dcbe2111', hideSearchFlexSection);
     
     
     

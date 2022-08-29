@@ -3238,6 +3238,11 @@ function initDialogBoxes() {
         individualBoxToShow.css('display', 'block');
         
         boxBg.removeClass().addClass('dialog-box__bg').addClass('c_bg_' + wpVars.themeMaps[individualBoxToShow.attr('data-theme')][1]);
+
+        boxContent.removeClass('dialog-box__content_w_md');
+        if (individualBoxToShow.attr('data-variation') == 'search') {
+            boxContent.addClass('dialog-box__content_w_md');
+        }
         
         typeof contentAppended === 'function' && contentAppended();
         
@@ -3254,6 +3259,10 @@ function initDialogBoxes() {
         siteHeader.attr('aria-hidden', true);
         siteContent.attr('aria-hidden', true);
         siteFooter.attr('aria-hidden', true);
+
+        if (individualBoxToShow.attr('data-variation') == 'search') {
+            individualBoxToShow.find('.search-bar__field').focus(); // immediately set focus to search field for search popup
+        }
     }
     
     function openGalleryBox(content, contentAppended) {
@@ -3315,8 +3324,9 @@ function initDialogBoxes() {
         }
     }
     
-    function createDialogBox(id, theme) {
+    function createDialogBox(id, theme, variation) {
         theme = (typeof theme === 'string') ? theme : 'main'; // default to main theme if no theme is provided
+        variation = (typeof variation === 'string') ? variation : 'default'; // set to defalt variation if no variation is provided
         
         var content = $('[data-dialog-box-content="' + id + '"]').removeAttr('data-dialog-box-content');
         var closeButton = $('<button type="button" class="dialog-box__close" />');
@@ -3327,8 +3337,13 @@ function initDialogBoxes() {
         closeButton.append('<svg viewBox="0 0 27.03 27.04" class="dialog-box__close-x"><polygon class="c_fill_' + wpVars.themeMaps[theme][0] + '" points="17.45 13.52 17.45 13.51 27.03 3.94 23.09 0 13.52 9.58 3.94 0 0 3.94 9.58 13.51 9.57 13.52 9.58 13.52 0 23.1 3.94 27.04 13.51 17.46 23.09 27.04 27.03 23.1 17.45 13.52 17.45 13.52"/></svg>');
         closeButton.click(closeDialogBox);
         closeButton.prependTo(content);
+
+        if (variation == 'search') {
+            closeButton.addClass('dialog-box__close_no-offset');
+        }
         
         individualContainer.attr('data-theme', theme);
+        individualContainer.attr('data-variation', variation);
         
         individualContainer.append(content);
         individualContainer.appendTo(box);
@@ -3433,7 +3448,7 @@ function initDialogBoxes() {
     });
     
     $('[data-dialog-box-content]').each(function() {
-        createDialogBox($(this).attr('data-dialog-box-content'), $(this).attr('data-dialog-theme'));
+        createDialogBox($(this).attr('data-dialog-box-content'), $(this).attr('data-dialog-theme'), $(this).attr('data-dialog-variation'));
     });
     
     $('[data-dialog-box]').click(function() {
@@ -3792,6 +3807,21 @@ function initAjaxGridLoad() {
         
         return request;
     }
+
+    function ajaxLoadSearch(search, page, passthrough) {
+        var request = $.ajax(wpVars.ajaxURL, {
+            method: 'POST',
+            data: {
+                action: 'kf_search_load',
+                search: search,
+                page_num: page,
+                passthrough_data: passthrough
+            },
+            dataType: 'html'
+        });
+        
+        return request;
+    }
     
     
     $('.tile-grid__wrap[data-type]').each(function() {
@@ -3804,14 +3834,13 @@ function initAjaxGridLoad() {
         var type = gridWrap.attr('data-type');
         var special = gridWrap.attr('data-special');
         var passthrough = gridWrap.attr('data-passthrough');
+        var search = gridWrap.attr('data-search');
         
         var currentPage = 1;
         
         
         function loadGridPage(page) {
-            gridMoreButton.prop('disabled', true).addClass('button_loading'); // disable load more button until loading is complete
-            
-            ajaxLoad(type, special, page, passthrough).done(function(data) {
+            function addItemsToGrid(data) {
                 var jData = $(data);
                 
                 var newItems = jData.filter('.tile-grid__item');
@@ -3847,11 +3876,20 @@ function initAjaxGridLoad() {
                 currentPage = page; // update current page
                 
                 gridMoreButton.prop('disabled', false).removeClass('button_loading'); // re-enable load more button
-            });
+            }
+
+
+            gridMoreButton.prop('disabled', true).addClass('button_loading'); // disable load more button until loading is complete
+            
+            if (type == 'search') {
+                ajaxLoadSearch(search, page, passthrough).done(addItemsToGrid);
+            } else {
+                ajaxLoad(type, special, page, passthrough).done(addItemsToGrid);
+            }
         }
         
         
-        gridWrap.removeAttr('data-type').removeAttr('data-special').removeAttr('data-passthrough'); // remove attributes that are no longer needed
+        gridWrap.removeAttr('data-type').removeAttr('data-special').removeAttr('data-passthrough').removeAttr('data-search'); // remove attributes that are no longer needed
         
         gridMoreButton.click(function() {
             loadGridPage(currentPage + 1);

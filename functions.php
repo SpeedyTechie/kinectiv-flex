@@ -659,6 +659,62 @@ add_action('wp_ajax_kf_grid_load', 'kf_ajax_grid_load');
 
 
 /**
+ * Get search results
+ */
+function kf_search_query($search, $page_num = 1) {
+    $per_page = 10; // number of search results per page
+
+    // base arguments
+    $query_args = array(
+        'post_status' => 'publish',
+        'posts_per_page' => $per_page,
+        'paged' => $page_num,
+        's' => $search,
+        'relevanssi' => true
+    );
+
+
+    $search_query = new WP_Query($query_args); // execute query
+    
+    return $search_query;
+}
+
+
+/**
+ * Load search results via AJAX
+ */
+function kf_ajax_search_load() {
+    $search = $_POST['search'];
+    $page_num = $_POST['page_num'];
+    $passthrough_data = json_decode(stripslashes($_POST['passthrough_data']), true);
+    
+    $load_query = kf_search_query($search, $page_num);
+    
+    if ($load_query->posts) {
+        foreach ($load_query->posts as $p_post) {
+            global $post;
+            $post = get_post($p_post);
+            setup_postdata($p_post);
+            ?>
+            <div class="tile-grid__item tile-grid__item_full">
+                <?php get_template_part('template-parts/preview', 'search', $passthrough_data); ?>
+            </div>
+            <?php
+            wp_reset_postdata();
+        }
+    }
+    
+    if ($load_query->max_num_pages > $page_num) {
+        echo '<span id="more-pages"></span>';
+    }
+
+    die();
+}
+add_action('wp_ajax_nopriv_kf_search_load', 'kf_ajax_search_load');
+add_action('wp_ajax_kf_search_load', 'kf_ajax_search_load');
+
+
+/**
  * Event date/time ACF validation
  */
 function kf_validate_event_dates($valid, $value, $field, $input) {
@@ -2202,22 +2258,296 @@ add_action('admin_init', 'ks_disable_comments_dashboard'); // remove comments me
 
 
 /**
- * Disable search
+ * Search
  */
-function ks_disable_search($query, $error = true) {
-    if (is_search() && !is_admin()) {
+function kf_disable_search($query, $error = true) {
+    $f_enable_search = get_field('config_search_enable', 'option');
+
+    if (!$f_enable_search && is_search() && !is_admin()) {
         $query->is_search = false;
-        $query->query_vars[s] = false;
-        $query->query[s] = false;
+        $query->query_vars['s'] = false;
+        $query->query['s'] = false;
 
         if ($error == true) {
             $query->is_404 = true;
         }
     }
 }
+add_action('parse_query', 'kf_disable_search'); // disable search results page if search is not enabled
 
-add_action('parse_query', 'ks_disable_search');
-add_filter('get_search_form', '__return_null');
+function kf_disable_search_form($form) {
+    $f_enable_search = get_field('config_search_enable', 'option');
+
+    if (!$f_enable_search) {
+        return null;
+    }
+
+    return $form;
+}
+add_filter('get_search_form', 'kf_disable_search_form'); // disable search form if search is not enabled
+
+function kf_acf_show_hide_search_related_fields($field) {
+    $f_enable_search = get_field('config_search_enable', 'option');
+
+    $class_list = explode(' ', $field['wrapper']['class']);
+
+    if (!$f_enable_search && in_array('show-if-search-enabled', $class_list)) {
+        return false; // hide field if search is not enabled and it has the show-if-search-enabled class
+    }
+    if ($f_enable_search && in_array('hide-if-search-enabled', $class_list)) {
+        return false; // hide field if search is enabled and it has the hide-if-search-enabled class
+    }
+
+    return $field;
+}
+add_filter('acf/prepare_field', 'kf_acf_show_hide_search_related_fields'); // show/hide ACF fields based on whether search is enabled
+
+function kf_hide_search_flex_section($field) {
+    $f_enable_search = get_field('config_search_enable', 'option');
+
+    if (!$f_enable_search) {
+        $field['wrapper']['class'] = explode(' ', $field['wrapper']['class']);
+        $field['wrapper']['class'][] = 'kf-hide-search';
+        $field['wrapper']['class'] = implode(' ', $field['wrapper']['class']);
+    }
+
+    return $field;
+}
+add_filter('acf/load_field/key=field_5f296dcbe2111', 'kf_hide_search_flex_section'); // add class to hide the search section in the flex layout selector if search is not enabled
+
+function kf_hide_search_section_front_end($value) {
+    $f_enable_search = get_field('config_search_enable', 'option');
+
+    if (!$f_enable_search && $value) {
+        $new_value = array();
+
+        foreach ($value as $section) {
+            if ($section['acf_fc_layout'] != 'search') {
+                $new_value[] = $section;
+            }
+        }
+
+        $value = $new_value;
+    }
+
+    return $value;
+}
+add_filter('acf/format_value/key=field_5f296dcbe2111', 'kf_hide_search_section_front_end'); // prevent search section from rendering on the front end if search is not enabled
+
+
+/**
+ * Add ACF content to Relevanssi content and excerpts
+ */
+function kf_check_acf_field_order($a, $b) {
+    $a_m = $a['menu_order'];
+    $b_m = $b['menu_order'];
+    $a_o = get_post($a['parent'])->menu_order;
+    $b_o = get_post($b['parent'])->menu_order;
+    $a_p = get_post($a['parent'])->post_content;
+    $b_p = get_post($b['parent'])->post_content;
+    
+    $p_array = array($a_p, $b_p);
+    foreach ($p_array as &$c) {
+        if (strpos($c, 'acf_after_title') !== false) {
+            $c = -1;
+        } elseif (strpos($c, 'side') !== false) {
+            $c = 1;
+        } else {
+            $c = 0;
+        }
+    }
+    $a_p = $p_array[0];
+    $b_p = $p_array[1];
+    
+    if ($a_p < $b_p) {
+        return -1;
+    } elseif ($a_p > $b_p) {
+        return 1;
+    }
+    if ($a_o < $b_o) {
+        return -1;
+    } elseif ($a_o > $b_o) {
+        return 1;
+    }
+    if ($a_o < $b_o) {
+        return -1;
+    } elseif ($a_o > $b_o) {
+        return 1;
+    }
+    if ($a_m < $b_m) {
+        return -1;
+    } elseif ($a_m > $b_m) {
+        return 1;
+    }
+    return 0;
+}
+
+function kf_get_acf_field_search_content($field, $post_id) {
+    $add = ''; // by default, add no content
+
+    $field_classes = explode(' ', $field['wrapper']['class']);
+    
+    // extract content based on field type (unless noindex class is present)
+    if (!in_array('search-noindex', $field_classes)) {
+        if ($field['type'] == 'text') {
+            // for text fields, get the value directly
+            $to_add = trim($field['value']);
+            
+            if ($to_add !== '') {
+                $add = ' ' . $to_add;
+            }
+        } elseif ($field['type'] == 'textarea' || $field['type'] == 'wysiwyg') {
+            // for textareas and wysiwygs, remove tags from content
+            $to_add = trim(strip_tags($field['value']));
+            
+            if ($to_add !== '') {
+                $add .= ' ' . $to_add;
+            }
+        } elseif ($field['type'] == 'image') {
+            // for images, get the alt text
+            if ($field['value']) {
+                $to_add = trim($field['value']['alt']);
+                
+                if ($to_add !== '') {
+                    $add .= ' ' . $to_add;
+                }
+            }
+        } elseif ($field['type'] == 'link') {
+            // for links, get only the title (not the URL or target)
+            if ($field['value']) {
+                $to_add = trim($field['value']['title']);
+                
+                if ($to_add !== '') {
+                    $add .= ' ' . $to_add;
+                }
+            }
+        } elseif ($field['type'] == 'repeater' || $field['type'] == 'flexible_content' || $field['type'] == 'group') {
+            // for repeaters, flexible content, and groups, get content from sub fields
+            $field_key = $field['key'];
+            if (isset($field['_clone'])) {
+                $field_key = $field['name']; // if this is inside a clone field, the key won't work, so use the name (we prefer the key, because the name can cause an infinite loop in some scenarios)
+            }
+            
+            while (have_rows($field_key, $post_id)) {
+                the_row();
+                $ordered_field_objects = array();
+                foreach(get_row() as $sub_field_name => $sub_field_value) {
+                    if ($sub_field_name != 'acf_fc_layout') {
+                        $ordered_field_objects[$sub_field_name] = get_sub_field_object($sub_field_name, $post_id);
+                    }
+                }
+                uasort($ordered_field_objects, 'kf_check_acf_field_order');
+                foreach($ordered_field_objects as $sub_field_object) {
+                    $add .= kf_get_acf_field_search_content($sub_field_object, $post_id);
+                }
+            }
+        } elseif ($field['type'] == 'clone') {
+            // for clone fields get content from sub fields
+            $ordered_field_objects = array();
+            foreach ($field['sub_fields'] as $sub_field) {
+                $sub_field['value'] = $field['value'][$sub_field['__name']]; // add sub field value to sub field object
+                
+                $ordered_field_objects[$sub_field['name']] = $sub_field;
+            }
+            uasort($ordered_field_objects, 'kf_check_acf_field_order');
+            foreach($ordered_field_objects as $sub_field_object) {
+                $add .= kf_get_acf_field_search_content($sub_field_object, $post_id);
+            }
+        }
+    }
+    
+    return $add;
+}
+
+function kf_search_content($post_id) {
+    $content = '';
+    
+    $all_fields = get_field_objects($post_id);
+        
+    if ($all_fields) {
+        uasort($all_fields, 'kf_check_acf_field_order');
+        
+        foreach ($all_fields as $field) {
+            $content .= kf_get_acf_field_search_content($field, $post_id);
+        }
+    }
+    
+    $content = trim(str_replace(array("\r", "\n"), ' ', $content)); // remove uneccesary whitespace and line breaks
+    
+    return $content;
+}
+
+function kf_relevanssi_content($content, $post) {
+    $content = trim($content . ' ' . kf_search_content($post->ID));
+    
+    return $content;
+}
+add_filter('relevanssi_content_to_index', 'kf_relevanssi_content', 10, 2);
+add_filter('relevanssi_excerpt_content', 'kf_relevanssi_content', 10, 2);
+
+
+/**
+ * Modify Relevanssi search result weights
+ */
+function kf_relevanssi_weights($results) {
+	foreach ($results as $post_id => $weight) {
+        $post_type = get_post_type($post_id);
+
+        // adjust the weight for each post based on how recent it is
+        if ($post_type == 'post') {
+            $time_since_post = time() - get_post_timestamp($post_id);
+
+            if ($time_since_post < 60*60*24*7) {
+                $results[$post_id] = $weight * 1.4; // within the past week
+            } elseif ($time_since_post < 60*60*24*7*4) {
+                $results[$post_id] = $weight * 1.2; // within the past 4 weeks
+            } elseif ($time_since_post > 60*60*24*7*52) {
+                $results[$post_id] = $weight * 0.9; // more than a year ago
+            }
+        }
+
+        // adjust the weight for each event based on the date
+        if ($post_type == 'event') {
+            $f_date = get_field('event_details_date', $post_id);
+
+            // create DateTime objects for event date(s)
+            $date_dt = new DateTime($f_date['date'], wp_timezone());
+            $date_end_dt = $f_date['end-date'] ? new DateTime($f_date['end-date'], wp_timezone()) : $date_dt;
+
+            $time_until_start = $date_dt->getTimestamp() - time();
+            $time_since_end = time() - $date_end_dt->getTimestamp();
+
+            if ($time_until_start < 0) {
+                if ($time_since_end < 0) {
+                    $results[$post_id] = $weight * 1.8; // happening now
+                } elseif ($time_since_end < 60*60*24) {
+                    $results[$post_id] = $weight * 1.6; // within the past day
+                } elseif ($time_since_end < 60*60*24*7) {
+                    $results[$post_id] = $weight * 1.4; // within the past week
+                } elseif ($time_since_end < 60*60*24*7*2) {
+                    $results[$post_id] = $weight * 1.2; // within the past 2 weeks
+                } elseif ($time_since_end > 60*60*24*7*52) {
+                    $results[$post_id] = $weight * 0.2; // more than a year ago
+                } elseif ($time_since_end > 60*60*24*7*8) {
+                    $results[$post_id] = $weight * 0.5; // more than 8 weeks ago
+                } elseif ($time_since_end > 60*60*24*7*4) {
+                    $results[$post_id] = $weight * 0.9; // more than 4 weeks ago
+                }
+            } elseif ($time_until_start < 60*60*24*7) {
+                $results[$post_id] = $weight * 1.6; // within the next week
+            } elseif ($time_until_start < 60*60*24*7*4) {
+                $results[$post_id] = $weight * 1.4; // within the next 4 weeks
+            } elseif ($time_until_start < 60*60*24*7*8) {
+                $results[$post_id] = $weight * 1.2; // within the next 8 weeks
+            } elseif ($time_until_start > 60*60*24*7*52) {
+                $results[$post_id] = $weight * 0.9; // more than a year away
+            }
+        }
+    }
+    
+    return $results;
+}
+add_filter('relevanssi_results', 'kf_relevanssi_weights');
 
 
 /**

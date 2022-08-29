@@ -60,29 +60,31 @@ if ($time_dt) {
             <h3 class="event-tile__title title title_sm"><?php echo get_the_title(); ?></h3>
             <?php if ($time_string || $f_location['name']): ?>
             <div class="event-tile__info">
-                <?php if ($time_string): ?>
-                <div class="event-tile__info-item">
-                    <p class="event-tile__info-line text text_xs text_line_1-4">
-                        <svg viewBox="0 0 17 17" class="event-tile__info-icon">
-                            <title>Time</title>
-                            <path class="c_fill_<?php color_id($theme, 5); ?>" d="M8.5,0A8.5,8.5,0,1,0,17,8.5,8.5,8.5,0,0,0,8.5,0m0,14.875A6.375,6.375,0,1,1,14.875,8.5,6.382,6.382,0,0,1,8.5,14.875"/>
-                            <path class="c_fill_<?php color_id($theme, 5); ?>" d="M8.5,3.586a.66.66,0,00-.66.6l-.386,3.86-3.27.327a.664.664,0,000,1.322l5.1.533h.012a.4.4,0,00.4-.411l-.535-5.632a.66.66,0,00-.66-.6"/>
-                        </svg>
-                        <?php echo $time_string; ?>
-                    </p>
+                <div class="event-info">
+                    <?php if ($time_string): ?>
+                    <div class="event-info__item">
+                        <p class="event-info__line text text_xs text_line_1-4">
+                            <svg viewBox="0 0 17 17" class="event-info__icon">
+                                <title>Time</title>
+                                <path class="c_fill_<?php color_id($theme, 5); ?>" d="M8.5,0A8.5,8.5,0,1,0,17,8.5,8.5,8.5,0,0,0,8.5,0m0,14.875A6.375,6.375,0,1,1,14.875,8.5,6.382,6.382,0,0,1,8.5,14.875"/>
+                                <path class="c_fill_<?php color_id($theme, 5); ?>" d="M8.5,3.586a.66.66,0,00-.66.6l-.386,3.86-3.27.327a.664.664,0,000,1.322l5.1.533h.012a.4.4,0,00.4-.411l-.535-5.632a.66.66,0,00-.66-.6"/>
+                            </svg>
+                            <?php echo $time_string; ?>
+                        </p>
+                    </div>
+                    <?php endif; ?>
+                    <?php if ($f_location['name']): ?>
+                    <div class="event-info__item">
+                        <p class="event-info__line text text_xs text_line_1-4">
+                            <svg viewBox="0 0 17 17" class="event-info__icon">
+                                <title>Location</title>
+                                <path class="c_fill_<?php color_id($theme, 5); ?>" d="M8.501,0a6.124,6.124,0,00-6.376,6.375C2.125,9.563,8.501,17,8.501,17s6.374-7.437,6.374-10.625A6.124,6.124,0,008.501,0m0,8.5a2.125,2.125,0,112.124-2.125A2.125,2.125,0,018.5,8.5"/>
+                            </svg>
+                            <?php echo $f_location['name']; ?>
+                        </p>
+                    </div>
+                    <?php endif; ?>
                 </div>
-                <?php endif; ?>
-                <?php if ($f_location['name']): ?>
-                <div class="event-tile__info-item">
-                    <p class="event-tile__info-line text text_xs text_line_1-4">
-                        <svg viewBox="0 0 17 17" class="event-tile__info-icon">
-                            <title>Location</title>
-                            <path class="c_fill_<?php color_id($theme, 5); ?>" d="M8.501,0a6.124,6.124,0,00-6.376,6.375C2.125,9.563,8.501,17,8.501,17s6.374-7.437,6.374-10.625A6.124,6.124,0,008.501,0m0,8.5a2.125,2.125,0,112.124-2.125A2.125,2.125,0,018.5,8.5"/>
-                        </svg>
-                        <?php echo $f_location['name']; ?>
-                    </p>
-                </div>
-                <?php endif; ?>
             </div>
             <?php endif; ?>
         </div>
