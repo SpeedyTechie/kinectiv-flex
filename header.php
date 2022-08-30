@@ -364,7 +364,7 @@
         <div class="site-header__secondary c_bg_<?php color_id($theme, 0); ?>">
             <div class="site-header__content">
                 <div class="sub-header-1">
-                    <?php if ($f_nav_2['links']): ?>
+                    <?php if ($f_nav_2['links'] || ($f_enable_search && $f_nav_2['search'])): ?>
                     <div class="sub-header-1__item">
                         <nav class="site-nav site-nav_right site-nav_xs site-nav_lines c_color_<?php color_id($theme, 3); ?>">
                             <?php foreach ($f_nav_2['links'] as $item): ?>
