@@ -2179,6 +2179,16 @@ add_filter('gform_field_css_class', 'kf_gform_field_css_class_custom_settings', 
 /**
  * Customize post password form
  */
+function kf_password_message($return = false) {
+    $message = 'A password is required to view this content.';
+
+    if ($return) {
+        return $message;
+    } else {
+        echo $message;
+    }
+}
+
 function kf_post_password_form($output, $post) {
     $theme = 'main';
     
@@ -2187,7 +2197,7 @@ function kf_post_password_form($output, $post) {
     ob_start();
     ?>
     <form action="<?php echo esc_url(site_url('wp-login.php?action=postpass', 'login_post')); ?>" class="post-password-form" method="post">
-        <p class="post-password-form__text text">A password is required to view this content.</p>
+        <p class="post-password-form__text text"><?php kf_password_message(); ?></p>
         <div class="post-password-form__field">
             <label for="<?php echo $field_id; ?>" class="post-password-form__label text text_bold text_line_1-4">Password</label>
             <input type="password" name="post_password" size="20" id="<?php echo $field_id; ?>" class="c_bg_<?php color_id($theme, 1); ?> c_color_<?php color_id($theme, 5); ?> c_placeholder_<?php color_id($theme, 2); ?>" />

@@ -19,7 +19,7 @@ if ($post_type == 'post' && !$excerpt) {
     $excerpt = get_field('post_preview_description');
 }
 if (post_password_required()) {
-    $excerpt = 'A password is required to view this content.';
+    $excerpt = kf_password_message(true);
 }
 
 $detail = '';

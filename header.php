@@ -103,7 +103,7 @@
     // clear meta image/description if password protected
     if (!is_404() && post_password_required()) {
         $meta_image = $f_image_default;
-        $meta_description = 'A password is required to view this content.';
+        $meta_description = kf_password_message(true);
     }
     
     $canonical_url = get_permalink();
