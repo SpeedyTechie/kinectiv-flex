@@ -190,7 +190,8 @@ function component_colors($theme, $component, $return = false) {
     // list of components and their associated color classes
     $component_classes = array(
         'button' =>  'c_bg_' . color_id($theme, 3, true) . ' c_h_bg_' . color_id($theme, 4, true) . ' c_color_' . color_id($theme, 0, true) . ' c_h_color_' . color_id($theme, 0, true),
-        'arrow-link' => 'c_color_' . color_id($theme, 5, true) . ' c_h_color_' . color_id($theme, 4, true)
+        'arrow-link' => 'c_color_' . color_id($theme, 5, true) . ' c_h_color_' . color_id($theme, 4, true),
+        'hr' => 'c_bg_' . color_id($theme, 2, true)
     );
 
     if (isset($component_classes[$component])) {
@@ -355,7 +356,7 @@ function kf_wysiwyg_color_classes($html, $theme) {
         'h3' => 'c_color_' . color_id($theme, 3, true),
         'h5' => 'c_color_' . color_id($theme, 3, true),
         'blockquote' => 'c_color_' . color_id($theme, 3, true),
-        'hr' => 'c_bg_' . color_id($theme, 2, true),
+        'hr' => component_colors($theme, 'hr', true),
         'figcaption' => 'c_color_' . color_id($theme, 3, true)
     );
     

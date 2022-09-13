@@ -22,11 +22,13 @@ A flexible WordPress theme for Kinectiv websites (based on [kinectiv-start](http
 #### Colors
 * Update the color themes in the `Colors` section in `style.css` and in the `kf_color_id_list()` function in `functions.php`.
 * Update the background color of `body` in the `Elements` section in `style.css`. This color is used to fill extra space on screens wider than 2100px.
+* Update the default `<hr>` color in the `Elements` section in `style.css` and the assigned color classes in the `component_colors()` function in `functions.php`.
 * Update the default background color of `.site` in the `Content` section in `style.css`.
 * Update the default text color in the `Typography` section in `style.css`.
 * Update the default link styles in the `Links` section in `style.css`.
 * Update the date picker styles in the `Date Picker` section in `style.css`.
 * If necessary, update the color classes assigned to WYSIWYG content in the `kf_wysiwyg_color_classes()` function in `functions.php`.
+* If necessary, update the color classes assigned to common components (such as buttons) in the `component_colors()` function in `functions.php`.
 
 #### Padding
 * If necessary, update the padding size variations in the `Section` section in `style.css`.
