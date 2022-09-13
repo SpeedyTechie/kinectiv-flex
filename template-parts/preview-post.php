@@ -9,6 +9,11 @@ $args = array_merge($default_args, $args);
 $f_image = get_field('post_preview_image');
 $f_description = get_field('post_preview_description');
 
+$excerpt = $f_description;
+if (post_password_required()) {
+    $excerpt = kf_password_message(true);
+}
+
 $theme = ($args['tile_options']['layout_color'] == 'custom') ? $args['tile_options']['color_theme'] : $args['theme'];
 $args['tile_options']['color_theme'] = $theme; // set theme for tile options (needed to generate bg styles)
 
@@ -26,7 +31,7 @@ $tile_classes = $tile_bg_styles['classes'];
                 <p class="post-tile__info-item text text_italic text_xs text_line_1-4"><time datetime="<?php echo get_the_date('Y-m-d'); ?>"><?php echo get_the_date(); ?></time></p>
                 <p class="post-tile__info-item text text_italic text_xs text_line_1-4">By <?php echo get_the_author(); ?></p>
             </div>
-            <?php if ($f_description) { ?><p class="post-tile__text text"><?php echo $f_description; ?></p><?php } ?>
+            <?php if ($excerpt) { ?><p class="post-tile__text text"><?php echo $excerpt; ?></p><?php } ?>
         </div>
     </div>
 </a>

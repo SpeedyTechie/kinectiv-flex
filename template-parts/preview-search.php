@@ -90,7 +90,7 @@ if ($post_type == 'event') {
             <?php endif; ?>
             <h3 class="result-tile__title title title_sm"><?php echo get_the_title(); ?></h3>
             <?php if ($detail) { ?><p class="result-tile__detail text text_xs text_italic text_line_1-4"><?php echo $detail; ?></p><?php } ?>
-            <?php if ($post_type == 'event' && ($time_string || $f_location['name'])): ?>
+            <?php if ($post_type == 'event' && ($time_string || $f_location['name']) && !post_password_required()): ?>
             <div class="result-tile__event-info">
                 <div class="event-info">
                     <?php if ($time_string): ?>

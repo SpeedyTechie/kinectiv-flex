@@ -58,7 +58,7 @@ if ($time_dt) {
                 <?php if ($date_end_string) { ?><time datetime="<?php echo $date_end_dt->format('Y-m-d'); ?>" class="event-tile__date-part"><?php echo $date_end_string; ?></time><?php } ?>
             </p>
             <h3 class="event-tile__title title title_sm"><?php echo get_the_title(); ?></h3>
-            <?php if ($time_string || $f_location['name']): ?>
+            <?php if (($time_string || $f_location['name']) && !post_password_required()): ?>
             <div class="event-tile__info">
                 <div class="event-info">
                     <?php if ($time_string): ?>
