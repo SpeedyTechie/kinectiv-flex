@@ -378,6 +378,9 @@ big {
 html {
 	box-sizing: border-box;
 }
+html.smooth-scroll {
+	scroll-behavior: smooth;
+}
 *,
 *:before,
 *:after {

@@ -1310,6 +1310,14 @@ function initMobileMenu() {
 
 
 
+/* Smooth Scrolling */
+
+function initSmoothScrolling() {
+    $('html').addClass('smooth-scroll'); // enable smooth scrolling after page load (to prevent scrolling on initial page load)
+}
+
+
+
 /* General */
 
 $(function() {
@@ -1327,6 +1335,7 @@ $(function() {
     initMobileMenu();
     initDialogBoxes();
     initAjaxGridLoad();
+    initSmoothScrolling();
 });
 
 function kinectivThrottle(func, wait, options) {
