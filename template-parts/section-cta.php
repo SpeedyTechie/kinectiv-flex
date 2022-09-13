@@ -17,6 +17,8 @@ $section_next = $args['sections']['next'];
 
 $theme = $section['options']['color_theme'];
 
+$section_id = $section['options']['advanced_id'] ? 'section-' . $section['options']['advanced_id'] : null;
+
 // build style attribute and class list
 $bg_styles = kf_section_bg_styles($section['options']);
 $padding_styles = kf_section_padding_styles($section['options'], $section_prev['options'], $section_next['options']);
@@ -27,7 +29,7 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
 $button_color_classes = kf_button_color_classes($theme, $section['options']['color_buttons']);
 ?>
 
-<div class="section c_color_<?php color_id($theme, 5); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
+<div <?php if ($section_id) { echo 'id="' . $section_id . '" '; } ?>class="section c_color_<?php color_id($theme, 5); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
     <div class="section__content">
         <div class="cta cta_<?php echo $section['options']['layout_align']; ?>">
             <?php if ($section['graphic']) { ?><img src="<?php echo $section['graphic']['url']; ?>" alt="<?php echo esc_attr($section['graphic']['alt']); ?>" width="<?php echo $section['graphic']['width']; ?>" height="<?php echo $section['graphic']['height']; ?>" class="cta__graphic cta__graphic_<?php echo $section['options']['layout_graphic-width']; ?> cta__graphic_<?php echo $section['options']['layout_align']; ?>" /><?php } ?>

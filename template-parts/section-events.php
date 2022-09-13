@@ -20,6 +20,8 @@ $f_none_text = get_field('config_events_none-text', 'option');
 $theme = $section['options']['color_theme'];
 $theme_inverse = kf_color_theme_inverses()[$theme];
 
+$section_id = $section['options']['advanced_id'] ? 'section-' . $section['options']['advanced_id'] : null;
+
 // build style attribute and class list
 $bg_styles = kf_section_bg_styles($section['options']);
 $padding_styles = kf_section_padding_styles($section['options'], $section_prev['options'], $section_next['options']);
@@ -30,7 +32,7 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
 $button_color_classes = kf_button_color_classes($theme, $section['options']['color_buttons']);
 ?>
 
-<div class="section c_color_<?php color_id($theme, 5); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
+<div <?php if ($section_id) { echo 'id="' . $section_id . '" '; } ?>class="section c_color_<?php color_id($theme, 5); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
     <div class="section__content">
         <div class="tile-grid">
             <?php if ($section['title']) { ?><h2 class="tile-grid__title title title_<?php echo $section['options']['layout_align-title']; ?>"><?php echo $section['title']; ?></h2><?php } ?>

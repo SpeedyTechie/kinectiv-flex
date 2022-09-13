@@ -17,6 +17,8 @@ $section_next = $args['sections']['next'];
 
 $theme = $section['options']['color_theme'];
 
+$section_id = $section['options']['advanced_id'] ? 'section-' . $section['options']['advanced_id'] : null;
+
 // build style attribute and class list
 $bg_styles = kf_section_bg_styles($section['options']);
 $padding_styles = kf_section_padding_styles($section['options'], $section_prev['options'], $section_next['options']);
@@ -40,7 +42,7 @@ if ($bottom_padding == 'xs' || $bottom_padding == 'none') {
 }
 ?>
 
-<div class="section c_color_<?php color_id($theme, 5); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
+<div <?php if ($section_id) { echo 'id="' . $section_id . '" '; } ?>class="section c_color_<?php color_id($theme, 5); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
     <div class="section__content section__content_w_full">
         <div class="page-intro">
             <?php if ($section['title'] || $section['text'] || $section['buttons'] || ($section['options']['bg_type'] == 'image' && $section['options']['layout_height'] != 'min')): ?>

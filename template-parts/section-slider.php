@@ -17,6 +17,8 @@ $section_next = $args['sections']['next'];
 
 $theme = $section['options']['color_theme'];
 
+$section_id = $section['options']['advanced_id'] ? 'section-' . $section['options']['advanced_id'] : null;
+
 // build style attribute and class list
 $bg_styles = kf_section_bg_styles($section['options']);
 $padding_styles = kf_section_padding_styles($section['options'], $section_prev['options'], $section_next['options']);
@@ -44,7 +46,7 @@ $slide_count = $section['slides'] ? count($section['slides']) : 0;
 $bg_image_styles = kf_advanced_bg_image_styles($section['options']['layout_advanced-image']);
 ?>
 
-<div class="section<?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
+<div <?php if ($section_id) { echo 'id="' . $section_id . '" '; } ?>class="section<?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
     <div class="image-slider<?php if ($border_location) { echo ' image-slider_border_' . $border_location; } ?><?php if ($slide_count > 1) { echo ' image-slider_slick'; } ?>">
         <?php if ($slide_count > 1): ?>
         <button type="button" class="image-slider__nav image-slider__nav_prev<?php if ($border_location) { echo ' image-slider__nav_border_' . $border_location; } ?>">

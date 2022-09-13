@@ -21,6 +21,8 @@ $popup_theme = 'main';
 $section['options']['layout_tile-options']['color_theme'] = $tile_theme; // set theme for tile options (needed to generate bg styles)
 $section['options']['layout_popup-options']['color_theme'] = $popup_theme; // set theme for popup options (needed to generate bg styles)
 
+$section_id = $section['options']['advanced_id'] ? 'section-' . $section['options']['advanced_id'] : null;
+
 // build style attribute and class list
 $bg_styles = kf_section_bg_styles($section['options']);
 $padding_styles = kf_section_padding_styles($section['options'], $section_prev['options'], $section_next['options']);
@@ -32,7 +34,7 @@ $button_color_classes = kf_button_color_classes($theme, $section['options']['col
 $popup_button_color_classes = kf_button_color_classes($popup_theme, $section['options']['layout_popup-options']['color_buttons']);
 ?>
 
-<div class="section c_color_<?php color_id($theme, 5); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
+<div <?php if ($section_id) { echo 'id="' . $section_id . '" '; } ?>class="section c_color_<?php color_id($theme, 5); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
     <div class="section__content">
         <div class="tile-grid">
             <?php if ($section['title']) { ?><h2 class="tile-grid__title<?php if ($section['options']['layout_per-row'] == 4) { echo ' tile-grid__title_wide'; } elseif ($section['options']['layout_per-row'] == 2) { echo ' tile-grid__title_no-max-w'; } ?> title title_<?php echo $section['options']['layout_align-title']; ?>"><?php echo $section['title']; ?></h2><?php } ?>

@@ -17,6 +17,8 @@ $section_next = $args['sections']['next'];
 
 $theme = $section['options']['color_theme'];
 
+$section_id = $section['options']['advanced_id'] ? 'section-' . $section['options']['advanced_id'] : null;
+
 // build style attribute and class list
 $bg_styles = kf_section_bg_styles($section['options']);
 $padding_styles = kf_section_padding_styles($section['options'], $section_prev['options'], $section_next['options']);
@@ -26,7 +28,7 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
 $testimonial_count = $section['testimonials'] ? count($section['testimonials']) : 0;
 ?>
 
-<div class="section c_color_<?php color_id($theme, 3); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
+<div <?php if ($section_id) { echo 'id="' . $section_id . '" '; } ?>class="section c_color_<?php color_id($theme, 3); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
     <div class="section__content">
         <div class="testimonials testimonials_<?php echo $section['options']['layout_align']; ?><?php if ($testimonial_count > 1) { echo ' testimonials_slick'; } ?>">
             <?php if ($testimonial_count > 1): ?>

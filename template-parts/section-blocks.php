@@ -18,6 +18,8 @@ $section_next = $args['sections']['next'];
 $theme = $section['options']['color_theme'];
 $section['options']['layout_block-options']['color_theme'] = $theme; // set theme for block options (needed to generate bg styles)
 
+$section_id = $section['options']['advanced_id'] ? 'section-' . $section['options']['advanced_id'] : null;
+
 // build style attribute and class list
 $bg_styles = kf_section_bg_styles($section['options']);
 $padding_styles = kf_section_padding_styles($section['options'], $section_prev['options'], $section_next['options']);
@@ -30,7 +32,7 @@ $button_color_classes = kf_button_color_classes($theme, $section['options']['col
 $blocks = ($section['options']['layout_image-position'] == 'left') ? array('image', 'text') : array('text', 'image'); // set order of blocks
 ?>
 
-<div class="section c_color_<?php color_id($theme, 3); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
+<div <?php if ($section_id) { echo 'id="' . $section_id . '" '; } ?>class="section c_color_<?php color_id($theme, 3); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
     <?php if ($section['options']['layout_size'] == 'boxed') { ?><div class="section__content"><?php } ?>
         <div class="text-image text-image_<?php echo $section['options']['layout_size']; ?>">
             <?php foreach ($blocks as $i_block => $block_type): ?>

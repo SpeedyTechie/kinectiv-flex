@@ -890,6 +890,44 @@
                     "layout": "block",
                     "prefix_label": 0,
                     "prefix_name": 1
+                },
+                {
+                    "key": "field_6320a82b217b6",
+                    "label": "Advanced",
+                    "name": "",
+                    "type": "accordion",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "open": 0,
+                    "multi_expand": 0,
+                    "endpoint": 0
+                },
+                {
+                    "key": "field_6320a833217b7",
+                    "label": "Advanced Options",
+                    "name": "advanced",
+                    "type": "clone",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "clone": [
+                        "group_6320960f69889"
+                    ],
+                    "display": "seamless",
+                    "layout": "block",
+                    "prefix_label": 0,
+                    "prefix_name": 1
                 }
             ]
         }
@@ -911,5 +949,6 @@
     "hide_on_screen": "",
     "active": false,
     "description": "",
-    "modified": 1609441628
+    "show_in_rest": 0,
+    "modified": 1663084623
 }
