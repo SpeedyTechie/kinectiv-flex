@@ -1108,6 +1108,14 @@ function kf_button_color_variation_list() {
 }
 
 function kf_load_custom_button_variations($field) {
+    if (is_admin() && function_exists('get_current_screen')) {
+        $current_screen = get_current_screen();
+
+        if ($current_screen->post_type == 'acf-field-group') {
+            return $field; // exit function for the field group editor
+        }
+    }
+
     $f_variations = get_field('appearance_buttons_variations', 'option');
 
     if ($f_variations) {
@@ -2314,6 +2322,14 @@ function kf_acf_show_hide_search_related_fields($field) {
 add_filter('acf/prepare_field', 'kf_acf_show_hide_search_related_fields'); // show/hide ACF fields based on whether search is enabled
 
 function kf_hide_search_flex_section($field) {
+    if (is_admin() && function_exists('get_current_screen')) {
+        $current_screen = get_current_screen();
+
+        if ($current_screen->post_type == 'acf-field-group') {
+            return $field; // exit function for the field group editor
+        }
+    }
+
     $f_enable_search = get_field('config_search_enable', 'option');
 
     if (!$f_enable_search) {
