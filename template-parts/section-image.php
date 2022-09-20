@@ -29,7 +29,7 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
 <div <?php if ($section_id) { echo 'id="' . $section_id . '" '; } ?>class="section<?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
     <div class="full-image">
         <?php if ($section['options']['layout_height'] == 'auto'): ?>
-        <img src="<?php echo $section['image']['url']; ?>" alt="<?php echo esc_attr($section['image']['alt']); ?>" class="full-image__image full-image__image_auto" />
+        <img src="<?php echo $section['image']['url']; ?>" width="<?php echo $section['image']['width']; ?>" height="<?php echo $section['image']['height']; ?>" alt="<?php echo esc_attr($section['image']['alt']); ?>" class="full-image__image full-image__image_auto" />
         <?php else: ?>
         <?php
         $bg_image_styles = kf_advanced_bg_image_styles($section['options']['layout_advanced-image']);
