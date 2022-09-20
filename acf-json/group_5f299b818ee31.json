@@ -40,9 +40,7 @@
                 "id": ""
             },
             "choices": {
-                "default": "Default",
-                "test-variation-67534b32": "Test Variation",
-                "very-orange-ad9775d0": "Very Orange"
+                "default": "Default"
             },
             "allow_null": 0,
             "default_value": "",
@@ -68,5 +66,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1660589279
+    "modified": 1663684779
 }
