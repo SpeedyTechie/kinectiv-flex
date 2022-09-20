@@ -27,5 +27,6 @@
     "browserslist": [
         "defaults",
         "> 0.5% in US"
-    ]
+    ],
+    "dependencies": {}
 }
