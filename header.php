@@ -309,11 +309,13 @@
                         <?php if ($f_nav['links'] || $f_nav['button']): ?>
                         <div class="header-1__col header-1__col_nav">
                             <nav class="site-nav site-nav_right c_color_<?php color_id($theme, 5); ?>">
+                                <?php if ($f_nav['links']): ?>
                                 <?php foreach ($f_nav['links'] as $item): ?>
                                 <div class="site-nav__item">
                                     <a href="<?php echo esc_url($item['link']['url']); ?>" target="<?php echo $item['link']['target']; ?>" class="site-nav__link c_color_<?php color_id($theme, 5); ?> c_h_color_<?php color_id($theme, 3); ?>"><?php echo $item['link']['title']; ?></a>
                                 </div>
                                 <?php endforeach; ?>
+                                <?php endif; ?>
                                 <?php if ($f_nav['button']): ?>
                                 <div class="site-nav__item">
                                     <a href="<?php echo esc_url($f_nav['button']['url']); ?>" target="<?php echo $f_nav['button']['target']; ?>" class="button <?php echo $button_color_classes; ?>"><?php echo $f_nav['button']['title']; ?></a>
@@ -467,11 +469,13 @@
                             <?php if ($f_nav['links'] || $f_nav['button']): ?>
                             <div class="footer-2__section">
                                 <nav class="site-nav c_color_<?php color_id($menu_theme, 5); ?>">
+                                    <?php if ($f_nav['links']): ?>
                                     <?php foreach ($f_nav['links'] as $item): ?>
                                     <div class="site-nav__item">
                                         <a href="<?php echo esc_url($item['link']['url']); ?>" target="<?php echo $item['link']['target']; ?>" class="site-nav__link c_color_<?php color_id($menu_theme, 5); ?> c_h_color_<?php color_id($menu_theme, 3); ?>"><?php echo $item['link']['title']; ?></a>
                                     </div>
                                     <?php endforeach; ?>
+                                    <?php endif; ?>
                                     <?php if ($f_nav['button']): ?>
                                     <div class="site-nav__item">
                                         <a href="<?php echo esc_url($f_nav['button']['url']); ?>" target="<?php echo $f_nav['button']['target']; ?>" class="button <?php echo $menu_button_color_classes; ?>"><?php echo $f_nav['button']['title']; ?></a>
