@@ -2416,8 +2416,8 @@ function kf_get_acf_field_search_content($field, $post_id) {
 
     $field_classes = explode(' ', $field['wrapper']['class']);
     
-    // extract content based on field type (unless noindex class is present)
-    if (!in_array('search-noindex', $field_classes)) {
+    // extract content based on field type (unless noindex class is present or Relevanssi exclude toggle is enabled)
+    if (!in_array('search-noindex', $field_classes) && !$field['relevanssi_exclude']) {
         if ($field['type'] == 'text') {
             // for text fields, get the value directly
             $to_add = trim($field['value']);

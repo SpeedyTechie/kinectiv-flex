@@ -6,6 +6,7 @@
             "key": "field_5f2975cf32fcf",
             "label": "Text",
             "name": "text",
+            "aria-label": "",
             "type": "wysiwyg",
             "instructions": "",
             "required": 0,
@@ -15,18 +16,20 @@
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "default_value": "",
+            "enable_autoembed": 0,
             "tabs": "visual",
             "toolbar": "standard",
             "media_upload": 1,
             "delay": 0,
-            "editor_height": 400,
-            "enable_autoembed": 0
+            "editor_height": 400
         },
         {
             "key": "field_5f2994f757d6e",
             "label": "Link Buttons",
             "name": "buttons",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -46,6 +49,7 @@
                     "key": "field_5f2995ef57d6f",
                     "label": "Link",
                     "name": "link",
+                    "aria-label": "",
                     "type": "link",
                     "instructions": "",
                     "required": 1,
@@ -55,14 +59,17 @@
                         "class": "",
                         "id": ""
                     },
-                    "return_format": "array"
+                    "return_format": "array",
+                    "parent_repeater": "field_5f2994f757d6e"
                 }
-            ]
+            ],
+            "rows_per_page": 20
         },
         {
             "key": "field_5f29994e6909c",
             "label": "<span class=\"dashicons dashicons-admin-settings\"><\/span> Options",
             "name": "",
+            "aria-label": "",
             "type": "accordion",
             "instructions": "",
             "required": 0,
@@ -80,6 +87,7 @@
             "key": "field_5f2998f762d47",
             "label": "",
             "name": "options",
+            "aria-label": "",
             "type": "group",
             "instructions": "",
             "required": 0,
@@ -95,6 +103,7 @@
                     "key": "field_5f2c4faae302c",
                     "label": "Layout",
                     "name": "",
+                    "aria-label": "",
                     "type": "accordion",
                     "instructions": "",
                     "required": 0,
@@ -112,6 +121,7 @@
                     "key": "field_5f2c4fc0e302d",
                     "label": "Alignment",
                     "name": "layout_align",
+                    "aria-label": "",
                     "type": "button_group",
                     "instructions": "",
                     "required": 0,
@@ -135,6 +145,7 @@
                     "key": "field_5f2998fe62d48",
                     "label": "Color",
                     "name": "",
+                    "aria-label": "",
                     "type": "accordion",
                     "instructions": "",
                     "required": 0,
@@ -152,6 +163,7 @@
                     "key": "field_5f299c251d543",
                     "label": "Color Options",
                     "name": "color",
+                    "aria-label": "",
                     "type": "clone",
                     "instructions": "",
                     "required": 0,
@@ -173,6 +185,7 @@
                     "key": "field_5f29992b62d49",
                     "label": "Background",
                     "name": "",
+                    "aria-label": "",
                     "type": "accordion",
                     "instructions": "",
                     "required": 0,
@@ -190,6 +203,7 @@
                     "key": "field_5f29a05b75982",
                     "label": "Background Options",
                     "name": "bg",
+                    "aria-label": "",
                     "type": "clone",
                     "instructions": "",
                     "required": 0,
@@ -211,6 +225,7 @@
                     "key": "field_5f29993362d4a",
                     "label": "Padding",
                     "name": "",
+                    "aria-label": "",
                     "type": "accordion",
                     "instructions": "",
                     "required": 0,
@@ -228,6 +243,7 @@
                     "key": "field_5f29a1416cff9",
                     "label": "Padding Options",
                     "name": "padding",
+                    "aria-label": "",
                     "type": "clone",
                     "instructions": "",
                     "required": 0,
@@ -249,6 +265,7 @@
                     "key": "field_6320972cfcdf8",
                     "label": "Advanced",
                     "name": "",
+                    "aria-label": "",
                     "type": "accordion",
                     "instructions": "",
                     "required": 0,
@@ -266,6 +283,7 @@
                     "key": "field_6320973bfcdf9",
                     "label": "Advanced Options",
                     "name": "advanced",
+                    "aria-label": "",
                     "type": "clone",
                     "instructions": "",
                     "required": 0,
@@ -304,5 +322,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1663080291
+    "modified": 1671134927
 }
