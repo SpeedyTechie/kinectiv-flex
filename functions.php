@@ -2690,6 +2690,12 @@ add_filter('tiny_mce_plugins', 'ks_tinymce_disable_emojis'); // disable wpemoji 
 
 
 /**
+ * Disable tabbed view for ACF field settings
+ */
+add_filter('acf/field_group/disable_field_settings_tabs', '__return_true');
+
+
+/**
  * Add ACF WYSIWYG height setting
  */
 function ks_acf_wysiwyg_field_height_setting($field) {
