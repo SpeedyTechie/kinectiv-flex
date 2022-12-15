@@ -2280,15 +2280,17 @@ add_action('admin_init', 'ks_disable_comments_dashboard'); // remove comments me
  * Search
  */
 function kf_disable_search($query, $error = true) {
-    $f_enable_search = get_field('config_search_enable', 'option');
+    if (is_search() && !is_admin()) {
+        $f_enable_search = get_field('config_search_enable', 'option');
 
-    if (!$f_enable_search && is_search() && !is_admin()) {
-        $query->is_search = false;
-        $query->query_vars['s'] = false;
-        $query->query['s'] = false;
+        if (!$f_enable_search) {
+            $query->is_search = false;
+            $query->query_vars['s'] = false;
+            $query->query['s'] = false;
 
-        if ($error == true) {
-            $query->is_404 = true;
+            if ($error == true) {
+                $query->is_404 = true;
+            }
         }
     }
 }
