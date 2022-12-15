@@ -3792,12 +3792,13 @@ function initTestimonialSlider() {
 /* AJAX Grid Load */
 
 function initAjaxGridLoad() {
-    function ajaxLoad(type, special, page, passthrough) {
+    function ajaxLoad(type, tags, special, page, passthrough) {
         var request = $.ajax(wpVars.ajaxURL, {
             method: 'POST',
             data: {
                 action: 'kf_grid_load',
                 type: type,
+                tags: tags,
                 special: special,
                 page_num: page,
                 passthrough_data: passthrough
@@ -3832,6 +3833,7 @@ function initAjaxGridLoad() {
         var gridMoreButton = gridMoreItem.find('.tile-grid__more-button');
         
         var type = gridWrap.attr('data-type');
+        var tags = gridWrap.attr('data-tags');
         var special = gridWrap.attr('data-special');
         var passthrough = gridWrap.attr('data-passthrough');
         var search = gridWrap.attr('data-search');
@@ -3884,12 +3886,12 @@ function initAjaxGridLoad() {
             if (type == 'search') {
                 ajaxLoadSearch(search, page, passthrough).done(addItemsToGrid);
             } else {
-                ajaxLoad(type, special, page, passthrough).done(addItemsToGrid);
+                ajaxLoad(type, tags, special, page, passthrough).done(addItemsToGrid);
             }
         }
         
         
-        gridWrap.removeAttr('data-type').removeAttr('data-special').removeAttr('data-passthrough').removeAttr('data-search'); // remove attributes that are no longer needed
+        gridWrap.removeAttr('data-type').removeAttr('data-tags').removeAttr('data-special').removeAttr('data-passthrough').removeAttr('data-search'); // remove attributes that are no longer needed
         
         gridMoreButton.click(function() {
             loadGridPage(currentPage + 1);

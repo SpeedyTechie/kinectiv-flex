@@ -103,6 +103,7 @@ function kf_post_types() {
         'menu_position' => 5,
         'menu_icon' => 'dashicons-calendar-alt',
         'supports' => array('title', 'revisions'),
+        'taxonomies' => array('post_tag'),
         'rewrite' => array(
             'with_front' => false
         )
@@ -553,7 +554,7 @@ function kf_get_ancestors($post_id) {
 /**
  * Get posts
  */
-function kf_custom_query($type, $single_page = false, $page_num = 1, $special = null) {
+function kf_custom_query($type, $tags = null, $single_page = false, $page_num = 1, $special = null) {
     // standardize number of posts per page based on type
     $per_page = array(
         'post' => 12,
@@ -568,6 +569,11 @@ function kf_custom_query($type, $single_page = false, $page_num = 1, $special = 
             'posts_per_page' => $single_page ? $single_page : $per_page[$type],
             'paged' => $page_num
         );
+
+        // add tag argument
+        if ($tags) {
+            $query_args['tag__in'] = $tags;
+        }
         
         // add event arguments
         if ($type == 'event') {
@@ -629,11 +635,16 @@ function kf_custom_query($type, $single_page = false, $page_num = 1, $special = 
  */
 function kf_ajax_grid_load() {
     $type = $_POST['type'];
+    $tags = trim($_POST['tags']);
     $special = $_POST['special'];
     $page_num = $_POST['page_num'];
     $passthrough_data = json_decode(stripslashes($_POST['passthrough_data']), true);
+
+    if ($tags) {
+        $tags = explode(',', $tags);
+    }
     
-    $load_query = kf_custom_query($type, false, $page_num, $special);
+    $load_query = kf_custom_query($type, $tags, false, $page_num, $special);
     
     if ($load_query->posts) {
         foreach ($load_query->posts as $p_post) {
@@ -2634,7 +2645,6 @@ add_action('parse_query', 'ks_disable_post_archives');
  */
 function ks_unregister_default_taxonomies() {
     unregister_taxonomy_for_object_type('category', 'post'); // unregister categories for posts
-    unregister_taxonomy_for_object_type('post_tag', 'post'); // unregister tags for posts
 }
 add_action('init', 'ks_unregister_default_taxonomies');
 

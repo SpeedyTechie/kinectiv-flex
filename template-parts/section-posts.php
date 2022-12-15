@@ -63,7 +63,7 @@ $button_color_classes = kf_button_color_classes($theme, $section['options']['col
                 $section['recent-posts'] = 3;
             }
             
-            $grid_query = kf_custom_query('post', $section['recent-posts']);
+            $grid_query = kf_custom_query('post', $section['tags'], $section['recent-posts']);
             ?>
             <div class="tile-grid__wrap">
                 <div class="tile-grid__grid tile-grid__grid_<?php echo $section['options']['layout_align-tiles']; ?>">
@@ -93,14 +93,14 @@ $button_color_classes = kf_button_color_classes($theme, $section['options']['col
             </div>
             <?php elseif ($section['type'] == 'all'): ?>
             <?php
-            $grid_query = kf_custom_query('post');
+            $grid_query = kf_custom_query('post', $section['tags']);
             
             $tile_args = array(
                 'theme' => $theme,
                 'tile_options' => $section['options']['layout_tile-options']
             );
             ?>
-            <div class="tile-grid__wrap" data-type="post" data-passthrough="<?php echo esc_attr(json_encode($tile_args, JSON_UNESCAPED_SLASHES)); ?>">
+            <div class="tile-grid__wrap" data-type="post" data-tags="<?php echo $section['tags'] ? implode(',', $section['tags']) : ''; ?>" data-passthrough="<?php echo esc_attr(json_encode($tile_args, JSON_UNESCAPED_SLASHES)); ?>">
                 <div class="tile-grid__grid tile-grid__grid_<?php echo $section['options']['layout_align-tiles']; ?>">
                     <?php if ($grid_query->posts): ?>
                     <?php foreach ($grid_query->posts as $p_post): ?>

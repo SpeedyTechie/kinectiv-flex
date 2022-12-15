@@ -82,7 +82,7 @@ $button_color_classes = kf_button_color_classes($theme, $section['options']['col
                 $section['upcoming-events'] = 3;
             }
             
-            $grid_query = kf_custom_query('event', $section['upcoming-events']);
+            $grid_query = kf_custom_query('event', $section['tags'], $section['upcoming-events']);
             ?>
             <div class="tile-grid__wrap">
                 <div class="tile-grid__grid tile-grid__grid_<?php echo $section['options']['layout_align-tiles']; ?>">
@@ -112,14 +112,14 @@ $button_color_classes = kf_button_color_classes($theme, $section['options']['col
             </div>
             <?php elseif ($section['type'] == 'all-future'): ?>
             <?php
-            $grid_query = kf_custom_query('event');
+            $grid_query = kf_custom_query('event', $section['tags']);
             
             $tile_args = array(
                 'theme' => $theme_inverse,
                 'tile_options' => $section['options']['layout_tile-options']
             );
             ?>
-            <div class="tile-grid__wrap" data-type="event" data-passthrough="<?php echo esc_attr(json_encode($tile_args, JSON_UNESCAPED_SLASHES)); ?>">
+            <div class="tile-grid__wrap" data-type="event" data-tags="<?php echo $section['tags'] ? implode(',', $section['tags']) : ''; ?>" data-passthrough="<?php echo esc_attr(json_encode($tile_args, JSON_UNESCAPED_SLASHES)); ?>">
                 <div class="tile-grid__grid tile-grid__grid_<?php echo $section['options']['layout_align-tiles']; ?>">
                     <?php if ($grid_query->posts): ?>
                     <?php foreach ($grid_query->posts as $p_post): ?>
@@ -150,14 +150,14 @@ $button_color_classes = kf_button_color_classes($theme, $section['options']['col
             </div>
             <?php elseif ($section['type'] == 'all-past'): ?>
             <?php
-            $grid_query = kf_custom_query('event', false, 1, 'past');
+            $grid_query = kf_custom_query('event', $section['tags'], false, 1, 'past');
             
             $tile_args = array(
                 'theme' => $theme_inverse,
                 'tile_options' => $section['options']['layout_tile-options']
             );
             ?>
-            <div class="tile-grid__wrap" data-type="event" data-special="past" data-passthrough="<?php echo esc_attr(json_encode($tile_args, JSON_UNESCAPED_SLASHES)); ?>">
+            <div class="tile-grid__wrap" data-type="event" data-tags="<?php echo $section['tags'] ? implode(',', $section['tags']) : ''; ?>" data-special="past" data-passthrough="<?php echo esc_attr(json_encode($tile_args, JSON_UNESCAPED_SLASHES)); ?>">
                 <div class="tile-grid__grid tile-grid__grid_<?php echo $section['options']['layout_align-tiles']; ?>">
                     <?php if ($grid_query->posts): ?>
                     <?php foreach ($grid_query->posts as $p_post): ?>
