@@ -45,9 +45,10 @@ if ($bottom_padding == 'xs' || $bottom_padding == 'none') {
 <div <?php if ($section_id) { echo 'id="' . $section_id . '" '; } ?>class="section c_color_<?php color_id($theme, 5); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
     <div class="section__content section__content_w_full">
         <div class="page-intro">
-            <?php if ($section['title'] || $section['text'] || $section['buttons'] || ($section['options']['bg_type'] == 'image' && $section['options']['layout_height'] != 'min')): ?>
+            <?php if ($section['graphic'] || $section['title'] || $section['text'] || $section['buttons'] || ($section['options']['bg_type'] == 'image' && $section['options']['layout_height'] != 'min')): ?>
             <div class="page-intro__main page-intro__main_<?php echo $section['options']['layout_align']; ?><?php if ($section['options']['bg_type'] == 'image') { echo ' page-intro__main_h_' . $section['options']['layout_height']; } ?>">
                 <div class="page-intro__main-content">
+                    <?php if ($section['graphic']) { ?><img src="<?php echo $section['graphic']['url']; ?>" alt="<?php echo esc_attr($section['graphic']['alt']); ?>" width="<?php echo $section['graphic']['width']; ?>" height="<?php echo $section['graphic']['height']; ?>" class="page-intro__graphic page-intro__graphic_<?php echo $section['options']['layout_graphic-width']; ?> page-intro__graphic_<?php echo $section['options']['layout_align']; ?>" /><?php } ?>
                     <?php if ($section['title']) { ?><h2 class="page-intro__title title title_<?php echo $section['options']['layout_title-size']; ?>"><?php echo $section['title']; ?></h2><?php } ?>
                     <?php if ($section['text']) { ?><div class="page-intro__text page-intro__text_<?php echo $section['options']['layout_align']; ?> text text_wrap text_compact"><?php echo kf_wysiwyg_color_classes($section['text'], $theme); ?></div><?php } ?>
                     <?php if ($section['buttons']): ?>
@@ -74,6 +75,7 @@ if ($bottom_padding == 'xs' || $bottom_padding == 'none') {
                 <div class="text-blocks text-blocks_<?php echo $section['options']['layout_align']; ?>">
                     <?php foreach ($section['text-blocks'] as $block): ?>
                     <div class="text-blocks__item<?php if ($half) { echo ' text-blocks__item_half'; } ?>">
+                        <?php if ($block['graphic']) { ?><img src="<?php echo $block['graphic']['url']; ?>" alt="<?php echo esc_attr($block['graphic']['alt']); ?>" width="<?php echo $block['graphic']['width']; ?>" height="<?php echo $block['graphic']['height']; ?>" class="text-blocks__graphic" /><?php } ?>
                         <?php if ($block['title']) { ?><h2 class="text-blocks__title text text_md text_bold"><?php echo $block['title']; ?></h2><?php } ?>
                         <?php if ($block['text']) { ?><div class="text-blocks__text text text_wrap text_compact"><?php echo kf_wysiwyg_color_classes($block['text'], $theme); ?></div><?php } ?>
                     </div>

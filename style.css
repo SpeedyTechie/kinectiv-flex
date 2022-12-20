@@ -5284,6 +5284,27 @@ input[type="radio"]:checked::after {
     width: 100%;
     max-width: 1200px;
 }
+.page-intro__graphic {
+    display: block;
+    width: 100%;
+    max-width: 750px;
+    margin: 0 auto 35px;
+}
+.page-intro__graphic_sm {
+    max-width: 450px;
+}
+.page-intro__graphic_lg {
+    max-width: none;
+}
+.page-intro__graphic_left {
+    margin-left: 0;
+}
+.page-intro__graphic_right {
+    margin-right: 0;
+}
+.page-intro__graphic:last-child {
+    margin-bottom: 0;
+}
 .page-intro__text {
     max-width: 1000px;
     margin: 15px auto 0;
@@ -5472,6 +5493,14 @@ input[type="radio"]:checked::after {
 }
 .text-blocks__item_half {
     width: 50%;
+}
+.text-blocks__graphic {
+    display: block;
+    width: 100%;
+    margin: 0 auto 25px;
+}
+.text-blocks__graphic:last-child {
+    margin-bottom: 0;
 }
 .text-blocks__title {
     margin-bottom: 12px;
