@@ -2378,141 +2378,145 @@ add_filter('acf/format_value/key=field_5f296dcbe2111', 'kf_hide_search_section_f
 /**
  * Add ACF content to Relevanssi content and excerpts
  */
-function kf_check_acf_field_order($a, $b) {
-    $a_m = $a['menu_order'];
-    $b_m = $b['menu_order'];
-    $a_o = get_post($a['parent'])->menu_order;
-    $b_o = get_post($b['parent'])->menu_order;
-    $a_p = get_post($a['parent'])->post_content;
-    $b_p = get_post($b['parent'])->post_content;
-    
-    $p_array = array($a_p, $b_p);
-    foreach ($p_array as &$c) {
-        if (strpos($c, 'acf_after_title') !== false) {
-            $c = -1;
-        } elseif (strpos($c, 'side') !== false) {
-            $c = 1;
-        } else {
-            $c = 0;
-        }
+function kf_compare_acf_field_groups($a, $b) {
+    $position_values = array(
+        'acf_after_title' => 0,
+        'normal' => 1,
+        'side' => 2
+    ); // assign numerical value to each position option
+
+    // compare using group positions
+    $relative_position = $position_values[$a['position']] - $position_values[$b['position']];
+    if ($relative_position != 0) {
+        return $relative_position;
     }
-    $a_p = $p_array[0];
-    $b_p = $p_array[1];
-    
-    if ($a_p < $b_p) {
-        return -1;
-    } elseif ($a_p > $b_p) {
-        return 1;
-    }
-    if ($a_o < $b_o) {
-        return -1;
-    } elseif ($a_o > $b_o) {
-        return 1;
-    }
-    if ($a_o < $b_o) {
-        return -1;
-    } elseif ($a_o > $b_o) {
-        return 1;
-    }
-    if ($a_m < $b_m) {
-        return -1;
-    } elseif ($a_m > $b_m) {
-        return 1;
-    }
-    return 0;
+
+    return $a['menu_order'] - $b['menu_order']; // for groups with the same position, compare using order numbers
 }
 
-function kf_get_acf_field_search_content($field, $post_id) {
-    $add = ''; // by default, add no content
+function kf_get_acf_field_search_content($post_id, $field, $is_sub_field = false, $value = null) {
+    $content = ''; // by default, add no content
 
-    $field_classes = explode(' ', $field['wrapper']['class']);
-    
-    // extract content based on field type (unless noindex class is present or Relevanssi exclude toggle is enabled)
-    if (!in_array('search-noindex', $field_classes) && !$field['relevanssi_exclude']) {
-        if ($field['type'] == 'text') {
-            // for text fields, get the value directly
-            $to_add = trim($field['value']);
-            
+    // extract content based on field type (unless Relevanssi exclude toggle is enabled)
+    if (!isset($field['relevanssi_exclude']) || !$field['relevanssi_exclude']) {
+        if ($field['type'] == 'text' || $field['type'] == 'email') {
+            $value = !$is_sub_field ? get_field($field['name'], $post_id) : $value;
+
+            // for text fields, just trim the value
+            $to_add = trim($value);
+
             if ($to_add !== '') {
-                $add = ' ' . $to_add;
+                $content .= ' ' . $to_add;
             }
         } elseif ($field['type'] == 'textarea' || $field['type'] == 'wysiwyg') {
-            // for textareas and wysiwygs, remove tags from content
-            $to_add = trim(strip_tags($field['value']));
-            
+            $value = !$is_sub_field ? get_field($field['name'], $post_id) : $value;
+
+            // for textareas and wysiwygs, remove line breaks and strip tags from content
+            $to_add = trim(preg_replace('/\s+/u', ' ', strip_tags($value)));
+
             if ($to_add !== '') {
-                $add .= ' ' . $to_add;
+                $content .= ' ' . $to_add;
             }
         } elseif ($field['type'] == 'image') {
-            // for images, get the alt text
-            if ($field['value']) {
-                $to_add = trim($field['value']['alt']);
+            $value = !$is_sub_field ? get_field($field['name'], $post_id) : $value;
+
+            // for images, use the alt text
+            if (is_array($value) && $value) {
+                $to_add = trim($value['alt']);
                 
                 if ($to_add !== '') {
-                    $add .= ' ' . $to_add;
+                    $content .= ' ' . $to_add;
+                }
+            }
+        } elseif ($field['type'] == 'gallery') {
+            $value = !$is_sub_field ? get_field($field['name'], $post_id) : $value;
+
+            // for galleries, use the alt text from each image
+            if (is_array($value) && $value) {
+                foreach ($value as $image) {
+                    if (is_array($image) && $image) {
+                        $to_add = trim($image['alt']);
+                        
+                        if ($to_add !== '') {
+                            $content .= ' ' . $to_add;
+                        }
+                    }
                 }
             }
         } elseif ($field['type'] == 'link') {
-            // for links, get only the title (not the URL or target)
-            if ($field['value']) {
-                $to_add = trim($field['value']['title']);
+            $value = !$is_sub_field ? get_field($field['name'], $post_id) : $value;
+
+            // for links, use the link text
+            if (is_array($value) && $value) {
+                $to_add = trim($value['title']);
                 
                 if ($to_add !== '') {
-                    $add .= ' ' . $to_add;
+                    $content .= ' ' . $to_add;
                 }
             }
-        } elseif ($field['type'] == 'repeater' || $field['type'] == 'flexible_content' || $field['type'] == 'group') {
-            // for repeaters, flexible content, and groups, get content from sub fields
-            $field_key = $field['key'];
-            if (isset($field['_clone'])) {
-                $field_key = $field['name']; // if this is inside a clone field, the key won't work, so use the name (we prefer the key, because the name can cause an infinite loop in some scenarios)
+        } elseif ($field['type'] == 'group' || $field['type'] == 'clone') {
+            $value = !$is_sub_field ? get_field($field['name'], $post_id) : $value;
+
+            // for groups and clone fields, process each sub field
+            if (is_array($field['sub_fields']) && $field['sub_fields'] && is_array($value) && $value) {
+                foreach ($field['sub_fields'] as $sub_field) {
+                    $content .= kf_get_acf_field_search_content($post_id, $sub_field, true, $value[$sub_field['name']]);
+                }
             }
-            
-            while (have_rows($field_key, $post_id)) {
-                the_row();
-                $ordered_field_objects = array();
-                foreach(get_row() as $sub_field_name => $sub_field_value) {
-                    if ($sub_field_name != 'acf_fc_layout') {
-                        $ordered_field_objects[$sub_field_name] = get_sub_field_object($sub_field_name, $post_id);
+        } elseif ($field['type'] == 'repeater') {
+            $value = !$is_sub_field ? get_field($field['name'], $post_id) : $value;
+
+            // for repeaters, process each row of sub fields
+            if (is_array($field['sub_fields']) && $field['sub_fields'] && is_array($value) && $value) {
+                foreach ($value as $value_row) {
+                    if (is_array($value_row) && $value_row) {
+                        foreach ($field['sub_fields'] as $sub_field) {
+                            $content .= kf_get_acf_field_search_content($post_id, $sub_field, true, $value_row[$sub_field['name']]);
+                        }
                     }
                 }
-                uasort($ordered_field_objects, 'kf_check_acf_field_order');
-                foreach($ordered_field_objects as $sub_field_object) {
-                    $add .= kf_get_acf_field_search_content($sub_field_object, $post_id);
+            }
+        } elseif ($field['type'] == 'flexible_content') {
+            $value = !$is_sub_field ? get_field($field['name'], $post_id) : $value;
+
+            // for flexible content fields, process each row of sub fields based on the layout
+            if (is_array($field['layouts']) && $field['layouts'] && is_array($value) && $value) {
+                $layouts = array_column($field['layouts'], null, 'name'); // re-index array using layout names
+
+                foreach ($value as $value_row) {
+                    if (is_array($value_row) && $value_row) {
+                        if (array_key_exists($value_row['acf_fc_layout'], $layouts) && is_array($layouts[$value_row['acf_fc_layout']]['sub_fields']) && $layouts[$value_row['acf_fc_layout']]['sub_fields']) {
+                            foreach ($layouts[$value_row['acf_fc_layout']]['sub_fields'] as $sub_field) {
+                                $content .= kf_get_acf_field_search_content($post_id, $sub_field, true, $value_row[$sub_field['name']]);
+                            }
+                        }
+                    }
                 }
-            }
-        } elseif ($field['type'] == 'clone') {
-            // for clone fields get content from sub fields
-            $ordered_field_objects = array();
-            foreach ($field['sub_fields'] as $sub_field) {
-                $sub_field['value'] = $field['value'][$sub_field['__name']]; // add sub field value to sub field object
-                
-                $ordered_field_objects[$sub_field['name']] = $sub_field;
-            }
-            uasort($ordered_field_objects, 'kf_check_acf_field_order');
-            foreach($ordered_field_objects as $sub_field_object) {
-                $add .= kf_get_acf_field_search_content($sub_field_object, $post_id);
             }
         }
     }
-    
-    return $add;
+
+    return $content;
 }
 
 function kf_search_content($post_id) {
     $content = '';
     
-    $all_fields = get_field_objects($post_id);
-        
-    if ($all_fields) {
-        uasort($all_fields, 'kf_check_acf_field_order');
-        
-        foreach ($all_fields as $field) {
-            $content .= kf_get_acf_field_search_content($field, $post_id);
+    $all_field_groups = acf_get_field_groups(array('post_id' => $post_id)); // get all field groups associated with the post
+
+    if ($all_field_groups) {
+        usort($all_field_groups, 'kf_compare_acf_field_groups'); // sort field groups
+
+        foreach ($all_field_groups as $field_group) {
+            $group_fields = acf_get_fields($field_group['key']); // get all fields in the group
+
+            foreach ($group_fields as $field) {
+                $content .= kf_get_acf_field_search_content($post_id, $field);
+            }
         }
     }
     
-    $content = trim(str_replace(array("\r", "\n"), ' ', $content)); // remove uneccesary whitespace and line breaks
+    $content = trim(preg_replace('/\s+/u', ' ', strip_tags($content))); // strip any remaining tags, line breaks, or extra whitespace
     
     return $content;
 }
