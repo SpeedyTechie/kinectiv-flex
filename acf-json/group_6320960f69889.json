@@ -3,9 +3,34 @@
     "title": "[Options] Advanced",
     "fields": [
         {
+            "key": "field_63b8795a8cad0",
+            "label": "Visibility",
+            "name": "visibility",
+            "aria-label": "",
+            "type": "button_group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "choices": {
+                "visible": "<span class=\"dashicons dashicons-visibility\"><\/span> Visible",
+                "hidden": "<span class=\"dashicons dashicons-hidden\"><\/span> Hidden"
+            },
+            "default_value": "visible",
+            "return_format": "",
+            "allow_null": 0,
+            "layout": ""
+        },
+        {
             "key": "field_632096cacdb35",
             "label": "Section ID",
             "name": "id",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -40,5 +65,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1663080785
+    "modified": 1673034172
 }

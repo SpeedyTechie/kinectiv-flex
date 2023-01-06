@@ -1078,6 +1078,25 @@ add_filter('acf/validate_value', 'kf_acf_skip_validation', 10, 4);
 
 
 /**
+ * Section visibility toggle
+ */
+function kf_remove_hidden_sections($value) {
+    $new_value = array();
+
+    foreach ($value as $section) {
+        if ($section['options']['advanced_visibility'] != 'hidden') {
+            $new_value[] = $section;
+        }
+    }
+
+    $value = $new_value;
+
+    return $value;
+}
+add_filter('acf/format_value/key=field_5f296dcbe2111', 'kf_remove_hidden_sections'); // remove hidden sections from flexible content field value
+
+
+/**
  * Custom button color variations
  */
 function kf_button_color_classes($theme, $button_variation) {
