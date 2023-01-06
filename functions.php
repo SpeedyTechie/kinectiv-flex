@@ -1081,15 +1081,17 @@ add_filter('acf/validate_value', 'kf_acf_skip_validation', 10, 4);
  * Section visibility toggle
  */
 function kf_remove_hidden_sections($value) {
-    $new_value = array();
+    if (is_array($value) && $value) {
+        $new_value = array();
 
-    foreach ($value as $section) {
-        if ($section['options']['advanced_visibility'] != 'hidden') {
-            $new_value[] = $section;
+        foreach ($value as $section) {
+            if ($section['options']['advanced_visibility'] != 'hidden') {
+                $new_value[] = $section;
+            }
         }
-    }
 
-    $value = $new_value;
+        $value = $new_value;
+    }
 
     return $value;
 }
