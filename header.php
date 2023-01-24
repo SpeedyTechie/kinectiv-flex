@@ -371,11 +371,13 @@
                     <?php if ($f_nav_2['links'] || ($f_enable_search && $f_nav_2['search'])): ?>
                     <div class="sub-header-1__item">
                         <nav class="site-nav site-nav_right site-nav_xs site-nav_lines c_color_<?php color_id($theme, 3); ?>">
+                            <?php if ($f_nav_2['links']): ?>
                             <?php foreach ($f_nav_2['links'] as $item): ?>
                             <div class="site-nav__item site-nav__item_xs site-nav__item_line">
                                 <a href="<?php echo esc_url($item['link']['url']); ?>" target="<?php echo $item['link']['target']; ?>" class="site-nav__link c_color_<?php color_id($theme, 3); ?> c_h_color_<?php color_id($theme, 5); ?>"><?php echo $item['link']['title']; ?></a>
                             </div>
                             <?php endforeach; ?>
+                            <?php endif; ?>
                             <?php if ($f_enable_search && $f_nav_2['search']): ?>
                             <div class="site-nav__item site-nav__item_xs site-nav__item_line">
                                 <button type="button" class="site-nav__search c_color_<?php color_id($theme, 3); ?> c_h_color_<?php color_id($theme, 5); ?> c_h-parent" data-dialog-box="header-search">
