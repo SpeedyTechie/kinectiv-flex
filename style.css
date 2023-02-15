@@ -1074,17 +1074,16 @@ input[type="radio"]:checked::after {
 .gform_wrapper .ui-datepicker-trigger {
     display: none;
 }
-.gfield .StripeElement {
+.gfield .StripeElement,
+.gform_wrapper.gravity-theme .gfield .StripeElement {
     background-color: currentColor;
     height: auto;
+    padding: 0.65em 0.9em;
     border: 0;
     border-radius: 0;
 }
 .gfield .StripeElement--webkit-autofill {
     background-color: currentColor !important;
-}
-.gfield .ginput_stripe_creditcard input {
-    padding: 0.65em 0.9em;
 }
 .gfield .ginput_complex label {
     display: inline-block;
@@ -4611,6 +4610,9 @@ input[type="radio"]:checked::after {
 .section {
     padding: 85px 0;
 }
+.section_relative {
+    position: relative;
+}
 .section_y_xs,
 .section_top_xs {
     padding-top: 25px;
@@ -4659,6 +4661,13 @@ input[type="radio"]:checked::after {
 .section_bottom_none {
     padding-bottom: 0;
 }
+.section__bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
 .section__content {
     max-width: 1450px;
     margin: 0 auto;
@@ -4669,6 +4678,9 @@ input[type="radio"]:checked::after {
 }
 .section__content_x_sm {
     padding: 0 60px;
+}
+.section_relative .section__content {
+    position: relative;
 }
 
 @media (max-width: 1250px) {
