@@ -43,10 +43,22 @@ if ($bottom_padding == 'xs' || $bottom_padding == 'none') {
 ?>
 
 <div <?php if ($section_id) { echo 'id="' . $section_id . '" '; } ?>class="section c_color_<?php color_id($theme, 5); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
+    <?php if ($section['options']['bg_type'] == 'video'): ?>
+    <?php
+    $video_args = array(
+        'image' => $section['options']['bg_image'],
+        'video' => $section['options']['bg_video'],
+        'advanced' => $section['options']['bg_advanced']
+    );
+    ?>
+    <div class="section__bg">
+        <?php get_template_part('template-parts/component', 'autoplay_video', $video_args); ?>
+    </div>
+    <?php endif; ?>
     <div class="section__content section__content_w_full">
         <div class="page-intro">
-            <?php if ($section['graphic'] || $section['title'] || $section['text'] || $section['buttons'] || ($section['options']['bg_type'] == 'image' && $section['options']['layout_height'] != 'min')): ?>
-            <div class="page-intro__main page-intro__main_<?php echo $section['options']['layout_align']; ?><?php if ($section['options']['bg_type'] == 'image') { echo ' page-intro__main_h_' . $section['options']['layout_height']; } ?>">
+            <?php if ($section['graphic'] || $section['title'] || $section['text'] || $section['buttons'] || (($section['options']['bg_type'] == 'image' || $section['options']['bg_type'] == 'video') && $section['options']['layout_height'] != 'min')): ?>
+            <div class="page-intro__main page-intro__main_<?php echo $section['options']['layout_align']; ?><?php if ($section['options']['bg_type'] == 'image' || $section['options']['bg_type'] == 'video') { echo ' page-intro__main_h_' . $section['options']['layout_height']; } ?>">
                 <div class="page-intro__main-content">
                     <?php if ($section['graphic']) { ?><img src="<?php echo $section['graphic']['url']; ?>" alt="<?php echo esc_attr($section['graphic']['alt']); ?>" width="<?php echo $section['graphic']['width']; ?>" height="<?php echo $section['graphic']['height']; ?>" class="page-intro__graphic page-intro__graphic_<?php echo $section['options']['layout_graphic-width']; ?> page-intro__graphic_<?php echo $section['options']['layout_align']; ?>" /><?php } ?>
                     <?php if ($section['title']) { ?><h2 class="page-intro__title title title_<?php echo $section['options']['layout_title-size']; ?>"><?php echo $section['title']; ?></h2><?php } ?>

@@ -6,6 +6,7 @@
             "key": "field_5f299fd263ae2",
             "label": "Type",
             "name": "type",
+            "aria-label": "",
             "type": "button_group",
             "instructions": "",
             "required": 0,
@@ -15,20 +16,23 @@
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "choices": {
                 "default": "Default",
                 "color": "Custom Color",
-                "image": "Image"
+                "image": "Image",
+                "video": "Video"
             },
-            "allow_null": 0,
             "default_value": "",
-            "layout": "horizontal",
-            "return_format": "value"
+            "return_format": "value",
+            "allow_null": 0,
+            "layout": "horizontal"
         },
         {
             "key": "field_5f29a00b63ae3",
             "label": "Color",
             "name": "color",
+            "aria-label": "",
             "type": "color_picker",
             "instructions": "",
             "required": 1,
@@ -46,12 +50,15 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "#ffffff"
+            "default_value": "#ffffff",
+            "enable_opacity": false,
+            "return_format": "string"
         },
         {
             "key": "field_5f29a03d63ae4",
             "label": "Image",
             "name": "image",
+            "aria-label": "",
             "type": "image",
             "instructions": "",
             "required": 1,
@@ -62,6 +69,13 @@
                         "operator": "==",
                         "value": "image"
                     }
+                ],
+                [
+                    {
+                        "field": "field_5f299fd263ae2",
+                        "operator": "==",
+                        "value": "video"
+                    }
                 ]
             ],
             "wrapper": {
@@ -69,8 +83,8 @@
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "return_format": "array",
-            "preview_size": "medium",
             "library": "all",
             "min_width": "",
             "min_height": "",
@@ -78,12 +92,43 @@
             "max_width": "",
             "max_height": "",
             "max_size": "",
-            "mime_types": ""
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_63ecf73cfee1a",
+            "label": "Video",
+            "name": "video",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "Required File Type: mp4",
+            "required": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f299fd263ae2",
+                        "operator": "==",
+                        "value": "video"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "mp4"
         },
         {
             "key": "field_5f2d539bc2c56",
             "label": "",
             "name": "advanced",
+            "aria-label": "",
             "type": "group",
             "instructions": "",
             "required": 0,
@@ -94,6 +139,13 @@
                         "operator": "==",
                         "value": "image"
                     }
+                ],
+                [
+                    {
+                        "field": "field_5f299fd263ae2",
+                        "operator": "==",
+                        "value": "video"
+                    }
                 ]
             ],
             "wrapper": {
@@ -101,12 +153,14 @@
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "layout": "block",
             "sub_fields": [
                 {
                     "key": "field_5f2d53030edf1",
                     "label": "Advanced Image Options",
                     "name": "",
+                    "aria-label": "",
                     "type": "accordion",
                     "instructions": "",
                     "required": 0,
@@ -124,6 +178,7 @@
                     "key": "field_5f2d532f0edf2",
                     "label": "Advanced Image Options",
                     "name": "image",
+                    "aria-label": "",
                     "type": "clone",
                     "instructions": "",
                     "required": 0,
@@ -138,6 +193,56 @@
                     ],
                     "display": "seamless",
                     "layout": "block",
+                    "prefix_label": 0,
+                    "prefix_name": 1
+                },
+                {
+                    "key": "field_63ecf7c732d84",
+                    "label": "Advanced Video Options",
+                    "name": "",
+                    "aria-label": "",
+                    "type": "accordion",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_5f299fd263ae2",
+                                "operator": "==",
+                                "value": "video"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "relevanssi_exclude": 0,
+                    "open": 0,
+                    "multi_expand": 0,
+                    "endpoint": 0
+                },
+                {
+                    "key": "field_63ecfb511623a",
+                    "label": "Advanced Video Options",
+                    "name": "video",
+                    "aria-label": "",
+                    "type": "clone",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "relevanssi_exclude": 0,
+                    "clone": [
+                        "group_63ecf91699b7c"
+                    ],
+                    "display": "seamless",
+                    "layout": "",
                     "prefix_label": 0,
                     "prefix_name": 1
                 }
@@ -161,5 +266,6 @@
     "hide_on_screen": "",
     "active": false,
     "description": "",
-    "modified": 1628095895
+    "show_in_rest": 0,
+    "modified": 1676558880
 }

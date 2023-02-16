@@ -391,6 +391,8 @@ function kf_section_bg_styles($options, $default = 0) {
         $image_styles = kf_advanced_bg_image_styles($options['bg_advanced']);
         $styles['style'] .= $image_styles['style'];
         $styles['classes'] .= $image_styles['classes'];
+    } elseif ($options['bg_type'] == 'video') {
+        $styles['classes'] .= ' section_relative'; // add relative positioning class to section
     }
     
     return $styles;
@@ -1202,6 +1204,51 @@ function kf_add_button_color_variation_css() {
     }
 }
 add_action('wp_enqueue_scripts', 'kf_add_button_color_variation_css');
+
+
+/**
+ * Only include video bg option for supported sections
+ */
+function kf_remove_video_bg_option($field) {
+    if (is_admin() && function_exists('get_current_screen')) {
+        $current_screen = get_current_screen();
+
+        if ($current_screen->post_type == 'acf-field-group') {
+            return $field; // exit function for the field group editor
+        }
+    }
+
+    unset($field['choices']['video']);
+
+    return $field;
+}
+add_filter('acf/load_field/key=field_5f299fd263ae2', 'kf_remove_video_bg_option'); // by default, remove video bg option
+
+function kf_enable_video_bg_option($field) {
+    if (is_admin() && function_exists('get_current_screen')) {
+        $current_screen = get_current_screen();
+
+        if ($current_screen->post_type == 'acf-field-group') {
+            return $field; // exit function for the field group editor
+        }
+    }
+
+    // get index of bg_type field in sub_field array
+    $type_field_index = -1;
+    foreach ($field['sub_fields'] as $i => $sub_field) {
+        if ($sub_field['name'] == 'bg_type') {
+            $type_field_index = $i;
+        }
+    }
+
+    // add video option to choices array
+    if ($type_field_index > -1) {
+        $field['sub_fields'][$type_field_index]['choices']['video'] = 'Video';
+    }
+
+    return $field;
+}
+add_filter('acf/load_field/key=field_5f314912ee71a', 'kf_enable_video_bg_option'); // enable video bg option for "Page Header" section
 
 
 /**
