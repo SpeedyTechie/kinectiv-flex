@@ -161,7 +161,7 @@
                                     <?php foreach ($f_logos['logos'] as $logo): ?>
                                     <div class="footer-logos__item footer-logos__item_<?php echo $f_options['layout_logo-size']; ?>">
                                         <?php if ($logo['link']) { ?><a href="<?php echo esc_url($logo['link']); ?>" target="_blank" rel="nofollow" class="footer-logos__link"><?php } ?>
-                                            <img src="<?php echo $logo['logo']['url']; ?>" alt="<?php echo esc_attr($section['logo']['alt']); ?>" width="<?php echo $logo['logo']['width']; ?>" height="<?php echo $logo['logo']['height']; ?>" class="footer-logos__logo footer-logos__logo_<?php echo $f_options['layout_logo-size']; ?>" />
+                                            <img src="<?php echo $logo['logo']['url']; ?>" alt="<?php echo esc_attr($logo['logo']['alt']); ?>" width="<?php echo $logo['logo']['width']; ?>" height="<?php echo $logo['logo']['height']; ?>" class="footer-logos__logo footer-logos__logo_<?php echo $f_options['layout_logo-size']; ?>" />
                                         <?php if ($logo['link']) { ?></a><?php } ?>
                                     </div>
                                     <?php endforeach; ?>
@@ -211,7 +211,7 @@
                                     <?php foreach ($f_logos['logos'] as $logo): ?>
                                     <div class="footer-logos__item footer-logos__item_<?php echo $f_options['layout_logo-size']; ?>">
                                         <?php if ($logo['link']) { ?><a href="<?php echo esc_url($logo['link']); ?>" target="_blank" rel="nofollow" class="footer-logos__link"><?php } ?>
-                                            <img src="<?php echo $logo['logo']['url']; ?>" alt="<?php echo esc_attr($section['logo']['alt']); ?>" width="<?php echo $logo['logo']['width']; ?>" height="<?php echo $logo['logo']['height']; ?>" class="footer-logos__logo footer-logos__logo_<?php echo $f_options['layout_logo-size']; ?>" />
+                                            <img src="<?php echo $logo['logo']['url']; ?>" alt="<?php echo esc_attr($logo['logo']['alt']); ?>" width="<?php echo $logo['logo']['width']; ?>" height="<?php echo $logo['logo']['height']; ?>" class="footer-logos__logo footer-logos__logo_<?php echo $f_options['layout_logo-size']; ?>" />
                                         <?php if ($logo['link']) { ?></a><?php } ?>
                                     </div>
                                     <?php endforeach; ?>
