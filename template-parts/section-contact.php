@@ -169,7 +169,7 @@ $c_info = $section['info']['addresses'] || $section['info']['hours'] || $section
                                         <path class="c_fill_<?php color_id($theme, 5); ?>" d="M98.68,5.84a94.71,94.71,0,1,0,94.71,94.71A94.71,94.71,0,0,0,98.68,5.84Zm70.73,88.8H145.85c-.95-23.6-7.52-44.47-17.42-58.49A71.12,71.12,0,0,1,169.41,94.64ZM92.76,30.73V94.64H63.32C64.78,60.72,78.58,36.22,92.76,30.73Zm0,75.74v63.91c-14.18-5.49-28-30-29.44-63.91Zm11.84,63.91V106.47H134C132.55,140.39,118.77,164.89,104.6,170.38Zm0-75.74V30.73c14.17,5.49,28,30,29.43,63.91ZM68.89,36.15C59,50.17,52.43,71,51.48,94.64H27.94A71.05,71.05,0,0,1,68.89,36.15ZM27.94,106.47H51.48c1,23.6,7.52,44.47,17.41,58.49A71.07,71.07,0,0,1,27.94,106.47ZM128.43,165c9.9-14,16.47-34.89,17.42-58.49h23.56A71.14,71.14,0,0,1,128.43,165Z"/>
                                     </svg>
                                     <div class="contact-info__info-row">
-                                        <?php if ($section['info']['social']['title']) { ?><p class="contact-info__info-label contact-info__info-label_social text text_line_1-4"><?php echo $section['info']['social']['title']; ?></p><?php } ?>
+                                        <?php if ($section['info']['social']['title']) { ?><strong class="contact-info__info-label contact-info__info-label_social text text_line_1-4"><?php echo $section['info']['social']['title']; ?></strong><?php } ?>
                                         <?php if ($social_links): ?>
                                         <div class="contact-info__info-social">
                                             <div class="social">
