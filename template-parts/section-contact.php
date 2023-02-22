@@ -105,7 +105,7 @@ $c_info = $section['info']['addresses'] || $section['info']['hours'] || $section
                                     <p class="contact-info__info-row text text_line_1-4">
                                         <?php if ($address_row['label']) { ?><strong class="contact-info__info-label"><?php echo $address_row['label']; ?></strong><br /><?php } ?>
                                         <?php if ($address_row['link']): ?>
-                                        <a href="<?php echo esc_url($address_row['link']); ?>" class="contact-info__info-detail c_color_<?php color_id($theme, 3); ?> c_h_color_<?php color_id($theme, 5); ?>">
+                                        <a href="<?php echo esc_url($address_row['link']); ?>" target="_blank" class="contact-info__info-detail c_color_<?php color_id($theme, 3); ?> c_h_color_<?php color_id($theme, 5); ?>">
                                             <span><?php echo $address_row['line-1']; ?></span><br />
                                             <span><?php echo $address_row['line-2']; ?></span>
                                         </a>
