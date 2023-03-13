@@ -168,7 +168,7 @@
                                 </div>
                             </div>
                             <?php endif; ?>
-                            <?php if ($f_logos['text']) { ?><div class="footer-logos__text text text_xs text_line_1-4 text_wrap text_compact"><?php echo $f_logos['text']; ?></div><?php } ?>
+                            <?php if ($f_logos['text']) { ?><div class="footer-logos__text text text_xs text_line_1-4 text_wrap text_compact"><?php echo kf_wysiwyg_color_classes($f_logos['text'], $theme); ?></div><?php } ?>
                         </div>
                     </div>
                     <?php endif; ?>
@@ -218,7 +218,7 @@
                                 </div>
                             </div>
                             <?php endif; ?>
-                            <?php if ($f_logos['text']) { ?><div class="footer-logos__text footer-logos__text_center text text_xs text_line_1-4 text_wrap text_compact"><?php echo $f_logos['text']; ?></div><?php } ?>
+                            <?php if ($f_logos['text']) { ?><div class="footer-logos__text footer-logos__text_center text text_xs text_line_1-4 text_wrap text_compact"><?php echo kf_wysiwyg_color_classes($f_logos['text'], $theme); ?></div><?php } ?>
                         </div>
                     </div>
                     <?php endif; ?>
