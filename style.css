@@ -984,7 +984,7 @@ input[type="radio"]:checked::after {
 .gfield .gform_fileupload_multifile {
     overflow: hidden;
 }
-.gfield .gform_drop_area {
+.gform_wrapper.gravity-theme .gfield .gform_drop_area {
     background-color: transparent;
     display: flex;
     flex-wrap: wrap;
@@ -997,11 +997,11 @@ input[type="radio"]:checked::after {
     border-style: solid;
     border-radius: 0;
 }
-.gfield .gform_drop_area .gform_drop_instructions {
+.gform_wrapper.gravity-theme .gfield .gform_drop_area .gform_drop_instructions {
     margin: 10px 10px 10px 0;
     line-height: 1.4;
 }
-.gfield .gform_drop_area .gform_fileupload_rules {
+.gform_wrapper.gravity-theme .gfield .gform_drop_area .gform_fileupload_rules {
     width: 100%;
     margin-top: 10px;
 }
@@ -1197,7 +1197,7 @@ input[type="radio"]:checked::after {
     .gfield .ginput_complex > .name_suffix {
         width: 13%;
     }
-    .gfield .gform_drop_area {
+    .gform_wrapper.gravity-theme .gfield .gform_drop_area {
         margin-bottom: 12px;
     }
     .gfield.field_description_below .gfield_description {
@@ -1312,7 +1312,7 @@ input[type="radio"]:checked::after {
     .gfield.field_kfgf_layout_horizontal .gfield_checkbox button {
         margin: 3px 10px;
     }
-    .gfield .gform_drop_area {
+    .gform_wrapper.gravity-theme .gfield .gform_drop_area {
         margin-bottom: 8px;
         padding: 40px 25px;
     }
@@ -1370,7 +1370,7 @@ input[type="radio"]:checked::after {
     .gform_wrapper .gform_submission_error {
         padding: 10px 15px;
     }
-    .gfield .gform_drop_area {
+    .gform_wrapper.gravity-theme .gfield .gform_drop_area {
         padding: 25px;
     }
     .gfield .ginput_recaptcha > div {

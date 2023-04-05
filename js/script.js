@@ -3924,7 +3924,7 @@ function initGformEnhanceFileInput() {
     
     function updateFileInputPreview(customPreview, sourcePreview) {
         var status = '';
-        var progressSource = sourcePreview.find('b');
+        var progressSource = sourcePreview.find('.gfield_fileupload_progress');
         var boxEl = customPreview.find('.kfgf-file-previews__box');
         var statusEl = customPreview.find('.kfgf-file-previews__status');
         var progressEl = customPreview.find('.kfgf-file-previews__progress');
@@ -3935,19 +3935,14 @@ function initGformEnhanceFileInput() {
             var name = '';
             
             // set name text
-            if (sourcePreview.find('strong').length > 0) {
-                name = sourcePreview.find('strong').text();
-            } else {
-                name = sourcePreview[0].childNodes[0].nodeValue.trim();
-                name = name.substr(0, name.lastIndexOf('(') - 1);
-            }
+            name = sourcePreview.find('.gfield_fileupload_filename').text();
             customPreview.find('.kfgf-file-previews__name').text(name);
             customPreview.find('.kfgf-file-previews__box').attr('title', name);
             
             // add cancel event handler
             cancelEl.click(function() {
                 sourcePreview.find('.gform_delete_file').trigger('click');
-                sourcePreview.find('a').trigger('click');
+                sourcePreview.find('.gfield_fileupload_cancel').trigger('click');
                 
                 customPreview.parents('.kfgf-file-previews').find('.kfgf-file-previews__item_error').not('.kfgf-file-previews__item_proto').remove();
             });
@@ -3964,9 +3959,9 @@ function initGformEnhanceFileInput() {
         // get status based on the current configuration of the source
         if (sourcePreview.children().length == 0) {
             status = 'failed';
-        } else if (progressSource.length == 0) {
+        } else if (progressSource.text().trim() == '100%') {
             status = 'complete';
-        } else if (sourcePreview.find('a').length == 0 && sourcePreview.find('img').length == 0 && sourcePreview.find('strong').length == 0) {
+        } else if (sourcePreview.find('.gfield_fileupload_cancel').length == 0 && sourcePreview.find('.gform_delete_file').length == 0 && progressSource.text().trim() != '100%') {
             status = 'cancelled';
         } else if (progressSource.text().trim() == '') {
             status = 'waiting';
@@ -4028,7 +4023,7 @@ function initGformEnhanceFileInput() {
             if (jQuery.contains(document, inputWrap[0])) {
                 var inputContainer = inputWrap.find('.ginput_container_fileupload');
                 var errors = inputWrap.find('[id^="gform_multifile_messages_"] li');
-                var previews = inputWrap.find('[id^="gform_preview_"] .ginput_preview');
+                var previews = inputWrap.find('.ginput_preview_list .ginput_preview');
                 var customPreviewWrap = inputContainer.find('.kfgf-file-previews');
                 var customPreviews = customPreviewWrap.find('.kfgf-file-previews__item_preview').not('.kfgf-file-previews__item_proto');
                 var protoWrap = customPreviewWrap.find('.kfgf-file-previews__proto');
