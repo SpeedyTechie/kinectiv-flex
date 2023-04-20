@@ -27,13 +27,26 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
 
 // get class list for button colors
 $button_color_classes = kf_button_color_classes($theme, $section['options']['color_buttons']);
+
+// build style attribute and class list for custom columns
+$column_styles = '';
+$column_classes = ' long-text__text_columns_' . $section['options']['layout_columns'];
+if ($section['options']['layout_columns'] == 'custom') {
+    $column_styles .= ' column-count: ' . $section['options']['layout_custom-columns']['count'] . ';';
+    $column_styles .= ' column-width: ' . $section['options']['layout_custom-columns']['width'] . 'px;';
+    $column_styles .= ' column-gap: ' . $section['options']['layout_custom-columns']['gap'] . '%;';
+
+    foreach ($section['options']['layout_custom-columns']['avoid-breaks'] as $element_type) {
+        $column_classes .= ' long-text__text_avoid-br_' . $element_type;
+    }
+}
 ?>
 
 <div <?php if ($section_id) { echo 'id="' . $section_id . '" '; } ?>class="section c_color_<?php color_id($theme, 5); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
     <div class="section__content">
         <div class="long-text">
             <?php if ($section['text']): ?>
-            <div class="long-text__text text text_wrap text_<?php echo $section['options']['layout_align']; ?>">
+            <div class="long-text__text text text_wrap text_<?php echo $section['options']['layout_align']; echo $column_classes; ?>"<?php if ($column_styles) { echo ' style="' . trim($column_styles) . '"'; } ?>>
                 <?php echo kf_wysiwyg_color_classes($section['text'], $theme); ?>
             </div>
             <?php endif; ?>

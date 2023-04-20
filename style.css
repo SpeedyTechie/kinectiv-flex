@@ -5252,6 +5252,32 @@ input[type="radio"]:checked::after {
 .long-text__buttons:first-child {
     margin-top: 0;
 }
+.long-text__text_columns_2 {
+    column-count: 2;
+    column-width: 300px;
+    column-gap: 10%;
+}
+.long-text__text_columns_3 {
+    column-count: 3;
+    column-width: 225px;
+    column-gap: 5%;
+}
+.long-text__text h1,
+.long-text__text h2,
+.long-text__text h3,
+.long-text__text h4,
+.long-text__text h5,
+.long-text__text h6,
+.long-text__text ul li,
+.long-text__text ol li,
+.long-text__text figure {
+    break-inside: avoid;
+}
+.long-text__text_avoid-br_p p,
+.long-text__text_avoid-br_list ul,
+.long-text__text_avoid-br_list ol {
+    break-inside: avoid;
+}
 
 @media (max-width: 1000px) {
     .long-text__buttons {
