@@ -154,6 +154,7 @@ class ks_acf_field_gf_select extends acf_field {
 		$field['type'] = 'select';
 		$field['ui'] = 1;
 		$field['choices'] = array();
+		$field['ajax'] = 0;
         
         // populate choices
         if (class_exists('GFAPI')) {
