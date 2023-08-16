@@ -1075,7 +1075,9 @@ input[type="radio"]:checked::after {
     display: none;
 }
 .gfield .StripeElement,
-.gform_wrapper.gravity-theme .gfield .StripeElement {
+.gform_wrapper.gravity-theme .gfield .StripeElement,
+.gform_legacy_markup_wrapper .gfield .ginput_full[data-payment-element=false] .StripeElement,
+.gravity-theme .gfield .ginput_full[data-payment-element=false] .StripeElement {
     background-color: currentColor;
     height: auto;
     padding: 0.65em 0.9em;
