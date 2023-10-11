@@ -522,7 +522,7 @@ select {
     padding: 0.65em 0.9em;
     font-size: 16px;
     line-height: 1.4;
-    border: 0;
+    border-width: 0;
     border-radius: 0;
     outline: 0;
 }
@@ -934,6 +934,17 @@ input[type="radio"]:checked::after {
 .gform_wrapper.gravity-theme .gform_body .gform_fields .gfield textarea {
     height: 225px;
 }
+.gform_wrapper input[type="text"][aria-invalid="true"],
+.gform_wrapper input[type="password"][aria-invalid="true"],
+.gform_wrapper input[type="number"][aria-invalid="true"],
+.gform_wrapper input[type="tel"][aria-invalid="true"],
+.gform_wrapper input[type="url"][aria-invalid="true"],
+.gform_wrapper input[type="email"][aria-invalid="true"],
+.gform_wrapper textarea[aria-invalid="true"],
+.gform_wrapper select[aria-invalid="true"] {
+    border-left-width: 4px;
+    border-left-style: solid;
+}
 .gfield .gfield_checkbox,
 .gfield .gfield_radio {
     margin: 0;
@@ -1302,6 +1313,16 @@ input[type="radio"]:checked::after {
     .gfield .ginput_container_email .ginput_left,
     .gfield .ginput_container_email .ginput_right {
         width: 100%;
+    }
+    .gform_wrapper input[type="text"][aria-invalid="true"],
+    .gform_wrapper input[type="password"][aria-invalid="true"],
+    .gform_wrapper input[type="number"][aria-invalid="true"],
+    .gform_wrapper input[type="tel"][aria-invalid="true"],
+    .gform_wrapper input[type="url"][aria-invalid="true"],
+    .gform_wrapper input[type="email"][aria-invalid="true"],
+    .gform_wrapper textarea[aria-invalid="true"],
+    .gform_wrapper select[aria-invalid="true"] {
+        border-left-width: 2px;
     }
     .gfield.field_kfgf_layout_horizontal .gfield_checkbox,
     .gfield.field_kfgf_layout_horizontal .gfield_radio {

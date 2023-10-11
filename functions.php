@@ -1646,6 +1646,9 @@ function kf_gform_field_content($field_content, $field) {
             
             if (in_array($type, $input_types_to_modify)) {
                 $classes = 'c_bg_' . color_id($theme, 1, true) . ' c_color_' . color_id($theme, 5, true) . ' c_placeholder_' . color_id($theme, 2, true);
+                if ($input_element->getAttribute('aria-invalid') == 'true') {
+                    $classes .= ' c_border_' . aux_color_id($theme, 1, true);
+                }
                 $input_element->setAttribute('class', trim($input_element->getAttribute('class') . ' ' . $classes));
             }
         }
@@ -1653,12 +1656,18 @@ function kf_gform_field_content($field_content, $field) {
         // add classes to textareas
         foreach ($dom->getElementsByTagName('textarea') as $textarea_element) {
             $classes = 'c_bg_' . color_id($theme, 1, true) . ' c_color_' . color_id($theme, 5, true) . ' c_placeholder_' . color_id($theme, 2, true);
+            if ($textarea_element->getAttribute('aria-invalid') == 'true') {
+                $classes .= ' c_border_' . aux_color_id($theme, 1, true);
+            }
             $textarea_element->setAttribute('class', trim($textarea_element->getAttribute('class') . ' ' . $classes));
         }
         
         // add classes and style to selects
         foreach ($dom->getElementsByTagName('select') as $select_element) {
             $classes = 'c_bg_' . color_id($theme, 1, true) . ' c_color_' . color_id($theme, 5, true) . ' c_placeholder_' . color_id($theme, 2, true);
+            if ($select_element->getAttribute('aria-invalid') == 'true') {
+                $classes .= ' c_border_' . aux_color_id($theme, 1, true);
+            }
             $select_element->setAttribute('class', trim($select_element->getAttribute('class') . ' ' . $classes));
             
             if (!$select_element->hasAttribute('multiple')) {
