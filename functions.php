@@ -1070,8 +1070,12 @@ add_action('acf/save_post', 'ks_save_options_page');
 function kf_acf_skip_validation($valid, $value, $field, $input_name) {
     $skip_validation_names = $_POST['_kf_acf_skip_validation'];
     
-    if ($skip_validation_names && in_array($input_name, $skip_validation_names)) {
-        $valid = true;
+    if ($skip_validation_names) {
+        if (in_array($input_name, $skip_validation_names)) {
+            $valid = true;
+        } elseif ($field['type'] == 'link' && in_array($input_name . '[title]', $skip_validation_names)) {
+            $valid = true; // handle special case for link fields
+        }
     }
     
     return $valid;
