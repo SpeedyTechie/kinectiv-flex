@@ -8859,7 +8859,7 @@ input[type="radio"]:checked::after {
 }
 
 /*--------------------------------------------------------------
-# Search Bar
+## Search Bar
 --------------------------------------------------------------*/
 .search-bar {
     text-align: left;
@@ -8957,7 +8957,7 @@ input.search-bar__field[type="search"] {
 }
 
 /*--------------------------------------------------------------
-# Search Results
+## Search Results
 --------------------------------------------------------------*/
 .search-results__top {
     display: flex;
@@ -9005,7 +9005,7 @@ input.search-bar__field[type="search"] {
 }
 
 /*--------------------------------------------------------------
-# Result Tile
+## Result Tile
 --------------------------------------------------------------*/
 .result-tile  {
     display: block;
