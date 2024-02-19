@@ -80,6 +80,7 @@ function kf_post_types() {
         'labels' => array(
             'name' => 'Events',
             'singular_name' => 'Event',
+            'add_new' => 'Add New Event',
             'add_new_item' => 'Add Event',
             'edit_item' => 'Edit Event',
             'new_item' => 'New Event',
