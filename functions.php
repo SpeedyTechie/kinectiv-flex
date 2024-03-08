@@ -2569,7 +2569,7 @@ function kf_get_acf_field_search_content($post_id, $field, $is_sub_field = false
                     if (is_array($value_row) && $value_row) {
                         if (array_key_exists($value_row['acf_fc_layout'], $layouts) && is_array($layouts[$value_row['acf_fc_layout']]['sub_fields']) && $layouts[$value_row['acf_fc_layout']]['sub_fields']) {
                             foreach ($layouts[$value_row['acf_fc_layout']]['sub_fields'] as $sub_field) {
-                                $content .= kf_get_acf_field_search_content($post_id, $sub_field, true, $value_row[$sub_field['name']]);
+                                $content .= kf_get_acf_field_search_content($post_id, $sub_field, true, isset($value_row[$sub_field['name']]) ? $value_row[$sub_field['name']] : null);
                             }
                         }
                     }
