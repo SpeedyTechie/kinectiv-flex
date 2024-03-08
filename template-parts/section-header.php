@@ -21,7 +21,7 @@ $section_id = $section['options']['advanced_id'] ? 'section-' . $section['option
 
 // build style attribute and class list
 $bg_styles = kf_section_bg_styles($section['options']);
-$padding_styles = kf_section_padding_styles($section['options'], $section_prev['options'], $section_next['options']);
+$padding_styles = kf_section_padding_styles($section['options'], $section_prev ? $section_prev['options'] : null, $section_next ? $section_next['options'] : null);
 $section_style = $bg_styles['style'] . $padding_styles['style'];
 $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
 
