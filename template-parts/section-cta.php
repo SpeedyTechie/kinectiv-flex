@@ -33,7 +33,7 @@ $button_color_classes = kf_button_color_classes($theme, $section['options']['col
     <div class="section__content">
         <div class="cta cta_<?php echo $section['options']['layout_align']; ?>">
             <?php if ($section['graphic']) { ?><img src="<?php echo $section['graphic']['url']; ?>" alt="<?php echo esc_attr($section['graphic']['alt']); ?>" width="<?php echo $section['graphic']['width']; ?>" height="<?php echo $section['graphic']['height']; ?>" class="cta__graphic cta__graphic_<?php echo $section['options']['layout_graphic-width']; ?> cta__graphic_<?php echo $section['options']['layout_align']; ?>" /><?php } ?>
-            <?php if ($section['title']) { ?><h2 class="cta__title title"><?php echo $section['title']; ?></h2><?php } ?>
+            <?php if ($section['title']) { ?><h2 class="cta__title title <?php echo component_colors($theme, 'title'); ?>"><?php echo $section['title']; ?></h2><?php } ?>
             <?php if ($section['text']) { ?><div class="cta__text cta__text_<?php echo $section['options']['layout_align']; ?> text text_md text_wrap text_compact"><?php echo kf_wysiwyg_color_classes($section['text'], $theme); ?></div><?php } ?>
             <?php if ($section['buttons']): ?>
             <div class="cta__buttons">

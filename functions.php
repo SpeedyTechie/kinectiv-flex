@@ -191,6 +191,7 @@ function aux_color_id($theme, $color_num, $return = false) {
 function component_colors($theme, $component, $return = false) {
     // list of components and their associated color classes
     $component_classes = array(
+        'title' => 'c_color_' . color_id($theme, 5, true),
         'button' =>  'c_bg_' . color_id($theme, 3, true) . ' c_h_bg_' . color_id($theme, 4, true) . ' c_color_' . color_id($theme, 0, true) . ' c_h_color_' . color_id($theme, 0, true),
         'arrow-link' => 'c_color_' . color_id($theme, 5, true) . ' c_h_color_' . color_id($theme, 4, true),
         'hr' => 'c_bg_' . color_id($theme, 2, true)
@@ -355,6 +356,7 @@ function kf_wysiwyg_text_classes($html) {
 function kf_wysiwyg_color_classes($html, $theme) {
     // list of classes to add to various elements
     $class_list = array(
+        'h2' => 'c_color_' . color_id($theme, 5, true),
         'h3' => 'c_color_' . color_id($theme, 3, true),
         'h5' => 'c_color_' . color_id($theme, 3, true),
         'blockquote' => 'c_color_' . color_id($theme, 3, true),

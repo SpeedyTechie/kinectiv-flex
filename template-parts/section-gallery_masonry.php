@@ -32,7 +32,7 @@ $image_index = 0;
 <div <?php if ($section_id) { echo 'id="' . $section_id . '" '; } ?>class="section c_color_<?php color_id($theme, 3); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
     <div class="section__content">
         <div class="title-caption">
-            <?php if ($section['title']) { ?><h2 class="title-caption__title title title_<?php echo $section['options']['layout_align-title']; ?> c_color_<?php color_id($theme, 5); ?>"><?php echo $section['title']; ?></h2><?php } ?>
+            <?php if ($section['title']) { ?><h2 class="title-caption__title title title_<?php echo $section['options']['layout_align-title']; ?> <?php echo component_colors($theme, 'title'); ?>"><?php echo $section['title']; ?></h2><?php } ?>
             <div class="title-caption__content">
                 <div class="image-masonry image-masonry_<?php echo $section['options']['layout_align-images']; ?> image-masonry_h_<?php echo $section['options']['layout_size']; ?><?php if ($section['options']['layout_truncate']) { echo ' image-masonry_truncate'; } ?>" data-gallery="<?php echo $i_section; ?>">
                     <?php foreach ($section['images'] as $image): ?>

@@ -88,7 +88,7 @@ if (!$time_string && !$f_description) $date_2_display = false;
             <div class="event-intro__item">
                 <div class="event-intro__block event-intro__block_text c_bg_<?php color_id($theme, $bg_color_2); ?>">
                     <div class="event-intro__content">
-                        <h1 class="event-intro__title title title_md"><?php echo get_the_title(); ?></h1>
+                        <h1 class="event-intro__title title title_md <?php echo component_colors($theme, 'title'); ?>"><?php echo get_the_title(); ?></h1>
                         <p class="event-intro__date text text_xl text_italic text_line_1-4">
                             <time datetime="<?php echo $date_dt->format('Y-m-d'); if ($time_dt) { echo ' ' . $time_dt->format('H:i'); } ?>" class="event-intro__date-part"><?php echo $date_string; ?></time>
                             <?php if ($date_end_string) { ?><time datetime="<?php echo $date_end_dt->format('Y-m-d'); ?>" class="event-intro__date-part"><?php echo $date_end_string; ?></time><?php } ?>

@@ -61,7 +61,7 @@ if ($bottom_padding == 'xs' || $bottom_padding == 'none') {
             <div class="page-intro__main page-intro__main_<?php echo $section['options']['layout_align']; ?><?php if ($section['options']['bg_type'] == 'image' || $section['options']['bg_type'] == 'video') { echo ' page-intro__main_h_' . $section['options']['layout_height']; } ?>">
                 <div class="page-intro__main-content">
                     <?php if ($section['graphic']) { ?><img src="<?php echo $section['graphic']['url']; ?>" alt="<?php echo esc_attr($section['graphic']['alt']); ?>" width="<?php echo $section['graphic']['width']; ?>" height="<?php echo $section['graphic']['height']; ?>" class="page-intro__graphic page-intro__graphic_<?php echo $section['options']['layout_graphic-width']; ?> page-intro__graphic_<?php echo $section['options']['layout_align']; ?>" /><?php } ?>
-                    <?php if ($section['title']) { ?><h2 class="page-intro__title title title_<?php echo $section['options']['layout_title-size']; ?>"><?php echo $section['title']; ?></h2><?php } ?>
+                    <?php if ($section['title']) { ?><h2 class="page-intro__title title title_<?php echo $section['options']['layout_title-size']; ?> <?php echo component_colors($theme, 'title'); ?>"><?php echo $section['title']; ?></h2><?php } ?>
                     <?php if ($section['text']) { ?><div class="page-intro__text page-intro__text_<?php echo $section['options']['layout_align']; ?> text text_wrap text_compact"><?php echo kf_wysiwyg_color_classes($section['text'], $theme); ?></div><?php } ?>
                     <?php if ($section['buttons']): ?>
                     <div class="page-intro__buttons">

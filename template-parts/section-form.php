@@ -29,7 +29,7 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
 <div <?php if ($section_id) { echo 'id="' . $section_id . '" '; } ?>class="section c_color_<?php color_id($theme, 5); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
     <div class="section__content">
         <div class="basic-form basic-form_<?php echo $section['options']['layout_align']; ?>">
-            <?php if ($section['title']) { ?><h2 class="basic-form__title title"><?php echo $section['title']; ?></h2><?php } ?>
+            <?php if ($section['title']) { ?><h2 class="basic-form__title title <?php echo component_colors($theme, 'title'); ?>"><?php echo $section['title']; ?></h2><?php } ?>
             <?php if ($section['text']) { ?><div class="basic-form__text text text_wrap text_compact c_color_<?php color_id($theme, 3); ?>"><?php echo kf_wysiwyg_color_classes($section['text'], $theme); ?></div><?php } ?>
             <?php if ($section['form']) { ?><div class="basic-form__form"><?php kf_show_gform($section['form'], $theme, $section['options']['color_buttons']); ?></div><?php } ?>
         </div>

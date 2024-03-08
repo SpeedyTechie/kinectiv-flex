@@ -51,7 +51,7 @@ if ($f_sections) {
             <?php if ($f_image) { ?><img src="<?php echo $f_image['url']; ?>" alt="<?php echo esc_attr($f_image['alt']); ?>" width="<?php echo $f_image['width']; ?>" height="<?php echo $f_image['height']; ?>" class="post-intro__image" /><?php } ?>
             <div class="post-intro__main">
                 <div class="post-intro__col post-intro__col_main">
-                    <h1 class="post-intro__title title title_md"><?php echo get_the_title(); ?></h1>
+                    <h1 class="post-intro__title title title_md <?php echo component_colors($theme, 'title'); ?>"><?php echo get_the_title(); ?></h1>
                     <div class="post-intro__info c_color_<?php color_id($theme, 3); ?>">
                         <p class="post-intro__info-item text text_lg text_line_1-4"><time datetime="<?php echo get_the_date('Y-m-d'); ?>"><?php echo get_the_date(); ?></time></p>
                         <p class="post-intro__info-item text text_lg text_line_1-4">By <?php echo get_the_author_meta('display_name', get_post()->post_author); ?></p>

@@ -65,7 +65,7 @@ $c_info = $section['info']['addresses'] || $section['info']['hours'] || $section
 <div <?php if ($section_id) { echo 'id="' . $section_id . '" '; } ?>class="section c_color_<?php color_id($theme, 5); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
     <div class="section__content">
         <div class="contact-info">
-            <?php if ($section['title']) { ?><h2 class="contact-info__title title title_<?php echo $section['options']['layout_align-title']; ?>"><?php echo $section['title']; ?></h2><?php } ?>
+            <?php if ($section['title']) { ?><h2 class="contact-info__title title title_<?php echo $section['options']['layout_align-title']; ?> <?php echo component_colors($theme, 'title'); ?>"><?php echo $section['title']; ?></h2><?php } ?>
             <?php if ($section['text']) { ?><div class="contact-info__text contact-info__text_<?php echo $section['options']['layout_align-title']; ?> text text_md text_wrap text_compact"><?php echo kf_wysiwyg_color_classes($section['text'], $theme); ?></div><?php } ?>
             <?php if ($section['form']['title'] || $section['form']['form'] || $section['info']['title'] || $section['info']['markers'] || $c_info): ?>
             <div class="contact-info__columns">

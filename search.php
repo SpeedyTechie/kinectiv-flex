@@ -33,7 +33,7 @@ $result_count = $search_query->found_posts ? $search_query->found_posts : 'No';
         <div class="search-results">
             <div class="search-results__top">
                 <div class="search-results__top-col search-results__top-col_text">
-                    <?php if ($f_results_config['title']) { ?><h1 class="search-results__title title title_md"><?php echo $f_results_config['title']; ?></h1><?php } ?>
+                    <?php if ($f_results_config['title']) { ?><h1 class="search-results__title title title_md <?php echo component_colors($theme, 'title'); ?>"><?php echo $f_results_config['title']; ?></h1><?php } ?>
                     <p class="search-results__subtitle text text_lg text_line_1-4"><?php echo $result_count; ?> results for "<?php echo get_search_query(); ?>"</p>
                 </div>
                 <div class="search-results__top-col search-results__top-col_bar">

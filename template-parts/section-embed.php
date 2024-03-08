@@ -29,7 +29,7 @@ $section_classes = $bg_styles['classes'] . $padding_styles['classes'];
 <div <?php if ($section_id) { echo 'id="' . $section_id . '" '; } ?>class="section c_color_<?php color_id($theme, 3); ?><?php echo $section_classes; ?>"<?php if ($section_style) { echo ' style="' . trim($section_style) . '"'; } ?>>
     <div class="section__content">
         <div class="title-caption title-caption_w_<?php echo $section['options']['layout_size']; ?>">
-            <?php if ($section['title']) { ?><h2 class="title-caption__title title title_<?php echo $section['options']['layout_align-title']; ?> c_color_<?php color_id($theme, 5); ?>"><?php echo $section['title']; ?></h2><?php } ?>
+            <?php if ($section['title']) { ?><h2 class="title-caption__title title title_<?php echo $section['options']['layout_align-title']; ?> <?php echo component_colors($theme, 'title'); ?>"><?php echo $section['title']; ?></h2><?php } ?>
             <div class="title-caption__content"><?php echo $section['embed']; ?></div>
             <?php if ($section['caption']) { ?><div class="title-caption__caption text text_<?php echo $section['options']['layout_align-caption']; ?> text_wrap text_compact"><?php echo kf_wysiwyg_color_classes($section['caption'], $theme); ?></div><?php } ?>
         </div>
