@@ -132,7 +132,7 @@ $button_color_classes = kf_button_color_classes($theme, $section['options']['col
             <?php endif; ?>
             <?php if ($section['type'] != 'all'): ?>
             <?php if ($section['cta']['text'] || $section['cta']['link']): ?>
-            <p class="tile-grid__cta<?php if ($section['options']['layout_per-row'] == 4) { echo ' tile-grid__cta_wide'; } ?> tile-grid__cta_<?php echo $section['options']['layout_align-cta']; ?> text text_xs">
+            <p class="tile-grid__cta tile-grid__cta_<?php echo $section['options']['layout_align-cta']; ?> text text_xs">
                 <?php echo $section['cta']['text']; ?>
                 <?php if ($section['cta']['link']): ?>
                 <a href="<?php echo esc_url($section['cta']['link']['url']); ?>" target="<?php echo $section['cta']['link']['target']; ?>" class="arrow-link <?php component_colors($theme, 'arrow-link'); ?>">

@@ -40,7 +40,7 @@ $button_color_classes = kf_button_color_classes($theme, $section['options']['col
                     <?php foreach ($section['logos'] as $logo): ?>
                     <div class="logos__item logos__item_<?php echo $section['options']['layout_logo-size']; ?>">
                         <?php if ($logo['link']) { ?><a href="<?php echo esc_url($logo['link']); ?>" target="_blank" rel="nofollow" class="logos__link"><?php } ?>
-                            <img src="<?php echo $logo['logo']['url']; ?>" alt="<?php echo esc_attr($section['logo']['alt']); ?>" width="<?php echo $logo['logo']['width']; ?>" height="<?php echo $logo['logo']['height']; ?>" class="logos__logo logos__logo_<?php echo $section['options']['layout_logo-size']; ?>" />
+                            <img src="<?php echo $logo['logo']['url']; ?>" alt="<?php echo esc_attr($logo['logo']['alt']); ?>" width="<?php echo $logo['logo']['width']; ?>" height="<?php echo $logo['logo']['height']; ?>" class="logos__logo logos__logo_<?php echo $section['options']['layout_logo-size']; ?>" />
                         <?php if ($logo['link']) { ?></a><?php } ?>
                     </div>
                     <?php endforeach; ?>

@@ -316,7 +316,7 @@ function kf_add_wysiwyg_classes($html, $class_list) {
     
     // build string of all elements (to exclude <html> and <body> wrappers that are added automatically)
     $final_html = '';
-    if ($dom->getElementsByTagName('body')->item(0)->childNodes > 0) {
+    if (isset($dom->getElementsByTagName('body')->item(0)->childNodes) > 0) {
         foreach ($dom->getElementsByTagName('body')->item(0)->childNodes as $node) {
             $final_html .= $dom->saveHTML($node);
         }
@@ -379,7 +379,7 @@ function kf_section_bg_styles($options, $default = 0) {
         'classes' =>  ''
     );
     
-    if ($options['color_theme']) {
+    if (isset($options['color_theme'])) {
         $styles['classes'] .= ' c_bg_' . color_id($options['color_theme'], $default, true); // set default bg to base color of theme
     }
     
@@ -413,7 +413,7 @@ function kf_section_padding_styles($options, $options_prev, $options_next) {
     $bg = kf_get_bg_color($options);
     
     foreach (array('top' => $options_prev, 'bottom' => $options_next) as $loc => $neighbor) {
-        if ($padding[$loc] == 'none' || !$options['padding_collapse-' . $loc] || !$bg || !$neighbor) continue; // leave padding as set if there's already no padding, padding collapse is disabled, the bg is not a solid color, or there's no neighboring section
+        if ($padding[$loc] == 'none' || !$options['padding_collapse-' . $loc] || !$bg || !$neighbor || !isset($neighbor['padding_vertical'])) continue; // leave padding as set if there's already no padding, padding collapse is disabled, the bg is not a solid color, there's no neighboring section, or the neighboring section has no vertical padding option defined
         
         $neighbor_loc = ($loc == 'top') ? 'bottom' : 'top'; // get opposite of current location to use for neighbor
         $neighbor_padding = ($neighbor['padding_vertical'] == 'separate') ? $neighbor['padding_' . $neighbor_loc] : $neighbor['padding_vertical']; // get padding from relevant location from neighbor
@@ -870,8 +870,8 @@ function kf_manage_event_sortable_columns($columns) {
 add_filter('manage_edit-event_sortable_columns', 'kf_manage_event_sortable_columns');
 
 function kf_event_custom_column_sorting($query) {
-    if(is_admin()) {
-        if($query->get('orderby') == 'column_event_date') {
+    if (is_admin()) {
+        if ($query->get('orderby') == 'column_event_date') {
             $meta_query = array(
                 'relation' => 'AND',
                 'order_num_start' => array(
@@ -2330,7 +2330,7 @@ add_filter('protected_title_format', 'kf_remove_private_protected_prefix');
 function ks_disable_comments_post_types_support() {
 	$post_types = get_post_types();
 	foreach ($post_types as $post_type) {
-		if(post_type_supports($post_type, 'comments')) {
+		if (post_type_supports($post_type, 'comments')) {
 			remove_post_type_support($post_type, 'comments');
 			remove_post_type_support($post_type, 'trackbacks');
 		}
@@ -2716,7 +2716,7 @@ add_filter('menu_order', 'ks_admin_menu_order'); // filter menu order
  * Disable archive pages for Posts
  */
 function ks_disable_post_archives($query){
-    if((!is_front_page() && is_home()) || is_category() || is_tag() || is_author() || is_date()) {
+    if ((!is_front_page() && is_home()) || is_category() || is_tag() || is_author() || is_date()) {
         global $wp_query;
         $wp_query->set_404();
         status_header(404);
@@ -3014,7 +3014,7 @@ function ks_wysiwyg_configs() {
         $processed_data['toolbars'] = $config_data['toolbars'];
 
         // generate block_formats string
-        if ($config_data['formats']) {
+        if (isset($config_data['formats'])) {
             $formats_list = array();
             foreach ($config_data['formats'] as $format_tag => $format_label) {
                 $formats_list[] = $format_label . '=' . $format_tag;
@@ -3024,15 +3024,15 @@ function ks_wysiwyg_configs() {
         }
 
         // generate valid_styles array
-        if ($config_data['elements'] || $config_data['global_styles']) {
+        if (isset($config_data['elements']) || isset($config_data['global_styles'])) {
             $styles_list = array();
             
-            if ($config_data['global_styles']) {
+            if (isset($config_data['global_styles'])) {
                 $styles_list['*'] = implode(',', $config_data['global_styles']);
             }
-            if ($config_data['elements']) {
+            if (isset($config_data['elements'])) {
                 foreach ($config_data['elements'] as $element_tag => $element_options) {
-                    if ($element_options['styles']) {
+                    if (isset($element_options['styles'])) {
                         $styles_list[$element_tag] = implode(',', $element_options['styles']);
                     }
                 }
@@ -3044,18 +3044,18 @@ function ks_wysiwyg_configs() {
         }
 
         // generate valid_styles array for when media is allowed
-        if ($config_data['media_elements']) {
+        if (isset($config_data['media_elements'])) {
             $styles_list = array();
 
-            if ($config_data['elements']) {
+            if (isset($config_data['elements'])) {
                 $config_data['media_elements'] = array_merge($config_data['elements'], $config_data['media_elements']);
             }
 
-            if ($config_data['global_styles']) {
+            if (isset($config_data['global_styles'])) {
                 $styles_list['*'] = implode(',', $config_data['global_styles']);
             }
             foreach ($config_data['media_elements'] as $element_tag => $element_options) {
-                if ($element_options['styles']) {
+                if (isset($element_options['styles'])) {
                     $styles_list[$element_tag] = implode(',', $element_options['styles']);
                 }
             }
@@ -3066,19 +3066,19 @@ function ks_wysiwyg_configs() {
         }
 
         // generate valid_elements string
-        if ($config_data['elements']) {
+        if (isset($config_data['elements'])) {
             $elements_list = array();
 
-            if ($processed_data['styles']) {
+            if (isset($processed_data['styles'])) {
                 $elements_list[] = '@[style]'; // ensure that the style attribute is allowed if there are valid styles specified (this has to be first in the list)
             }
             foreach ($config_data['elements'] as $element_tag => $element_options) {
                 $element_attribute_string = '';
-                if ($element_options['attributes']) {
+                if (isset($element_options['attributes'])) {
                     $element_attribute_string = '[' . implode('|', $element_options['attributes']) . ']';
                 }
 
-                if ($element_options['synonyms']) {
+                if (isset($element_options['synonyms'])) {
                     foreach ($element_options['synonyms'] as $synonym) {
                         $elements_list[] = $element_tag . '/' . $synonym . $element_attribute_string;
                     }
@@ -3091,23 +3091,23 @@ function ks_wysiwyg_configs() {
         }
 
         // generate valid_elements string for when media is allowed
-        if ($config_data['media_elements']) {
+        if (isset($config_data['media_elements'])) {
             $elements_list = array();
 
-            if ($config_data['elements']) {
+            if (isset($config_data['elements'])) {
                 $config_data['media_elements'] = array_merge($config_data['elements'], $config_data['media_elements']);
             }
 
-            if ($processed_data['styles_with_media'] || $processed_data['styles']) {
+            if (isset($processed_data['styles_with_media']) || isset($processed_data['styles'])) {
                 $elements_list[] = '@[style]'; // ensure that the style attribute is allowed if there are valid styles specified (this has to be first in the list)
             }
             foreach ($config_data['media_elements'] as $element_tag => $element_options) {
                 $element_attribute_string = '';
-                if ($element_options['attributes']) {
+                if (isset($element_options['attributes'])) {
                     $element_attribute_string = '[' . implode('|', $element_options['attributes']) . ']';
                 }
 
-                if ($element_options['synonyms']) {
+                if (isset($element_options['synonyms'])) {
                     foreach ($element_options['synonyms'] as $synonym) {
                         $elements_list[] = $element_tag . '/' . $synonym . $element_attribute_string;
                     }
@@ -3131,31 +3131,31 @@ function ks_configure_tinymce($mce_init, $config_name, $media_allowed) {
 
     $config_name = str_replace( '-', '_', sanitize_title($config_name));
 
-    if ($wysiwyg_configs[$config_name]) {
+    if (isset($wysiwyg_configs[$config_name])) {
         $config = $wysiwyg_configs[$config_name];
 
         // update toolbars
-        $mce_init['toolbar1'] = $config['toolbars'][1] ? implode(',', $config['toolbars'][1]) : '';
-        $mce_init['toolbar2'] = $config['toolbars'][2] ? implode(',', $config['toolbars'][2]) : '';
-        $mce_init['toolbar3'] = $config['toolbars'][3] ? implode(',', $config['toolbars'][3]) : '';
-        $mce_init['toolbar4'] = $config['toolbars'][4] ? implode(',', $config['toolbars'][4]) : '';
+        $mce_init['toolbar1'] = isset($config['toolbars'][1]) ? implode(',', $config['toolbars'][1]) : '';
+        $mce_init['toolbar2'] = isset($config['toolbars'][2]) ? implode(',', $config['toolbars'][2]) : '';
+        $mce_init['toolbar3'] = isset($config['toolbars'][3]) ? implode(',', $config['toolbars'][3]) : '';
+        $mce_init['toolbar4'] = isset($config['toolbars'][4]) ? implode(',', $config['toolbars'][4]) : '';
 
         // update block_formats setting
-        if ($config['formats']) {
+        if (isset($config['formats'])) {
             $mce_init['block_formats'] = $config['formats'];
         }
 
         // update valid_elements setting
-        if ($media_allowed && $config['elements_with_media']) {
+        if ($media_allowed && isset($config['elements_with_media'])) {
             $mce_init['valid_elements'] = $config['elements_with_media'];
-        } elseif ($config['elements']) {
+        } elseif (isset($config['elements'])) {
             $mce_init['valid_elements'] = $config['elements'];
         }
 
         // update valid_styles setting
-        if ($media_allowed && $config['styles_with_media']) {
+        if ($media_allowed && isset($config['styles_with_media'])) {
             $mce_init['valid_styles'] = json_encode($config['styles_with_media'], JSON_UNESCAPED_SLASHES);
-        } elseif ($config['styles']) {
+        } elseif (isset($config['styles'])) {
             $mce_init['valid_styles'] = json_encode($config['styles'], JSON_UNESCAPED_SLASHES);
         }
     }
@@ -3186,7 +3186,7 @@ add_filter('acf/fields/wysiwyg/toolbars' , 'ks_acf_toolbars'); // add toolbars
  * Disable autoembed for ACF WYSIWYG fields (and add option to re-enable)
  */
 function ks_acf_wysiwyg_disable_auto_embed($value, $post_id, $field) {
-    if(!empty($GLOBALS['wp_embed']) && !$field['enable_autoembed']) {
+    if (!empty($GLOBALS['wp_embed']) && !$field['enable_autoembed']) {
 	   remove_filter('acf_the_content', array( $GLOBALS['wp_embed'], 'autoembed' ), 8);
     }
 	
@@ -3195,7 +3195,7 @@ function ks_acf_wysiwyg_disable_auto_embed($value, $post_id, $field) {
 add_filter('acf/format_value/type=wysiwyg', 'ks_acf_wysiwyg_disable_auto_embed', 10, 3); // disable autoembed
 
 function ks_acf_wysiwyg_disable_auto_embed_after($value, $post_id, $field) {
-    if(!empty($GLOBALS['wp_embed']) && !$field['enable_autoembed']) {
+    if (!empty($GLOBALS['wp_embed']) && !$field['enable_autoembed']) {
 	   add_filter('acf_the_content', array( $GLOBALS['wp_embed'], 'autoembed' ), 8);
     }
 	

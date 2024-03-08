@@ -104,7 +104,7 @@ $popup_button_color_classes = kf_button_color_classes($popup_theme, $section['op
                                 <?php endif; ?>
                             </div>
                             <?php elseif ($base_class == 'image-tile'): ?>
-                            <div class="image-tile__tile image-tile__tile_<?php echo $section['options']['layout_tile-options']['layout_align']; ?> c_color_<?php color_id($tile_theme, 5); ?> c_bg_<?php color_id($tile_theme, 1); ?><?php echo $tile_classes; ?>" style="background-image: url(<?php echo $tile['image']['url']; ?>);<?php echo $tile_style; ?>">
+                            <div class="image-tile__tile image-tile__tile_<?php echo $section['options']['layout_tile-options']['layout_align']; ?> c_color_<?php color_id($tile_theme, 5); ?> c_bg_<?php color_id($tile_theme, 1); ?><?php echo $tile_classes; ?>"<?php if ($tile['image']) { ?> style="background-image: url(<?php echo $tile['image']['url']; ?>);<?php } echo $tile_style; ?>">
                                 <div class="image-tile__main">
                                     <?php if ($tile['title']) { ?><h3 class="image-tile__title title title_sm"><?php echo $tile['title']; ?></h3><?php } ?>
                                     <?php if ($tile['subtitle']) { ?><p class="image-tile__subtitle text"><?php echo $tile['subtitle']; ?></p><?php } ?>
