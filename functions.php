@@ -1071,7 +1071,7 @@ add_action('acf/save_post', 'ks_save_options_page');
  * ACF - skip validation of specified fields
  */
 function kf_acf_skip_validation($valid, $value, $field, $input_name) {
-    $skip_validation_names = $_POST['_kf_acf_skip_validation'];
+    $skip_validation_names = isset($_POST['_kf_acf_skip_validation']) ? $_POST['_kf_acf_skip_validation'] : array();
     
     if ($skip_validation_names) {
         if (in_array($input_name, $skip_validation_names)) {
@@ -1152,7 +1152,7 @@ function kf_load_custom_button_variations($field) {
     if (is_admin() && function_exists('get_current_screen')) {
         $current_screen = get_current_screen();
 
-        if ($current_screen->post_type == 'acf-field-group') {
+        if (isset($current_screen->post_type) && $current_screen->post_type == 'acf-field-group') {
             return $field; // exit function for the field group editor
         }
     }
@@ -1220,7 +1220,7 @@ function kf_remove_video_bg_option($field) {
     if (is_admin() && function_exists('get_current_screen')) {
         $current_screen = get_current_screen();
 
-        if ($current_screen->post_type == 'acf-field-group') {
+        if (isset($current_screen->post_type) && $current_screen->post_type == 'acf-field-group') {
             return $field; // exit function for the field group editor
         }
     }
@@ -1235,16 +1235,18 @@ function kf_enable_video_bg_option($field) {
     if (is_admin() && function_exists('get_current_screen')) {
         $current_screen = get_current_screen();
 
-        if ($current_screen->post_type == 'acf-field-group') {
+        if (isset($current_screen->post_type) && $current_screen->post_type == 'acf-field-group') {
             return $field; // exit function for the field group editor
         }
     }
 
     // get index of bg_type field in sub_field array
     $type_field_index = -1;
-    foreach ($field['sub_fields'] as $i => $sub_field) {
-        if ($sub_field['name'] == 'bg_type') {
-            $type_field_index = $i;
+    if (isset($field['sub_fields'])) {
+        foreach ($field['sub_fields'] as $i => $sub_field) {
+            if ($sub_field['name'] == 'bg_type') {
+                $type_field_index = $i;
+            }
         }
     }
 
@@ -2422,7 +2424,7 @@ function kf_hide_search_flex_section($field) {
     if (is_admin() && function_exists('get_current_screen')) {
         $current_screen = get_current_screen();
 
-        if ($current_screen->post_type == 'acf-field-group') {
+        if (isset($current_screen->post_type) && $current_screen->post_type == 'acf-field-group') {
             return $field; // exit function for the field group editor
         }
     }
