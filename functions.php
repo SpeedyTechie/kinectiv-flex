@@ -1331,6 +1331,12 @@ add_filter('gform_add_field_buttons', 'kf_filter_gform_add_field_buttons');
 
 
 /**
+ * Gravity Forms - bypass template library
+ */
+add_filter('gform_bypass_template_library', '__return_true');
+
+
+/**
  * Gravity Forms - store theme in ACF store for access while modifying form markup
  */
 function kf_get_theme_gform_form_args($form_args) {
