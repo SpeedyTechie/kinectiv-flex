@@ -117,7 +117,7 @@ add_action('init', 'kf_post_types');
  * Formatted copyright year
  */
 function kf_get_copyright_year() {
-    $year = '2023'; // year site was first published
+    $year = '2024'; // year site was first published
     $today_dt = current_datetime();
     
     // if the current year is not the publish year, convert to a range (e.g. "2018-2020")
