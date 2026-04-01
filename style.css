@@ -752,10 +752,12 @@ input[type="radio"]:checked::after {
     display: flex;
     grid-gap: 0;
 }
-.basic-form_center .gform_fields {
+.basic-form_center .gform_fields,
+.basic-form_center .gform_footer {
     justify-content: center;
 }
-.basic-form_right .gform_fields {
+.basic-form_right .gform_fields,
+.basic-form_right .gform_footer {
     justify-content: flex-end;
 }
 .gfield {
