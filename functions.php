@@ -3439,3 +3439,16 @@ function kf_acf_google_map_api($api){
     return $api;
 }
 add_filter('acf/fields/google_map/api', 'kf_acf_google_map_api');
+
+
+/**
+ * Allow settings dashicon for ACF accordion labels
+ */
+function ks_acf_accordion_options_icon($label, $field, $context) {
+    if ($field['type'] == 'accordion') {
+        $label = str_replace('&lt;span class=&quot;dashicons dashicons-admin-settings&quot;&gt;&lt;/span&gt;', '<span class="dashicons dashicons-admin-settings"></span>', $label);
+    }
+
+    return $label;
+}
+add_filter('acf/get_field_label', 'ks_acf_accordion_options_icon', 10, 3);
